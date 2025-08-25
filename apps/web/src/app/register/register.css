@@ -1,0 +1,41 @@
+.register {
+  max-width: 320px;
+  margin: 10vh auto;
+  padding: 20px;
+  text-align: center;
+}
+.register h2 {
+  margin-bottom: 16px;
+}
+.register input {
+  display: block;
+  width: 100%;
+  margin-bottom: 10px;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  outline: none;
+}
+.register input:focus {
+  border-color: #111827;
+}
+.register button {
+  width: 100%;
+  padding: 10px;
+  border: none;
+  border-radius: 8px;
+  background: #111827;
+  color: white;
+  cursor: pointer;
+}
+.register button:disabled {
+  background: #aaa;
+  cursor: not-allowed;
+}
+.error {
+  color: #e11d48;
+  font-size: 12px;
+  margin-top: -6px;
+  margin-bottom: 8px;
+  text-align: left;
+}

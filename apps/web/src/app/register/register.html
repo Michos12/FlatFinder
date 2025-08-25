@@ -1,0 +1,32 @@
+<section class="register">
+  <h2>Registro</h2>
+
+  <form [formGroup]="form" (ngSubmit)="onSubmit()">
+    <input type="text" formControlName="firstName" placeholder="Nombre" />
+    <div *ngIf="form.get('firstName')?.touched && form.get('firstName')?.invalid" class="error">
+      Mínimo 2 caracteres.
+    </div>
+
+    <input type="text" formControlName="lastName" placeholder="Apellido" />
+    <div *ngIf="form.get('lastName')?.touched && form.get('lastName')?.invalid" class="error">
+      Mínimo 2 caracteres.
+    </div>
+
+    <input type="email" formControlName="email" placeholder="Email" />
+    <div *ngIf="form.get('email')?.touched && form.get('email')?.invalid" class="error">
+      Ingresa un email válido.
+    </div>
+
+    <input type="date" formControlName="birthDate" placeholder="Fecha de nacimiento" />
+    <div *ngIf="form.get('birthDate')?.touched && form.get('birthDate')?.invalid" class="error">
+      La fecha es obligatoria.
+    </div>
+
+    <input type="password" formControlName="password" placeholder="Contraseña" />
+    <div *ngIf="form.get('password')?.touched && form.get('password')?.invalid" class="error">
+      Mínimo 6 caracteres, con letra, número y símbolo.
+    </div>
+
+    <button type="submit" [disabled]="form.invalid">Registrarse</button>
+  </form>
+</section>
