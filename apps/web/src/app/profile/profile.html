@@ -1,1 +1,31 @@
-<p>profile works!</p>
+<section class="profile">
+  <h2>Perfil</h2>
+
+  <form [formGroup]="form" (ngSubmit)="onSave()">
+    <label>
+      Nombre
+      <input type="text" formControlName="firstName" />
+    </label>
+
+    <label>
+      Apellido
+      <input type="text" formControlName="lastName" />
+    </label>
+
+    <label>
+      Email
+      <input type="email" formControlName="email" />
+    </label>
+
+    <label>
+      Fecha de nacimiento
+      <input type="date" formControlName="birthDate" />
+    </label>
+
+    <div class="buttons">
+      <button type="button" (click)="toggleEdit()" *ngIf="!isEditing">Editar</button>
+      <button type="submit" *ngIf="isEditing">Guardar</button>
+      <button type="button" (click)="toggleEdit()" *ngIf="isEditing">Cancelar</button>
+    </div>
+  </form>
+</section>

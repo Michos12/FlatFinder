@@ -33,7 +33,7 @@ export class Register {
     if (this.form.valid) {
       console.log('Register data:', this.form.value);
     } else {
-      this.form.markAllAsTouched(); // 👈 fuerza mostrar errores
+      this.form.markAllAsTouched(); 
     }
   }
 }
