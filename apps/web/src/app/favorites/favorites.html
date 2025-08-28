@@ -1,1 +1,28 @@
-<p>favorites works!</p>
+<div class="table">
+    <h1>My Favourites</h1>
+    <div class="lands-container">
+        @for (land of lands; track land) {
+            <div class="land-card">
+                <div class="land-head">
+                    <img [src]="land.imageUrl" alt="preview of the land">
+                </div>
+                <div class="land-body">
+                    <h1 class="tittle">Room in {{ land.city }}</h1>
+                </div>
+                <div class="land-foot">
+                    <p>{{ land.description }}'. It has a area size of
+                        {{ land.areaSize }} and were made on {{ land.year }}</p>
+                    <p><b>Price:</b> {{ land.price}}</p>
+                    <p><b>Address:</b>{{ land.streetName }} {{ land.streetNumber }}.
+                        {{ land.city }}</p>
+                    <p>A/C: {{ land.ac }} </p>
+                    <p>Available from: {{ land.date }}</p>
+                    <button>See More</button>
+                </div>
+                <div class="land-actions">
+                    <button type="button">Delete Flat</button>
+                </div>
+            </div>
+        }
+    </div>
+</div>

@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-
+import { Land, DataService } from '../home-page/lands';
 @Component({
   selector: 'app-favorites',
   imports: [],
@@ -7,5 +7,5 @@ import { Component } from '@angular/core';
   styleUrl: './favorites.css'
 })
 export class Favorites {
-
+  lands: Land[] = DataService.prototype.lands;
 }

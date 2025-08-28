@@ -1,0 +1,20 @@
+<h1>Room in {{ land.city }}</h1>
+<div class="gallery">
+  <img src="{{ land.imageUrl}}" alt="">
+</div>
+<div class="description">
+    <h2>{{ land.description }}</h2>
+    <div class="data">
+        <p>Price: {{ land.price }}</p>
+        <p>Location: {{ land.streetName }} {{ land.streetNumber }}. {{ land.city }}</p>
+        <p>Size: {{ land.areaSize }} sqm</p>
+        <p>Ac: {{ land.ac }}</p>
+        <p>Year Made: {{ land.year }}</p>
+        <p>Date Available: {{ land.date }}</p>
+    </div>
+</div>
+<div class="contact">
+    <h2>Contact Information</h2>
+    <button onclick="window.location.href='/'">Back to Homepage</button>
+    <!--Im gonna be better in the future!-->
+</div>

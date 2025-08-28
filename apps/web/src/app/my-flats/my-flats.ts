@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
-import { Land } from '../home-page/home-page';
+import { Land } from '../home-page/lands';
+
 // import User 
 @Component({
   selector: 'app-my-flats',
@@ -49,9 +50,10 @@ export class MyFlats {
   ];
 
   // Method to handle adding a new flat
-  newFlat() {
+  newFlat() { 
     console.log('New Flat button clicked');
     // Logic to add a new flat goes here
+    
   }
 
   // Method to handle editing a flat

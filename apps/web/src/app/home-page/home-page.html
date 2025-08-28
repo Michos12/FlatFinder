@@ -7,8 +7,8 @@
       <div class="dropdown-content" #dropdown_content>
         <ul>
           <li><a href="">Home</a></li>
-          <li><a href="">My Profile</a></li>
-          <li><a href="">Favourites</a></li>
+          <li><a href="/profile">My Profile</a></li>
+          <li><a href="/favorites">Favourites</a></li>
           <li><a href="/my-flats">My flats</a></li>
           <button>Delete Account</button>
           <button>Log Out</button>
@@ -25,7 +25,7 @@
         <button>Area Size</button>
       </div>
       <div class="lands-container">
-        @for (land of lands; track land) {
+        @for (land of lands; track land; let index = $index) {
           <div class="land-card">
             <div class="land-head">
               <img [src]="land.imageUrl" alt="preview of the land">
@@ -44,10 +44,7 @@
             </div>
             <div class="land-actions">
               <button type="button" (click)="addFav(land)">Add to Favourites</button>
-              <button type="button" onclick='()=> {
-                console.log("hola")
-                window.location.href = `/land-details/${land.id}`;
-              }'>See details</button>
+              <button type="button" (click)="viewDetails(index)">See details</button>
             </div>
           </div>
         }
