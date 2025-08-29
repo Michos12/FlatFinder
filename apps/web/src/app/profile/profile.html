@@ -1,31 +1,25 @@
 <section class="profile">
-  <h2>Perfil</h2>
+  <h2>Mi Perfil</h2>
 
-  <form [formGroup]="form" (ngSubmit)="onSave()">
-    <label>
-      Nombre
-      <input type="text" formControlName="firstName" />
-    </label>
+  <!-- Mostrar datos -->
+  <div *ngIf="!editing">
+    <p><strong>Nombre:</strong> {{ user.firstname }}</p>
+    <p><strong>Apellido:</strong> {{ user.lastname }}</p>
+    <p><strong>Email:</strong> {{ user.email }}</p>
+    <p><strong>Fecha de nacimiento:</strong> {{ user.birthdate }}</p>
 
-    <label>
-      Apellido
-      <input type="text" formControlName="lastName" />
-    </label>
+    <button (click)="toggleEdit()">Editar</button>
+  </div>
 
-    <label>
-      Email
-      <input type="email" formControlName="email" />
-    </label>
+  <!-- Formulario de edición -->
+  <form *ngIf="editing" [formGroup]="form" (ngSubmit)="saveChanges()">
+    <input type="text" formControlName="firstname" placeholder="Nombre" />
+    <input type="text" formControlName="lastname" placeholder="Apellido" />
+    <input type="email" formControlName="email" placeholder="Email" />
+    <input type="date" formControlName="birthdate" />
+    <input type="password" formControlName="password" placeholder="Password" />
 
-    <label>
-      Fecha de nacimiento
-      <input type="date" formControlName="birthDate" />
-    </label>
-
-    <div class="buttons">
-      <button type="button" (click)="toggleEdit()" *ngIf="!isEditing">Editar</button>
-      <button type="submit" *ngIf="isEditing">Guardar</button>
-      <button type="button" (click)="toggleEdit()" *ngIf="isEditing">Cancelar</button>
-    </div>
+    <button type="submit" [disabled]="form.invalid">Guardar</button>
+    <button type="button" (click)="toggleEdit()">Cancelar</button>
   </form>
 </section>

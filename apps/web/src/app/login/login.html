@@ -5,44 +5,11 @@
   <form [formGroup]="form" (ngSubmit)="onSubmit()">
     <input type="email" formControlName="email" placeholder="Email" />
     <input type="password" formControlName="password" placeholder="Password" />
+
+    <p *ngIf="errorMessage" class="error">{{ errorMessage }}</p>
+
     <button type="submit" [disabled]="form.invalid">Entrar</button>
   </form>
 </section>
 
-<style>
-  .login {
-    max-width: 300px;
-    margin: 15vh auto;
-    padding: 20px;
-    text-align: center;
-  }
-  .login h2 {
-    margin-bottom: 16px;
-    font-weight: 600;
-  }
-  .login input {
-    display: block;
-    width: 100%;
-    margin-bottom: 12px;
-    padding: 10px;
-    border: 1px solid #ccc;
-    border-radius: 8px;
-    outline: none;
-  }
-  .login input:focus {
-    border-color: #111827;
-  }
-  .login button {
-    width: 100%;
-    padding: 10px;
-    border: none;
-    border-radius: 8px;
-    background: #111827;
-    color: white;
-    cursor: pointer;
-  }
-  .login button:disabled {
-    background: #aaa;
-    cursor: not-allowed;
-  }
-</style>
+
