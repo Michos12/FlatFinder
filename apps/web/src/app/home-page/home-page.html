@@ -42,6 +42,12 @@
               <p>A/C: {{ land.ac }} </p>
               <p>Available from: {{ land.date }}</p>
             </div>
+            <div class="contact">
+              @
+              <p><b>Contact:</b> {{ land.contactName }}</p>
+              <p><b>Email:</b> {{ land.contactEmail }}</p>
+              <p><b>Phone:</b> {{ land.contactPhone }}</p>
+            </div>
             <div class="land-actions">
               <button type="button" (click)="addFav(land)">Add to Favourites</button>
               <button type="button" (click)="viewDetails(index)">See details</button>

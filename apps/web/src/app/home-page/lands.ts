@@ -1,22 +1,11 @@
 import { Injectable } from "@angular/core";
+import { Land } from "../models/land";
 
-export interface Land{
-  city: string;
-  streetName: string;
-  streetNumber: number;
-  areaSize: number;
-  ac: boolean;
-  year: number;
-  price: number;
-  date: Date;
-  description: string;
-  imageUrl: string;
-}
 @Injectable({
   providedIn: 'root'
 })
 export class DataService{
-  lands = [
+  lands: Land[] = [
       {
         city: 'Vancouver',
         streetName: 'Kingsway',
@@ -298,5 +287,8 @@ export class DataService{
   
   getElementByIndex(index: number): Land | undefined {
     return this.lands[index];
-}
+  }
+  editElement(index: number, newLand: Land): void {
+    this.lands[index] = { ...this.lands[index], ...newLand };
+  }
 }
