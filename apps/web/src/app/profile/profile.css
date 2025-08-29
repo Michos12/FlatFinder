@@ -44,3 +44,74 @@ button[type="submit"] {
 button:not([type="submit"]) {
   background: #e5e7eb;
 }
+
+.profile {
+  max-width: 500px;
+  margin: 40px auto;
+  padding: 20px 30px;
+  border-radius: 12px;
+  background: #ffffff;
+  box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
+  font-family: Arial, sans-serif;
+}
+
+.profile h2 {
+  text-align: center;
+  margin-bottom: 20px;
+  font-size: 24px;
+  color: #333;
+}
+
+.profile p {
+  font-size: 16px;
+  margin: 8px 0;
+  color: #555;
+}
+
+.profile p strong {
+  color: #222;
+}
+
+.profile button {
+  display: inline-block;
+  margin: 10px 8px 0 0;
+  padding: 10px 18px;
+  border: none;
+  border-radius: 8px;
+  font-size: 14px;
+  cursor: pointer;
+  transition: 0.3s ease;
+}
+
+.profile button:first-of-type {
+  background: #007bff;
+  color: white;
+}
+
+.profile button:first-of-type:hover {
+  background: #0056b3;
+}
+
+.profile button:last-of-type {
+  background: #f0f0f0;
+  color: #333;
+}
+
+.profile button:last-of-type:hover {
+  background: #ddd;
+}
+
+form input {
+  width: 100%;
+  margin: 8px 0;
+  padding: 10px;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  font-size: 14px;
+  transition: border 0.3s;
+}
+
+form input:focus {
+  outline: none;
+  border-color: #007bff;
+}

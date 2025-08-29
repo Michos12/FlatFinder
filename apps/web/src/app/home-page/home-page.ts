@@ -1,7 +1,10 @@
 //Inteface for flat user
-import { Component } from '@angular/core';
-import { Land, DataService } from './lands';
+import { Component, OnInit } from '@angular/core';
+import { DataService } from './lands';
 import { UrlService } from './url-service';
+import { Land } from '../models/land';
+import { Router } from '@angular/router';
+import { User } from '../models/user';
 
 @Component({
   selector: 'app-home-page',
@@ -9,9 +12,26 @@ import { UrlService } from './url-service';
   templateUrl: './home-page.html',
   styleUrl: './home-page.css'
 })
-export class HomePage {
+export class HomePage implements OnInit {
   lands: Land[] = [];
-  constructor(private urlService: UrlService, private dataService: DataService) {
+  currentUser: User | null = null;
+  constructor(private urlService: UrlService, private dataService: DataService, private router: Router) {
+    this.lands = this.dataService.lands;
+
+     
+  }
+
+  ngOnInit(): void {
+    if (typeof window !== 'undefined') { 
+      const currentUserString = localStorage.getItem('currentUser');
+      if (!currentUserString) {
+        this.router.navigate(['/login']);
+        return;
+      }
+      this.currentUser = JSON.parse(currentUserString) as User;
+       console.log(this.currentUser)
+    }
+
     this.lands = this.dataService.lands;
   }
 

@@ -1,0 +1,98 @@
+.table {
+  max-width: 1200px;
+  margin: 3rem auto;
+  padding: 0 1rem;
+}
+
+.table h1 {
+  text-align: center;
+  margin-bottom: 2rem;
+  font-size: 2rem;
+  font-weight: 600;
+  color: #111827;
+}
+
+.lands-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 1.5rem;
+}
+
+.land-card {
+  background-color: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.land-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 20px rgba(0,0,0,0.12);
+}
+
+.land-head img {
+  width: 100%;
+  height: 180px;
+  object-fit: cover;
+}
+
+.land-body {
+  padding: 0.8rem 1rem;
+}
+
+.land-body .tittle {
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: #111827;
+  margin: 0;
+}
+
+.land-foot {
+  padding: 0.8rem 1rem;
+  font-size: 0.9rem;
+  color: #4b5563;
+}
+
+.land-foot p {
+  margin: 0.2rem 0;
+}
+
+.land-foot button {
+  margin-top: 0.5rem;
+  padding: 8px 12px;
+  background-color: #111827;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.land-foot button:hover {
+  background-color: #374151;
+}
+
+.land-actions {
+  display: flex;
+  justify-content: space-between;
+  padding: 0.5rem 1rem 1rem;
+}
+
+.land-actions button {
+  flex: 1;
+  margin: 0 0.25rem;
+  padding: 8px;
+  border-radius: 8px;
+  border: none;
+  background-color: #ef4444;
+  color: #fff;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.land-actions button:hover {
+  background-color: #b91c1c;
+}

@@ -13,16 +13,13 @@
     </thead>
     <tbody>
       <tr *ngFor="let user of users">
-        <td>{{ user.firstName }}</td>
-        <td>{{ user.lastName }}</td>
+        <td>{{ user.firstname }}</td>
+        <td>{{ user.lastname }}</td>
         <td>{{ user.email }}</td>
-        <td>{{ user.birthDate }}</td>
+        <td>{{ user.birthdate }}</td>
         <td>{{ user.role }}</td>
       </tr>
     </tbody>
   </table>
 
-  <ng-template #noUsers>
-    <p>No hay usuarios registrados.</p>
-  </ng-template>
 </section>

@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
-import { Land, DataService } from '../home-page/lands';
+import { DataService } from '../home-page/lands';
 import { ActivatedRoute } from '@angular/router';
+import { Land } from '../models/land';
 
 @Component({
   selector: 'app-flat-view',
