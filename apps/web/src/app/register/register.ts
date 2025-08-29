@@ -20,7 +20,7 @@ export class Register {
     private userService: UserService,
     private router: Router
   ) {
-    this.form = this.fb.group({
+        this.form = this.fb.group({
       firstName: ['', [Validators.required, Validators.minLength(2)]],
       lastName: ['', [Validators.required, Validators.minLength(2)]],
       email: ['', [Validators.required, Validators.email]],
@@ -32,7 +32,8 @@ export class Register {
           Validators.minLength(6),
           Validators.pattern(/^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{6,}$/)
         ]
-      ]
+      ],
+      role: ['user', Validators.required]
     });
   }
 
@@ -42,7 +43,7 @@ export class Register {
 
 
       if (this.userService.findByEmail(user.email)) {
-        alert('⚠️ El email ya está registrado.');
+        alert('El email ya está registrado.');
         return;
       }
 

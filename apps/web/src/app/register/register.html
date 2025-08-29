@@ -27,6 +27,14 @@
       Mínimo 6 caracteres, con letra, número y símbolo.
     </div>
 
+    <div>
+  <label for="role">Rol</label>
+  <select formControlName="role">
+    <option value="user">Usuario</option>
+    <option value="admin">Admin</option>
+  </select>
+</div>
+
     <button type="submit" [disabled]="form.invalid">Registrarse</button>
   </form>
 </section>

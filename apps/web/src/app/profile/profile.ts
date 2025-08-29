@@ -46,7 +46,7 @@ export class Profile implements OnInit {
     this.editing = !this.editing;
 
     if (this.editing) {
-      // cuando empiezo a editar, recargo valores por si cambiaron
+     
       this.form.patchValue(this.user);
     }
   }
@@ -55,15 +55,12 @@ export class Profile implements OnInit {
     if (this.form.valid) {
       const updatedUser = this.form.value;
 
-      // actualizar lista de usuarios
       const users = JSON.parse(localStorage.getItem('users') || '[]');
       const index = users.findIndex((u: any) => u.email === this.user.email);
       if (index !== -1) {
         users[index] = updatedUser;
         localStorage.setItem('users', JSON.stringify(users));
       }
-
-      // actualizar currentUser
       localStorage.setItem('currentUser', JSON.stringify(updatedUser));
 
       this.user = updatedUser;
