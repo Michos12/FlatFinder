@@ -25,11 +25,13 @@ export class HomePage implements OnInit {
     if (typeof window !== 'undefined') { 
       const currentUserString = localStorage.getItem('currentUser');
       if (!currentUserString) {
-        this.router.navigate(['/login']);
+        this.router.navigate(['/register']);
         return;
       }
-      this.currentUser = JSON.parse(currentUserString) as User;
-       console.log(this.currentUser)
+      else {
+        this.currentUser = JSON.parse(currentUserString) as User;
+        console.log(this.currentUser)
+      }
     }
 
     this.lands = this.dataService.lands;
@@ -41,15 +43,19 @@ export class HomePage implements OnInit {
     element.classList.toggle('show');
   }
   //Will add 'add_to_favourites' function
-  addFav(land: Land) {
-    // if(user.favourites.includes(land)){
-    //   window.alert("This land is already in your favourites");
-    // }
-    // else{
-    //   user.favourites.push(land);
-    //   window.alert("Land added to favourites");
-    // }
-    window.alert(`Adding to favourites`);
+  addFav(land: Land): void {
+      const currentUserString = localStorage.getItem('currentUser');
+      this.currentUser = JSON.parse(currentUserString || '{}') as User;
+      if(this.currentUser.favorites) {
+        if(this.currentUser.favorites.includes(land)){
+          window.alert("This land is already in your favourites");
+        }
+        else{
+          this.currentUser.favorites.push(land);
+          localStorage.setItem('currentUser', JSON.stringify(this.currentUser));
+          window.alert(`Adding to favourites`);
+        }
+      }
   }
   viewDetails(index:number){
     console.log(`Navigating to details of land index: ${index}`);
