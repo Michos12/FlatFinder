@@ -20,5 +20,4 @@ export const routes: Routes = [
     { path: 'new-flat', component: NewFlat },
     { path: `flat-view/:id`, component: FlatView },
     { path: '**', redirectTo: '' }
-    
 ]

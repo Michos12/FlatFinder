@@ -8,4 +8,5 @@ export interface User {
   password: string;
   role: string;
   favorites?: Land[];
+  lands?: Land[];
 }

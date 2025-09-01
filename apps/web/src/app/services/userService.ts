@@ -1,6 +1,7 @@
 
 import { Injectable } from '@angular/core';
 import { User } from '../models/user';
+import { Land } from '../models/land';
 
 @Injectable({
   providedIn: 'root'
@@ -23,7 +24,6 @@ export class UserService {
     users.push(user);
     this.saveUsers(users);
   }
-
   findByEmail(email: string): User | undefined {
     return this.getUsers().find(u => u.email === email);
   }
@@ -46,5 +46,13 @@ export class UserService {
 
   logout(): void {
     localStorage.removeItem(this.currentKey);
+  }
+  addLand(land: Land): void {
+    const user = this.getCurrentUser();
+    if (user) {
+      user.lands = user.lands || [];
+      user.lands.push(land);
+      localStorage.setItem(this.currentKey, JSON.stringify(user));
+    }
   }
 }

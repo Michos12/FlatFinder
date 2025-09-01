@@ -1,31 +1,47 @@
 import { Component } from '@angular/core';
 import { Land } from '../models/land';
-
+import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
+import { UserService } from '../services/userService';
 
 @Component({
   selector: 'app-new-flat',
-  imports: [],
+  imports: [ReactiveFormsModule],
   templateUrl: './new-flat.html',
   styleUrl: './new-flat.css'
 })
 export class NewFlat {
+  form: FormGroup;
+
+  constructor(private fb: FormBuilder, private userService: UserService) {
+    this.form = this.fb.group({
+      city: ['', Validators.required],
+      streetName: ['', Validators.required],
+      streetNumber: [0, Validators.required],
+      areaSize: [0, Validators.required],
+      ac: [false, Validators.required],
+      year: [0, Validators.required],
+      price: [0, Validators.required],
+      date: [new Date(), Validators.required],
+      description: ['', Validators.required],
+      imageUrl: ['', Validators.required]
+    });
+  }
+
   createFlat() {
-    // Logic to create a new flat
-    const newFlat: Land = {
-      city: (document.querySelector('#city') as HTMLInputElement).value,
-      streetName: (document.querySelector('#streetName') as HTMLInputElement).value,
-      streetNumber: (document.querySelector('#streetNumber') as HTMLInputElement).valueAsNumber,
-      areaSize: (document.querySelector('#areaSize') as HTMLInputElement).valueAsNumber,
-      ac: (document.querySelector('#ac') as HTMLInputElement).checked,
-      year: (document.querySelector('#year') as HTMLInputElement).valueAsNumber,
-      price: (document.querySelector('#price') as HTMLInputElement).valueAsNumber,
-      date: (document.querySelector('#date') as HTMLInputElement).valueAsDate? new Date((document.querySelector('#date') as HTMLInputElement).value) : new Date(),
-      description: (document.querySelector('#description') as HTMLInputElement).value,
-      imageUrl: (document.querySelector('#imageUrl') as HTMLInputElement).value
-    };
-    return newFlat;
+    if(this.form.valid){
+      const land: Land = this.form.value;
+      this.userService.addLand(land);
+      console.log('Flat created:', land);
+      console.log(this.userService.getCurrentUser());
+     //window.location.href = '/my-flats';
+    }
+    else{
+      this.form.markAllAsTouched();
+      console.log('Form is invalid');
+    }
   }
   showData(){
-    console.log(this.createFlat());
+    console.log(this.form.value);
+    console.log(this.userService.getCurrentUser());
   }
 }
