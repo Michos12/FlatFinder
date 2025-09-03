@@ -2,10 +2,11 @@ import { Component } from '@angular/core';
 import { DataService } from '../home-page/lands';
 import { ActivatedRoute } from '@angular/router';
 import { Land } from '../models/land';
+import { Header } from '../header/header';
 
 @Component({
   selector: 'app-flat-view',
-  imports: [],
+  imports: [Header],
   templateUrl: './flat-view.html',
   styleUrl: './flat-view.css'
 })

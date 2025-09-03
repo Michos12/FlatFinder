@@ -1,22 +1,5 @@
 <div class="box">
-  <div class="header">
-    <img src="assets/logo.png" alt="">
-    <p>Hello</p>  <div class="dropdown">
-      <button (click)="showContent(dropdown_content)"><img src="assets/icon.png" alt=""></button>
-      <div class="dropdown-content" #dropdown_content>
-        <ul>
-          <li><a href="">Home</a></li>
-          <li><a href="/profile">My Profile</a></li>
-          <li><a href="/favorites">Favourites</a></li>
-          <li><a href="/my-flats">My flats</a></li>
-          <li><a href="/register">Create Account</a></li>
-          <li><a href="/users">View Users</a></li>
-          
-          <button>Log Out</button>
-        </ul>
-      </div>
-    </div>
-  </div>
+  <app-header></app-header>
   <div class='body'>
     <div class="table">
       <h1>My flats</h1>
@@ -43,9 +26,12 @@
               <p>A/C: {{ land.ac }} </p>
               <p>Available from: {{ land.date }}</p>
             </div>
-            <div class="contact">
-              <p>Name: Jhon Doe</p>
-              <p>Phone: 123-456-7890</p>
+            <div class="land-contact">
+              <h3>Contact the owner:</h3>
+              <div class="owner-info">
+                <p>Name: Jhon Doe</p>
+                <p>Phone: 123-456-7890</p>
+              </div>
             </div>
             <div class="land-actions">
               <button type="button" (click)="addFav(land)">Add to Favourites</button>

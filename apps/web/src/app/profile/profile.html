@@ -1,25 +1,27 @@
 <section class="profile">
   <h2>Mi Perfil</h2>
+  @if(user){
+    <!-- Mostrar datos -->
+    <div *ngIf="!editing">
+      <p><strong>Nombre:</strong> {{ user.firstName }}</p>
+      <p><strong>Apellido:</strong> {{ user.lastName }}</p>
+      <p><strong>Email:</strong> {{ user.email }}</p>
+      <p><strong>Fecha de nacimiento:</strong> {{ user.birthDate }}</p>
+  
+      <button (click)="toggleEdit()">Editar</button>
+    </div>
+  
+    <!-- Formulario de edición -->
+    <form *ngIf="editing" [formGroup]="form" (ngSubmit)="saveChanges()">
+      <input type="text" formControlName="firstname" placeholder="Nombre" />
+      <input type="text" formControlName="lastname" placeholder="Apellido" />
+      <input type="email" formControlName="email" placeholder="Email" />
+      <input type="date" formControlName="birthdate" />
+      <input type="password" formControlName="password" placeholder="Password" />
+  
+      <button type="submit" [disabled]="form.invalid">Guardar</button>
+      <button type="button" (click)="toggleEdit()">Cancelar</button>
+    </form>
 
-  <!-- Mostrar datos -->
-  <div *ngIf="!editing">
-    <p><strong>Nombre:</strong> {{ user.firstname }}</p>
-    <p><strong>Apellido:</strong> {{ user.lastname }}</p>
-    <p><strong>Email:</strong> {{ user.email }}</p>
-    <p><strong>Fecha de nacimiento:</strong> {{ user.birthdate }}</p>
-
-    <button (click)="toggleEdit()">Editar</button>
-  </div>
-
-  <!-- Formulario de edición -->
-  <form *ngIf="editing" [formGroup]="form" (ngSubmit)="saveChanges()">
-    <input type="text" formControlName="firstname" placeholder="Nombre" />
-    <input type="text" formControlName="lastname" placeholder="Apellido" />
-    <input type="email" formControlName="email" placeholder="Email" />
-    <input type="date" formControlName="birthdate" />
-    <input type="password" formControlName="password" placeholder="Password" />
-
-    <button type="submit" [disabled]="form.invalid">Guardar</button>
-    <button type="button" (click)="toggleEdit()">Cancelar</button>
-  </form>
+  }
 </section>

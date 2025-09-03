@@ -53,7 +53,7 @@ export class DataService{
         price: 3200,
         date: new Date('2025-01-12'),
         description: 'Modern apartment with skyline views and walking distance to downtown.',
-        imageUrl: 'assets/houses/house4.jpg'
+        imageUrl: 'assets/houses/house.jpg'
       },
       {
         city: 'Calgary',
@@ -65,7 +65,7 @@ export class DataService{
         price: 1800,
         date: new Date('2024-11-05'),
         description: 'Cozy family house with a large backyard and nearby schools.',
-        imageUrl: 'assets/houses/house5.jpg'
+        imageUrl: 'assets/houses/house2.jpg'
       },
       {
         city: 'Montreal',
@@ -77,7 +77,7 @@ export class DataService{
         price: 2400,
         date: new Date('2025-03-14'),
         description: 'Stylish loft in the heart of the city with exposed brick walls.',
-        imageUrl: 'assets/houses/house6.jpg'
+        imageUrl: 'assets/houses/house3.jpg'
       },
       {
         city: 'Vancouver',
@@ -89,7 +89,7 @@ export class DataService{
         price: 2100,
         date: new Date('2024-12-21'),
         description: 'Affordable unit close to SkyTrain and shopping centers.',
-        imageUrl: 'assets/houses/house7.jpg'
+        imageUrl: 'assets/houses/house.jpg'
       },
       {
         city: 'Ottawa',
@@ -101,7 +101,7 @@ export class DataService{
         price: 3400,
         date: new Date('2025-04-09'),
         description: 'Spacious condo with underground parking and river views.',
-        imageUrl: 'assets/houses/house8.jpg'
+        imageUrl: 'assets/houses/house2.jpg'
       },
       {
         city: 'Edmonton',
@@ -113,7 +113,7 @@ export class DataService{
         price: 2200,
         date: new Date('2025-02-28'),
         description: 'Trendy apartment near nightlife, cafes, and art galleries.',
-        imageUrl: 'assets/houses/house9.jpg'
+        imageUrl: 'assets/houses/house3.jpg'
       },
       {
         city: 'Quebec City',
@@ -125,7 +125,7 @@ export class DataService{
         price: 2000,
         date: new Date('2024-09-18'),
         description: 'Charming stone house with historic details and garden.',
-        imageUrl: 'assets/houses/house10.jpg'
+        imageUrl: 'assets/houses/house.jpg'
       },
       {
         city: 'Halifax',
@@ -137,7 +137,7 @@ export class DataService{
         price: 1500,
         date: new Date('2025-05-06'),
         description: 'Compact studio ideal for students and young professionals.',
-        imageUrl: 'assets/houses/house11.jpg'
+        imageUrl: 'assets/houses/house2.jpg'
       },
       {
         city: 'Winnipeg',
@@ -149,7 +149,7 @@ export class DataService{
         price: 2800,
         date: new Date('2025-06-01'),
         description: 'Large suburban house with double garage and basement.',
-        imageUrl: 'assets/houses/house12.jpg'
+        imageUrl: 'assets/houses/house3.jpg'
       },
       {
         city: 'Victoria',
@@ -161,7 +161,7 @@ export class DataService{
         price: 1900,
         date: new Date('2025-07-11'),
         description: 'Peaceful apartment close to the harbour and ferry terminal.',
-        imageUrl: 'assets/houses/house13.jpg'
+        imageUrl: 'assets/houses/house.jpg'
       },
       {
         city: 'Kelowna',
@@ -173,7 +173,7 @@ export class DataService{
         price: 2600,
         date: new Date('2024-10-23'),
         description: 'Bright unit with balcony overlooking the Okanagan Lake.',
-        imageUrl: 'assets/houses/house14.jpg'
+        imageUrl: 'assets/houses/house2.jpg'
       },
       {
         city: 'London',
@@ -185,7 +185,7 @@ export class DataService{
         price: 1750,
         date: new Date('2025-01-29'),
         description: 'Spacious townhouse located in a quiet family-friendly area.',
-        imageUrl: 'assets/houses/house15.jpg'
+        imageUrl: 'assets/houses/house3.jpg'
       },
       {
         city: 'Saskatoon',
@@ -197,7 +197,7 @@ export class DataService{
         price: 2100,
         date: new Date('2025-02-19'),
         description: 'Modern flat near shopping malls and public transit routes.',
-        imageUrl: 'assets/houses/house16.jpg'
+        imageUrl: 'assets/houses/house.jpg'
       },
       {
         city: 'Regina',
@@ -209,7 +209,7 @@ export class DataService{
         price: 2300,
         date: new Date('2025-03-25'),
         description: 'Comfortable home with renovated kitchen and fenced yard.',
-        imageUrl: 'assets/houses/house17.jpg'
+        imageUrl: 'assets/houses/house.jpg'
       },
       {
         city: 'Hamilton',
@@ -221,7 +221,7 @@ export class DataService{
         price: 1600,
         date: new Date('2025-04-15'),
         description: 'Affordable basement suite close to downtown Hamilton.',
-        imageUrl: 'assets/houses/house18.jpg'
+        imageUrl: 'assets/houses/house2.jpg'
       },
       {
         city: 'Whistler',
@@ -233,7 +233,7 @@ export class DataService{
         price: 3000,
         date: new Date('2025-05-19'),
         description: 'Ski-in/ski-out condo with mountain views and fireplace.',
-        imageUrl: 'assets/houses/house19.jpg'
+        imageUrl: 'assets/houses/house3.jpg'
       },
       {
         city: 'Banff',
@@ -245,43 +245,7 @@ export class DataService{
         price: 2200,
         date: new Date('2025-06-30'),
         description: 'Rustic cabin-style apartment in the heart of the Rockies.',
-        imageUrl: 'assets/houses/house20.jpg'
-      },
-      {
-        city: 'St. John’s',
-        streetName: 'Water St',
-        streetNumber: 414,
-        areaSize: 59,
-        ac: true,
-        year: 2011,
-        price: 1700,
-        date: new Date('2024-08-14'),
-        description: 'Colourful row house with ocean views and cozy interior.',
-        imageUrl: 'assets/houses/house21.jpg'
-      },
-      {
-        city: 'Niagara Falls',
-        streetName: 'Clifton Hill',
-        streetNumber: 88,
-        areaSize: 77,
-        ac: true,
-        year: 2005,
-        price: 2500,
-        date: new Date('2025-02-08'),
-        description: 'Tourist area apartment with large balcony and bright rooms.',
-        imageUrl: 'assets/houses/house22.jpg'
-      },
-      {
-        city: 'Kamloops',
-        streetName: 'Victoria St',
-        streetNumber: 612,
-        areaSize: 68,
-        ac: false,
-        year: 1994,
-        price: 1850,
-        date: new Date('2025-07-23'),
-        description: 'Quiet home near parks, hiking trails, and shopping areas.',
-        imageUrl: 'assets/houses/house23.jpg'
+        imageUrl: 'assets/houses/house.jpg'
       },
   ];
   

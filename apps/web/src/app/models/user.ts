@@ -1,7 +1,7 @@
 import { Land } from "./land";
 
 export interface User {
-  firstname: string;
+  firstName: string;
   lastName: string;
   email: string;
   birthDate: string;

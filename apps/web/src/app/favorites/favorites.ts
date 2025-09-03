@@ -1,30 +1,27 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Inject, PLATFORM_ID } from '@angular/core'; // <-- MODIFIED
+import { isPlatformBrowser } from '@angular/common'; // <-- NEW
 import { Land } from '../models/land';
 import { User } from '../models/user';
+import { Header } from '../header/header';
+import { UserService } from '../services/userService';
 
 @Component({
   selector: 'app-favorites',
-  imports: [],
   templateUrl: './favorites.html',
-  styleUrl: './favorites.css'
+  styleUrl: './favorites.css',
+  imports: [Header]
 })
-export class Favorites implements OnInit{
-  lands: Land[];
+export class Favorites{
+  lands: Land[] = []; 
   currentUser: User | null = null;
 
-  constructor() {
-    const currentUserString = localStorage.getItem('currentUser') ? localStorage.getItem('currentUser') : this.currentUser = null;
-    if (currentUserString !== null) {
-      this.currentUser = JSON.parse(currentUserString) as User;
+  constructor(@Inject(PLATFORM_ID) private platformId: Object, private userService: UserService) { 
+    if (isPlatformBrowser(this.platformId)) { 
+      const currentUser = this.userService.getCurrentUser();
+      if (currentUser) {
+        this.currentUser = currentUser;
+        this.lands = this.currentUser.favorites || [];
+      }
     }
-    this.lands = this.currentUser?.favorites || [];
-  }
-
-  ngOnInit(): void {
-   if(this.lands.length === 0) {
-     const message = document.createElement('h1') as HTMLHeadingElement;
-     message.textContent = 'No favorite lands found.';
-     document.body.appendChild(message);
-   }
   }
 }

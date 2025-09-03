@@ -5,10 +5,11 @@ import { UrlService } from './url-service';
 import { Land } from '../models/land';
 import { Router } from '@angular/router';
 import { User } from '../models/user';
+import { Header } from '../header/header';
 
 @Component({
   selector: 'app-home-page',
-  imports: [],
+  imports: [Header],
   templateUrl: './home-page.html',
   styleUrl: './home-page.css'
 })
@@ -37,11 +38,6 @@ export class HomePage implements OnInit {
     this.lands = this.dataService.lands;
   }
 
-  
-  // Function to toggle the visibility of the dropdown content
-  showContent(element:HTMLDivElement): void {
-    element.classList.toggle('show');
-  }
   //Will add 'add_to_favourites' function
   addFav(land: Land): void {
       const currentUserString = localStorage.getItem('currentUser');

@@ -1,6 +1,13 @@
+<app-header></app-header>
 <div class="table">
     <h1>My Favourites</h1>
+    @if(!currentUser){
+        <h1>Please log in to see your favorite lands.</h1>
+    }
     <div class="lands-container">
+        @if(lands.length === 0){
+            <h1>No favorite lands found.</h1>
+        }
         @for (land of lands; track land) {
             <div class="land-card">
                 <div class="land-head">

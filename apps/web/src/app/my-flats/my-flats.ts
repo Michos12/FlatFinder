@@ -1,40 +1,37 @@
 import { Component } from '@angular/core';
 import { Land } from '../models/land';
-import { DataService } from '../home-page/lands';
+import { UserService } from '../services/userService';
+import { User } from '../models/user';
+import { Router } from '@angular/router';
 
-
-// import User 
 @Component({
   selector: 'app-my-flats',
-  imports: [],
   templateUrl: './my-flats.html',
-  styleUrl: './my-flats.css'
+  styleUrls: ['./my-flats.css']
 })
 export class MyFlats {
   lands: Land[];
-  constructor(private dataService: DataService) {
-    this.lands = this.dataService.lands;
-  }
-
-  // Method to handle adding a new flat
-  newFlat() { 
-    console.log('New Flat button clicked');
-    // Logic to add a new flat goes here
-    
-  }
-
-  // Method to handle editing a flat
-  edit(land: any) {
-    console.log('Edit button clicked for land:', land);
-    // Logic to edit the flat goes here
-  }
-
-  // Method to handle deleting a flat
-  delete(land: any) {
-    console.log('Delete button clicked for land:', land);
-    // Logic to delete the flat goes here
+  currentUser: User | null = null;
+  alertMessage: string | null = null;
+  deleteLand: Function;
+  constructor(private userService: UserService, private router: Router) {
+    this.deleteLand = this.userService.deleteLand.bind(this.userService);
+    this.currentUser = this.userService.getCurrentUser();
+    if(this.currentUser){
+      if(this.currentUser.lands){
+        this.lands = this.currentUser.lands;
+      }
+      else{
+        this.lands = [];
+        this.alertMessage = 'No lands found for the current user.';
+      }
+    }
+    else{
+      this.lands = [];
+      this.alertMessage = 'Please log in to view your lands.';
+    }
   }
   showNewFlatForm() {
-    window.location.href = '/new-flat';
+    this.router.navigate(['/new-flat']);
   }
 }

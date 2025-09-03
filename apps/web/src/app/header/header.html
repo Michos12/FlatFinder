@@ -1,0 +1,24 @@
+<div class="header">
+  <a href="">
+    <img src="assets/logo.png" alt="">
+  </a>
+  @if(user){
+    <p>Hello {{ user.lastName }} </p>
+  } @else {
+    <p>Hello Guest</p>
+  }
+  <div class="dropdown">
+    <button (click)="showContent(dropdown_content)"><img src="assets/icon.png" alt=""></button>
+    <div class="dropdown-content" #dropdown_content>
+      <ul>
+        <li><a href="">Home</a></li>
+        <li><a href="/profile">My Profile</a></li>
+        <li><a href="/favorites">Favourites</a></li>
+        <li><a href="/my-flats">My flats</a></li>
+        <li><a href="/register">Create Account</a></li>
+        <li><a href="/users">View Users</a></li>
+        <button>Log Out</button>
+      </ul>
+    </div>
+  </div>
+</div>

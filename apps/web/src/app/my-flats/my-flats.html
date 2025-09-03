@@ -2,7 +2,7 @@
     <h1>My flats</h1>
     <button (click)="showNewFlatForm()">New Flat</button>
     <div class="lands-container">
-    @for (land of lands; track land) {
+   @for (land of lands; track land) {
         <div class="land-card">
         <div class="land-head">
             <img [src]="land.imageUrl" alt="preview of the land">
@@ -21,9 +21,13 @@
             <button>See More</button>
         </div>
         <div class="land-actions">
-            <button type="button">Delete Flat</button>
+            <button type="button" (click)="deleteLand(land)">Delete Flat</button>
             <button type="button">Edit Land</button>
         </div>
         </div>
     }
     </div>
+</div>
+    @if(alertMessage) {
+      <div class="alert-message">{{ alertMessage }}</div>
+    }
