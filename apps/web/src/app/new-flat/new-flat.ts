@@ -41,7 +41,4 @@ export class NewFlat {
       console.log('Form is invalid');
     }
   }
-  showData() {
-    console.log(this.form.value);
-  }
 }

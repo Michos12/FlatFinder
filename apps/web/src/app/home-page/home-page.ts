@@ -6,6 +6,7 @@ import { Land } from '../models/land';
 import { Router } from '@angular/router';
 import { User } from '../models/user';
 import { Header } from '../header/header';
+import { FirebaseService } from '../services/firebase/functions';
 
 @Component({
   selector: 'app-home-page',
@@ -16,10 +17,10 @@ import { Header } from '../header/header';
 export class HomePage implements OnInit {
   lands: Land[] = [];
   currentUser: User | null = null;
-  constructor(private urlService: UrlService, private dataService: DataService, private router: Router) {
+  getUsers: any;
+  constructor(private urlService: UrlService, private dataService: DataService, private router: Router, private firebaseService: FirebaseService) {
     this.lands = this.dataService.lands;
-
-     
+    this.getUsers = this.firebaseService.getUsers();
   }
 
   ngOnInit(): void {

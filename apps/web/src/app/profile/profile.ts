@@ -69,6 +69,7 @@ export class Profile implements OnInit {
       this.editing = false;
     } else {
       this.form.markAllAsTouched();
+      console.log('Formulario inválido', this.form.errors); 
     }
   }
 }

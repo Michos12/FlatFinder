@@ -2,6 +2,7 @@ import { Injectable, Inject, PLATFORM_ID } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common'; 
 import { User } from '../models/user';
 import { Land } from '../models/land';
+import { FirebaseService } from '../services/firebase/functions'
 
 @Injectable({
   providedIn: 'root'
@@ -11,7 +12,7 @@ export class UserService {
   public currentKey = 'currentUser';
   private isBrowser: boolean;
 
-  constructor(@Inject(PLATFORM_ID) private platformId: Object) { 
+  constructor(@Inject(PLATFORM_ID) private platformId: Object, private firebaseService: FirebaseService) { 
     this.isBrowser = isPlatformBrowser(this.platformId); 
   }
 
@@ -30,9 +31,7 @@ export class UserService {
   }
 
   addUser(user: User): void {
-    const users = this.getUsers();
-    users.push(user);
-    this.saveUsers(users);
+    this.firebaseService.addUser(user);
   }
 
   findByEmail(email: string): User | undefined {
