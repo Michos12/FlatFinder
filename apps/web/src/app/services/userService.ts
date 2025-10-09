@@ -8,7 +8,6 @@ import { FirebaseService } from '../services/firebase/functions'
   providedIn: 'root'
 })
 export class UserService {
-  private storageKey = 'users';
   public currentKey = 'currentUser';
   private isBrowser: boolean;
 
@@ -16,39 +15,29 @@ export class UserService {
     this.isBrowser = isPlatformBrowser(this.platformId); 
   }
 
-  getUsers(): User[] {
-    if (this.isBrowser) { 
-      const data = localStorage.getItem(this.storageKey);
-      return data ? JSON.parse(data) : [];
-    }
-    return []; 
-  }
-
-  private saveUsers(users: User[]): void {
-    if (this.isBrowser) { 
-      localStorage.setItem(this.storageKey, JSON.stringify(users));
-    }
-  }
-
   addUser(user: User): void {
     this.firebaseService.addUser(user);
   }
 
   findByEmail(email: string): User | undefined {
-    return this.getUsers().find(u => u.email === email);
+    let u;
+    this.firebaseService.getUsers().then(
+      users => u = users.find(u => u.email === email)
+    );
+    return u;
   }
 
   login(email: string, password: string): boolean {
-    if (this.isBrowser) { 
-        const user = this.getUsers().find(
-          u => u.email === email && u.password === password
-        );
-        if (user) {
-          localStorage.setItem(this.currentKey, JSON.stringify(user));
-          return true;
-        }
+    const user = this.firebaseService.getUsers().then(users => users.find(
+      u => u.email === email && u.password === password
+    ));
+    if (user) {
+      localStorage.setItem(this.currentKey, JSON.stringify(user));
+      return true;
+    } else {
+      console.log("Login failed: Invalid email or password.");
+      return false; 
     }
-    return false; 
   }
 
   getCurrentUser(): User | null {
@@ -56,6 +45,10 @@ export class UserService {
         const data = localStorage.getItem(this.currentKey);
         if (data) {
           return JSON.parse(data);
+        }
+        else {
+          console.log("No current user found in localStorage, please log in.");
+          return null; 
         }
     }
     return null; 
@@ -68,35 +61,22 @@ export class UserService {
   }
 
   addLand(land: Land): void {
-    if (this.isBrowser) { 
-        const user = this.getCurrentUser();
-        if (user) {
-          user.lands = user.lands || [];
-          user.lands.push(land);
-          const users = this.getUsers();
-          const userIndex = users.findIndex(u => u.email === user.email);
-          if (userIndex > -1) {
-            users[userIndex] = user;
-            this.saveUsers(users);
-          }
-          localStorage.setItem(this.currentKey, JSON.stringify(user));
-        }
+    const user = this.getCurrentUser();
+    if (user) {
+      user.lands = user.lands || [];
+      user.lands.push(land);
+      localStorage.setItem(this.currentKey, JSON.stringify(user));
+      this.firebaseService.addUser(user, true);
     }
   }
+  
   deleteLand(land: Land): void {
       const user = this.getCurrentUser();
       if (user) {
         user.lands = user.lands || [];
         user.lands = user.lands.filter(l => l != land);
         localStorage.setItem(this.currentKey, JSON.stringify(user));
-        const users = this.getUsers();
-        const userIndex = users.findIndex(u => u.email === user.email);
-        if (userIndex > -1) {
-          this.saveUsers(users);
-          users[userIndex] = user;
-          this.saveUsers(users);
-        }
-        localStorage.setItem(this.currentKey, JSON.stringify(user));
+        this.firebaseService.addUser(user, true);
       }
   }
 }

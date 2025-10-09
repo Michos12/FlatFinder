@@ -6,7 +6,6 @@ import { Land } from '../models/land';
 import { Router } from '@angular/router';
 import { User } from '../models/user';
 import { Header } from '../header/header';
-import { FirebaseService } from '../services/firebase/functions';
 
 @Component({
   selector: 'app-home-page',
@@ -17,10 +16,8 @@ import { FirebaseService } from '../services/firebase/functions';
 export class HomePage implements OnInit {
   lands: Land[] = [];
   currentUser: User | null = null;
-  getUsers: any;
-  constructor(private urlService: UrlService, private dataService: DataService, private router: Router, private firebaseService: FirebaseService) {
+  constructor(private urlService: UrlService, private dataService: DataService, private router: Router) {
     this.lands = this.dataService.lands;
-    this.getUsers = this.firebaseService.getUsers();
   }
 
   ngOnInit(): void {
@@ -32,7 +29,6 @@ export class HomePage implements OnInit {
       }
       else {
         this.currentUser = JSON.parse(currentUserString) as User;
-        console.log(this.currentUser)
       }
     }
 
