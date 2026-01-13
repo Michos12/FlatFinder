@@ -16,5 +16,8 @@
   "bugs": {
     "url": "https://github.com/Michos12/FlatFinder-BackEnd/issues"
   },
-  "homepage": "https://github.com/Michos12/FlatFinder-BackEnd#readme"
+  "homepage": "https://github.com/Michos12/FlatFinder-BackEnd#readme",
+  "dependencies": {
+    "mongoose": "^9.1.3"
+  }
 }
