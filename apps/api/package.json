@@ -1,0 +1,20 @@
+{
+  "name": "flatfinder-backend",
+  "version": "1.0.0",
+  "description": "BackEnd of the previous project FlatFinder's Front-end",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Michos12/FlatFinder-BackEnd.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Michos12/FlatFinder-BackEnd/issues"
+  },
+  "homepage": "https://github.com/Michos12/FlatFinder-BackEnd#readme"
+}
