@@ -1,6 +1,6 @@
-import mongoose from "mongoose";
+import mongoose, { Schema } from "mongoose";
 
-const flatSchema = new mongoose.Schema({
+const flatSchema = new Schema({
     city: {
         type: String, required: true
     },
@@ -32,4 +32,4 @@ const flatSchema = new mongoose.Schema({
     { timestamps: true }
 )
 
-module.exports = mongoose.model("Flat", flatSchema);
+export const Flat = mongoose.model("Flat", flatSchema);
