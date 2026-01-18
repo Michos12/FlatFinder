@@ -8,19 +8,19 @@ const flatSchema = new Schema({
         type: String, required: true
     },
     stNum: {
-        type: Number, required: true
+        type: Number, required: true, min: 0
     },
     size: {
-        type: Number, required: true
+        type: Number, required: true, min: 0
     },
     hasAc: {
         type: Boolean, default: false
     },
     year: {
-        type: Number, required: true
+        type: Number, required: true, min: 1800
     },
     price: {
-        type: Number, required: true
+        type: Number, required: true, min: 0
     },
     availDate: {
         type: Date, required: true
