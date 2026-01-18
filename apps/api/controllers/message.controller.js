@@ -37,7 +37,7 @@ export async function getAllMessages(req, res) {
         }
 
         if (!flat.ownerId.equals(req.user.id)) {
-            return res.status(403).json({ message: "Access denied" });
+            return res.status(403).json({ message: "Unauthorized user!" });
         }
 
         const messages = await getAllMessagesService(flatId);
@@ -65,7 +65,7 @@ export async function getUserMessages(req, res) {
         const senderId = req.params.senderId;
 
         if (senderId !== req.user.id) {
-            return res.status(403).json({ message: "Access denied" });
+            return res.status(403).json({ message: "Unauthorized user!" });
         }
 
         const messages = await getUserMessagesService(flatId, senderId);
