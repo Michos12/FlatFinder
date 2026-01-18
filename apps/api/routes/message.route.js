@@ -3,8 +3,8 @@ import {
   addMessage,
   getAllMessages,
   getUserMessages
-} from "../controllers/message.controller";
-import { verifyToken } from "../middleware/authVerifyToken";
+} from "../controllers/message.controller.js";
+import { verifyToken } from "../middleware/authVerifyToken.js";
 const router = Router();
 
 router.get("/", verifyToken, getAllMessages);

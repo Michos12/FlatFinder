@@ -1,4 +1,4 @@
-import { Flat } from "../models/flat.model";
+import { Flat } from "../models/flat.model.js";
 
 export async function getAllFlatsService() {
     const flats = await Flat.find();

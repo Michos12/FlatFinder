@@ -3,8 +3,8 @@ import express from 'express';
 import mongoose from 'mongoose';
 import cors from "cors";
 
-import flatRoutes from "./routes/flat.route";
-import messageRoutes from "./routes/message.route";
+import flatRoutes from "./routes/flat.route.js";
+import messageRoutes from "./routes/message.route.js";
 
 dotenv.config();
 const app = express();

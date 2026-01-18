@@ -2,11 +2,11 @@ import {
     getAllMessagesService,
     getUserMessagesService,
     addMessageService
-} from "../services/message.service";
+} from "../services/message.service.js";
 
 import { 
     getFlatByIdService
-} from "../services/flat.service";
+} from "../services/flat.service.js";
 
 export async function addMessage(req, res) {
     try {

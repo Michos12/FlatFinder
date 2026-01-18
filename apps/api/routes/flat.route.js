@@ -5,8 +5,8 @@ import {
   getFlatById,
   updateFlat,
   deleteFlat
-} from "../controllers/flat.controller";
-import { verifyToken } from "../middleware/authVerifyToken";
+} from "../controllers/flat.controller.js";
+import { verifyToken } from "../middleware/authVerifyToken.js";
 const router = Router();
 
 router.get("/", verifyToken, getAllFlats);

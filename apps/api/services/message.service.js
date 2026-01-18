@@ -1,4 +1,4 @@
-import { Message } from "../models/message.model";
+import { Message } from "../models/message.model.js";
 
 export async function getAllMessagesService(flatId) {
     const messages = await Message.find({ flatId });

@@ -4,7 +4,7 @@ import {
     deleteFlatService,
     addFlatService,
     getFlatByIdService
-} from "../services/flat.service";
+} from "../services/flat.service.js";
 
 export async function addFlat(req, res) {
     try {
