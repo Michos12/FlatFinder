@@ -76,7 +76,7 @@ export async function updateFlat(req, res) {
         }
 
         if (!flat.ownerId.equals(req.user.id)) {
-            return res.status(403).json({ message: "Access denied" });
+            return res.status(403).json({ message: "Unauthorized user!" });
         }
 
         const updatedFlat = await updateFlatService(req.body, flatId)
@@ -104,7 +104,7 @@ export async function deleteFlat(req, res) {
         }
 
         if (!flat.ownerId.equals(req.user.id)) {
-            return res.status(403).json({ message: "Access denied" });
+            return res.status(403).json({ message: "Unauthorized user!" });
         }
 
         const deletedFlat = await deleteFlatService(flatId);
