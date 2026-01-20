@@ -12,15 +12,15 @@ import { verifyToken } from "../middleware/authToken.js";
 const userRouter = express.Router();
 
 // Public routes
-router.post("/login", loginController); 
-router.post("/register", registerController);
+userRouter.post("/login", loginController); 
+userRouter.post("/register", registerController);
 
 // Protected routes
-router.get("/:id", verifyToken, getUserByIdController);
-router.put("/:id", verifyToken, updateUserController);
+userRouter.get("/:id", verifyToken, getUserByIdController);
+userRouter.put("/:id", verifyToken, updateUserController);
 
 // Admin-only routes
-router.get("/", [verifyToken, admin], getAllUsersController);
-router.delete("/:id", [verifyToken, admin], deleteUserController);
+userRouter.get("/", [verifyToken, admin], getAllUsersController);
+userRouter.delete("/:id", [verifyToken, admin], deleteUserController);
 
 export { userRouter }

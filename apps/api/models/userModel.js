@@ -1,6 +1,5 @@
 import mongoose from "mongoose";
 import bcrypt from "bcryptjs";
-import { hashPassword } from "../middleware/authToken";
 import jwt from "jsonwebtoken";
 
 const userSchema = new mongoose.Schema(
@@ -40,6 +39,8 @@ const userSchema = new mongoose.Schema(
     }},
     { timestamps: true });
     
+const User = mongoose.model("User", userSchema);
+
 // MIDDLEWARE TO HASH PASSWORD BEFORE SAVING USER
 User.schema.pre("save", async function (next) {
     if (!this.isModified("password")) {
@@ -56,20 +57,18 @@ User.schema.pre("save", async function (next) {
 });
 
 // METHOD TO GENERATE TOKEN
-User.methods.generateAuthToken = function(){
+User.schema.method('generateAuthToken', function(){
     const token = jwt.sign(
         { _id: this._id, isAdmin: this.isAdmin }, 
         process.env.JWT_SECRET, 
         { expiresIn: '2h' } 
     );
     return token;
-}
+});
 
 // METHOD TO COMPARE PASSWORDS
-User.methods.comparePassword = async function(password){
+User.schema.method('comparePassword', async function(password){
     return await bcrypt.compare(password, this.password);
-}
-
-const User = mongoose.model("User", userSchema);
+});
 
 export default User;
