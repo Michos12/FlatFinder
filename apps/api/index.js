@@ -1,8 +1,10 @@
 import express from 'express';
 import cors from 'cors';
-import { userRouter } from './routes/userRoute.js';
 import dotenv from 'dotenv';
 import mongoose from 'mongoose';
+import { userRouter } from './routes/userRoute.js';
+import flatRoutes from "./routes/flat.route.js";
+import messageRoutes from "./routes/message.route.js";
 
 dotenv.config();
 
@@ -16,11 +18,14 @@ mongoose
   .then(() => console.log("MongoDB Connected"))
   .catch((err) => console.error("Error connecting to MongoDB:", err));
 
-// JWT Authentication Middleware
-
-
 // endpoint for User API
 app.use('/users', userRouter);
+
+// Endpoint for Flat
+app.use("/api/flats", flatRoutes);
+
+// Endpoint for Message 
+app.use("/api/flats/:id/messages", messageRoutes);
 
 // Start the server
 app.listen(process.env.PORT, () => {

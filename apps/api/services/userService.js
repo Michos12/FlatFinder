@@ -42,6 +42,7 @@ async function loginService(email, password) {
     const token = user.generateAuthToken();
     return { user, token };
 }
+    
 async function registerService(userData){
     const existUser =  await User.findOne({ email: userData.email });
     if(existUser) throw new Error("User already exists with this email");
@@ -53,11 +54,10 @@ async function registerService(userData){
             lastName: userData.lastName,
             birthDate: userData.birthDate,
         });
+        await newUser.save();
+        const token = newUser.generateAuthToken();
+        return { user: newUser, token };
     }
-    await newUser.save();
-
-    const token = newUser.generateAuthToken();
-    return { user: newUser, token };
 }
 
 export { getAllUsersService, getUserByIdService, updateUserService, deleteUserService, loginService, registerService }

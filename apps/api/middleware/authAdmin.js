@@ -1,8 +1,9 @@
 function admin(req, res, next) {
-    if (!req.user.isAdmin) {
-        return res.status(403).json({ error: "Access denied. Admins only." });
+    if(req.user._id == req.params.id || req.user.isAdmin){
+        next();
+    } else {
+        return res.status(403).json({ error: "Access denied. Admins or account owner only." });
     }
-    next();
 }
 
 export default admin;

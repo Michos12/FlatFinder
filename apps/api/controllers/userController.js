@@ -3,6 +3,7 @@ import { getAllUsersService, getUserByIdService, updateUserService, deleteUserSe
 async function getAllUsersController(req, res) {
     try{
         const users = await getAllUsersService();
+        console.log(req);
         res.status(200).json(users);
     } catch (error){
         res.status(500).json({ error: `Server error: ${error.message}` });
@@ -36,7 +37,10 @@ async function updateUserController(req, res){
 async function deleteUserController(req, res){
     try{
         await deleteUserService(req.params.id);
-        res.status(200).json({ message: "User deleted successfully" });
+        res.status(200).json({ 
+            message: "User deleted successfully",
+            deletedUser: req.params.id
+         });
     } catch (error){
         if (error.message === "User not found") {
             return res.status(404).json({ error: error.message });

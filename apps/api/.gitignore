@@ -3,4 +3,5 @@ server.js
 /adminer/
 .env
 /.snapshots/
-/aska/
+/asuka/
+/postman/
