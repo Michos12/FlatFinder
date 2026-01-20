@@ -1,58 +1,89 @@
 import { getAllUsersService, getUserByIdService, updateUserService, deleteUserService, loginService, registerService } from "../services/userService.js";
 import existsValidator from "../validators/existsValidator.js";
 
-function getAllUsersController(req, res) {
+async function getAllUsersController(req, res) {
     try{
-        getAllUsersService().then(users => {
-            res.status(200).json(users);
-        });
+        const users = await getAllUsersService();
+        res.status(200).json(users);
     } catch (error){
         res.status(500).json({ error: `Server error: ${error.message}` });
     }
 }
 
-function getUserByIdController(req, res){
+async function getUserByIdController(req, res){
     try{
-        getUserByIdService(req.params.id).then(user => {
-            existsValidator(user);
-        });
+        const user = await getUserByIdService(req.params.id);
+        res.status(200).json(user);
     } catch (error){
-        res.status(500).json({ error: `Server error: ${error.message}` });
+        if (error.message === "User not found") {
+            return res.status(404).json({ error: error.message });
+        }
+        res.status(500).json({ error: error.message });
     }
 }
 
-function updateUserController(req, res){
+async function updateUserController(req, res){
     try{
-        updateUserService(req.params.id, req.body).then(updatedUser => {
-            existsValidator(updatedUser);
-        });
+        const updatedUser = await updateUserService(req.params.id, req.body);
+        res.status(200).json(updatedUser);
     } catch (error){
-        res.status(500).json({ error: `Server error: ${error.message}` });
+        if (error.message === "User not found") {
+            return res.status(404).json({ error: error.message });
+        }
+        res.status(400).json({ error: error.message });
     }
 }
 
-function deleteUserController(req, res){
+async function deleteUserController(req, res){
     try{
-        deleteUserService(req.params.id).then(objective => {
-            existsValidator(objective);
-        });
+        await deleteUserService(req.params.id);
+        res.status(200).json({ message: "User deleted successfully" });
     } catch (error){
+        if (error.message === "User not found") {
+            return res.status(404).json({ error: error.message });
+        }
         res.status(500).json({ error: `Server error: ${error.message}`})
     }
 }
-function loginController(req, res){
-    try{
 
+async function loginController(req, res){
+    try{
+        const { email, password } = req.body;
+        const { user, token } = await loginService(email, password);
+        res.header('x-auth-token', token).status(200).json({
+            message: "Login successful",
+            token,
+            user: {
+                id: user._id,
+                email: user.email,
+                isAdmin: user.isAdmin
+            }
+        });
     } catch (error){
-        
+        if (error.message === "Invalid email or password") {
+            return res.status(400).json({ error: error.message });
+        }
+        res.status(500).json({ error: error.message });
     }
 }
 
-function registerController(req, res){
+async function registerController(req, res){
     try{
-        
+        const { user, token } = await registerService(req.body);
+        res.header('x-auth-token', token).status(201).json({ 
+            message: "User registered successfully",
+            user: {
+                id: user._id,
+                email: user.email,
+                firstName: user.firstName
+            },
+            token 
+        });
     } catch (error){
-        
+        if (error.message === "User already exists") {
+            return res.status(400).json({ error: error.message });
+        }
+        res.status(500).json({ error: error.message });        
     }
 }
 
