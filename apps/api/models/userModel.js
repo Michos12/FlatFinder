@@ -37,37 +37,39 @@ const userSchema = new mongoose.Schema(
     },
     favouriteFlatsList: {
         type: [Object],
-    },
-    createdAt: {
-        type: Date,
-        default: Date.now,
-    },
-    updatedAt: {
-        type: Date,
-    },
-    });
-const User = mongoose.model("User", userSchema);
-
-
+    }},
+    { timestamps: true });
+    
 // MIDDLEWARE TO HASH PASSWORD BEFORE SAVING USER
 User.schema.pre("save", async function (next) {
     if (!this.isModified("password")) {
         alert("Password not modified")
         return next();
     }
-    const salt = await bcrypt.genSalt(10);
-    this.password = await bcrypt.hash(this.password, salt);
-    next();
+    try{
+        const salt = await bcrypt.genSalt(10);
+        this.password = await bcrypt.hash(this.password, salt);
+        next();
+    } catch (error){
+        return next(error);
+    }
 });
 
 // METHOD TO GENERATE TOKEN
 User.methods.generateAuthToken = function(){
     const token = jwt.sign(
-        { _id: this._id, role: this.role }, 
+        { _id: this._id, isAdmin: this.isAdmin }, 
         process.env.JWT_SECRET, 
         { expiresIn: '2h' } 
     );
     return token;
 }
+
+// METHOD TO COMPARE PASSWORDS
+User.methods.comparePassword = async function(password){
+    return await bcrypt.compare(password, this.password);
+}
+
+const User = mongoose.model("User", userSchema);
 
 export default User;
