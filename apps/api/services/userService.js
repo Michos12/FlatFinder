@@ -1,37 +1,40 @@
 import User from "../models/userModel.js";
 
-async function getAllUsers(){
+async function getAllUsersService(){
     return await User.find();
 }
 
-async function getUserById(userId) {
+async function getUserByIdService(userId) {
     return await User.findById(userId);
 };
 
-async function updateUser(userId, userData){
-    return await User.findByIdAndUpdate(
+async function updateUserService(userId, userData){
+    const updatedUser = await User.findByIdAndUpdate(
         userId, 
         userData,
         { new: true }
     );
+    updatedUser.updatedAt = new Date();
+    await updatedUser.save();
+    return updatedUser;
 };
 
-async function deleteUser(userId){
+async function deleteUserService(userId){
     return await User.findByIdAndDelete(userId);
 }
 
-async function login(){
-
+async function loginService(email, password) {
+    
 }
-async function register(userData){
+async function registerService(userData){
     const newUser = new User({
         email: userData.email,
         password: userData.password,
-        firstName: userData.name,
-        lastName: userData.surname,
+        firstName: userData.firstName,
+        lastName: userData.lastName,
         birthDate: userData.birthDate,
     });
     return await newUser.save();
 }
 
-export { getAllUsers, getUserById, updateUser, deleteUser, login, register}
+export { getAllUsersService, getUserByIdService, updateUserService, deleteUserService, loginService, registerService }
