@@ -1,6 +1,6 @@
 import mongoose from "mongoose";
 import bcrypt from "bcryptjs";
-import { hashPassword } from "../middleware/authHash";
+import { hashPassword } from "../middleware/authToken";
 import jwt from "jsonwebtoken";
 
 const userSchema = new mongoose.Schema(

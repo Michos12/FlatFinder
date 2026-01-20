@@ -1,5 +1,4 @@
 import { getAllUsersService, getUserByIdService, updateUserService, deleteUserService, loginService, registerService } from "../services/userService.js";
-import existsValidator from "../validators/existsValidator.js";
 
 async function getAllUsersController(req, res) {
     try{

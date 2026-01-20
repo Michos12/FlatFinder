@@ -1,8 +1,9 @@
 import express from 'express';
 import cors from 'cors';
-import jwt from 'jsonwebtoken';
-import { SECRET_KEY, PORT } from './server.js';
 import { userRouter } from './routes/userRoute.js';
+import dotenv from 'dotenv';
+
+dotenv.config();
 
 const app = express();
 app.use(cors());
@@ -10,7 +11,7 @@ app.use(express.json());
 
 // ---- MongoDB Atlas Connection ----
 mongoose
-  .connect(MONGO_URL)
+  .connect(process.env.MONGO_URL)
   .then(() => console.log("MongoDB Connected"))
   .catch((err) => console.error("Error connecting to MongoDB:", err));
 
@@ -21,6 +22,6 @@ mongoose
 app.use('/users', userRouter);
 
 // Start the server
-app.listen(PORT, () => {
-    console.log(`Server is running on port ${PORT}`);
+app.listen(process.env.PORT, () => {
+    console.log(`Server is running on port ${process.env.PORT}`);
 });
