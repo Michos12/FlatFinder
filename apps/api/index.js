@@ -22,10 +22,10 @@ mongoose
 app.use('/users', userRouter);
 
 // Endpoint for Flat
-app.use("/api/flats", flatRoutes);
+app.use("/flats", flatRoutes);
 
 // Endpoint for Message 
-app.use("/api/flats/:id/messages", messageRoutes);
+app.use("/flats/:id/messages", messageRoutes);
 
 // Start the server
 app.listen(process.env.PORT, () => {

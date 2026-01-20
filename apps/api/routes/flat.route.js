@@ -5,14 +5,15 @@ import {
   getFlatById,
   updateFlat,
   deleteFlat
-} from "../asuka/controllers/flat.controller.js";
-import { verifyToken } from "../asuka/middleware/authVerifyToken.js";
+} from "../controllers/flat.controller.js";
+import { verifyToken } from "../middleware/authToken.js";
+import admin from "../middleware/authAdmin.js";
 const router = Router();
 
 router.get("/", verifyToken, getAllFlats);
-router.patch("/:id", verifyToken, updateFlat);
-router.delete("/:id", verifyToken, deleteFlat);
-router.post("/", verifyToken, addFlat);
+router.patch("/:id", verifyToken, admin, updateFlat);
+router.delete("/:id", verifyToken, admin, deleteFlat);
+router.post("/", verifyToken, admin, addFlat);
 router.get("/:id", verifyToken, getFlatById);
 
 

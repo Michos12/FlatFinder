@@ -3,12 +3,14 @@ import {
   addMessage,
   getAllMessages,
   getUserMessages
-} from "../asuka/controllers/message.controller.js";
-import { verifyToken } from "../asuka/middleware/authVerifyToken.js";
+} from "../controllers/message.controller.js";
+import { verifyToken } from "../middleware/authToken.js";
+import admin from "../middleware/authAdmin.js";
+
 const router = Router();
 
-router.get("/", verifyToken, getAllMessages);
+router.get("/", verifyToken, admin, getAllMessages);
 router.post("/", verifyToken, addMessage);
-router.get("/:senderId", verifyToken, getUserMessages);
+router.get("/:senderId", verifyToken, admin, getUserMessages);
 
 export default router;
