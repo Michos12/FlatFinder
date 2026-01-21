@@ -1,24 +1,33 @@
-import dotenv from 'dotenv';
 import express from 'express';
+import cors from 'cors';
+import dotenv from 'dotenv';
 import mongoose from 'mongoose';
-import cors from "cors";
-
+import { userRouter } from './routes/userRoute.js';
 import flatRoutes from "./routes/flat.route.js";
 import messageRoutes from "./routes/message.route.js";
 
 dotenv.config();
-const app = express();
 
+const app = express();
 app.use(cors());
 app.use(express.json());
 
+// ---- MongoDB Atlas Connection ----
 mongoose
-  .connect(process.env.MONGODB_URI)
-  .then(() => console.log('MongoDB connected'))
-  .catch((err) => console.error(err));
+  .connect(process.env.MONGO_URL)
+  .then(() => console.log("MongoDB Connected"))
+  .catch((err) => console.error("Error connecting to MongoDB:", err));
 
-app.use("/api/flats", flatRoutes);
-app.use("/api/flats/:id/messages", messageRoutes);
+// endpoint for User API
+app.use('/users', userRouter);
 
-const PORT = process.env.PORT || 3000;
-app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
+// Endpoint for Flat
+app.use("/flats", flatRoutes);
+
+// Endpoint for Message 
+app.use("/flats/:id/messages", messageRoutes);
+
+// Start the server
+app.listen(process.env.PORT, () => {
+    console.log(`Server is running on port ${process.env.PORT}`);
+});
