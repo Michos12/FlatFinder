@@ -7,8 +7,30 @@ BackEnd of the previous project FlatFinder's Front-end
 - MongoDB/ Mongoose
 - JWT Authentication
 
+## API Responsibilities
+- **User API & Auth API** :  Created by Michael  
+  - User registration, login, and authentication
+  - Admin-only actions like fetching all users and deleting a user
+
+- **Flat API & Messages API** : Created by Asuka  
+  - Flat creation, update, deletion, and retrieval
+  - Message creation and retrieval per flat
+  - Flat owners can access related to their own flats
+
+  ## Project Structure
+```
+FlatFinder-BackEnd/
+├── controllers/    # Handle route
+├── middleware/     # Auth handling
+├── models/         # Data models
+├── routes/         # API routes
+├── services/       # DB Connection
+├── .env
+└── index.js        # Start server
+```
+
 ## Features
-- Message APIs require authentication.
+- Only flat owners can update or delete their own Flat data.
 - Flat owners can access all messages related to their flat.
 - Users can only access their own messages.
 
@@ -26,8 +48,8 @@ npm install
 
 3. Create a .env file
 ```bash 
-MONGODB_URI=your_mongodb_connection_string
-JWT_SECRET=your_jwt_secret
+MONGO_URL=your_mongodb_connection_string
+SECRET_KEY=your_jwt_secret
 PORT=3000
 ```
 
