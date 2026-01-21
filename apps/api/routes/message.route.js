@@ -5,7 +5,8 @@ import {
   getUserMessages
 } from "../controllers/message.controller.js";
 import { verifyToken } from "../middleware/authVerifyToken.js";
-const router = Router();
+
+const router = Router({ mergeParams: true });
 
 router.get("/", verifyToken, getAllMessages);
 router.post("/", verifyToken, addMessage);

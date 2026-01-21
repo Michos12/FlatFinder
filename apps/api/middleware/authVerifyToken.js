@@ -14,7 +14,7 @@ export const verifyToken = (req, res, next) => {
             return res.status(401).json({ message: "Invalid token" });
         }
 
-        const secret = process.env["JWT_SECRET"];
+        const secret = process.env.SECRET_KEY || "secret";
 
         if (!secret) {
             return res.status(401).json({ message: "Invalid user" });
@@ -22,7 +22,7 @@ export const verifyToken = (req, res, next) => {
 
         const decoded = jwt.verify(token, secret);
 
-        req.user = { id: decoded.id, email: decoded.email, isAdmin: decoded.isAdmin };
+        req.user = { id: decoded._id, email: decoded.email, isAdmin: decoded.isAdmin };
 
         return next();
     } catch (error) {
