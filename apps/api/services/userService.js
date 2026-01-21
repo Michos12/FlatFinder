@@ -53,6 +53,7 @@ async function registerService(userData){
             firstName: userData.firstName,
             lastName: userData.lastName,
             birthDate: userData.birthDate,
+            role: userData.role || "guest"
         });
         await newUser.save();
         const token = newUser.generateAuthToken();

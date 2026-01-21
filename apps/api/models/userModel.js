@@ -27,9 +27,10 @@ const userSchema = new mongoose.Schema(
         required: true,
         type: Date,
     },
-    isAdmin: {
-        type: Boolean,
-        default: false,
+    role: {
+        type: String, 
+        enum: ['guest', 'admin'],
+        default: "guest",
     },
     favouriteFlatsList: {
         type: mongoose.Schema.Types.ObjectId,

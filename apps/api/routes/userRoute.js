@@ -6,7 +6,6 @@ import { getAllUsersController,
     loginController, 
     registerController 
 } from "../controllers/userController.js";
-import admin from "../middleware/authAdmin.js";
 import { verifyToken } from "../middleware/authToken.js";
 
 const userRouter = express.Router();
@@ -16,11 +15,11 @@ userRouter.post("/login", loginController);
 userRouter.post("/register", registerController);
 
 // Protected routes
-userRouter.get("/:id", verifyToken, getUserByIdController);
-userRouter.patch("/:id", verifyToken, updateUserController);
+userRouter.get("/:id", getUserByIdController);
+userRouter.patch("/:id", verifyToken("owner"), updateUserController);
 
 // Admin-only routes
-userRouter.get("/", [verifyToken, admin], getAllUsersController);
-userRouter.delete("/:id", [verifyToken, admin], deleteUserController);
+userRouter.get("/", verifyToken, getAllUsersController);
+userRouter.delete("/:id", verifyToken("owner"), deleteUserController);
 
 export { userRouter }
