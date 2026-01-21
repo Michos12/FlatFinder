@@ -10,7 +10,7 @@ import {
 
 export async function addMessage(req, res) {
     try {
-        const senderId = req.user.id;
+        const senderId = req.user._id;
         const flatId = req.params.id;
         const messageData = { ...req.body, senderId: senderId, flatId: flatId };
         const newMessage = await addMessageService(messageData);
@@ -36,7 +36,7 @@ export async function getAllMessages(req, res) {
             return res.status(404).json({ message: 'Flat is not found' });
         }
 
-        if (!flat.ownerId.equals(req.user.id)) {
+        if (!flat.ownerId.equals(req.user._id)) {
             return res.status(403).json({ message: "Unauthorized user!" });
         }
 
@@ -64,7 +64,7 @@ export async function getUserMessages(req, res) {
         const flatId = req.params.id;
         const senderId = req.params.senderId;
 
-        if (senderId !== req.user.id) {
+        if (senderId !== req.user._id) {
             return res.status(403).json({ message: "Unauthorized user!" });
         }
 

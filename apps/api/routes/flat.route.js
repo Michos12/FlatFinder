@@ -6,7 +6,7 @@ import {
   updateFlat,
   deleteFlat
 } from "../controllers/flat.controller.js";
-import { verifyToken } from "../middleware/authVerifyToken.js";
+import { verifyToken } from "../middleware/authToken.js";
 const router = Router();
 
 router.get("/", verifyToken, getAllFlats);

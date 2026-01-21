@@ -4,7 +4,7 @@ import {
   getAllMessages,
   getUserMessages
 } from "../controllers/message.controller.js";
-import { verifyToken } from "../middleware/authVerifyToken.js";
+import { verifyToken } from "../middleware/authToken.js";
 
 const router = Router({ mergeParams: true });
 
