@@ -3,7 +3,6 @@ import { getAllUsersService, getUserByIdService, updateUserService, deleteUserSe
 async function getAllUsersController(req, res) {
     try{
         const users = await getAllUsersService();
-        console.log(req);
         res.status(200).json(users);
     } catch (error){
         res.status(500).json({ error: `Server error: ${error.message}` });

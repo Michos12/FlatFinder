@@ -29,7 +29,7 @@ const userSchema = new mongoose.Schema(
     },
     role: {
         type: String, 
-        enum: ['guest', 'admin'],
+        enum: ['guest', 'admin', 'owner'],
         default: "guest",
     },
     favouriteFlatsList: {
@@ -42,7 +42,7 @@ const userSchema = new mongoose.Schema(
 // METHOD TO GENERATE TOKEN
 userSchema.method('generateAuthToken', function(){
     const token = jwt.sign(
-        { _id: this._id, isAdmin: this.isAdmin }, 
+        { _id: this._id, role: this.role }, 
         process.env.SECRET_KEY, 
         { expiresIn: '2h' } 
     );

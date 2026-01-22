@@ -11,14 +11,7 @@ function verifyToken(requiredRole = 'admin') {
         try {
             const decoded = jwt.verify(token, process.env.SECRET_KEY);
             req.user = decoded;
-            if(req.user.role == 'admin'){
-                next()
-            } else if(requiredRole == "owner"){
-                if (req.params.id == req.user._id) next()
-                else return res.status(403).json({ error: "Access denied. You can only modify your own account." }); 
-            } else {
-                return res.status(403).json({ error: "Access denied. Admins only." });
-            }
+            next();
         } catch (err) {
             res.status(400).json({ error: err.message });
         }
