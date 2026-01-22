@@ -5,24 +5,22 @@ function admin(permissionNeeded = "admin", req = req, res = res) {
         const decoded = jwt.verify(token, process.env.SECRET_KEY);
         req.user = decoded;
             if(req.user.role == "admin") return true
-            switch(permissionNeeded){
-                case "owner":
-                    if(req.user.role == "owner" || req.user.role == "admin"){
-                        return true
-                        break
-                    } else {
-                        return false
-                        break
-                    }
-                case "admin":
-                    if(req.user.role == "admin"){
-                        return true
-                        break
-                    } else {
-                        return false
-                        break
-                    }
-            }
+            (function (permissionNeeded, req){
+                switch(permissionNeeded){
+                    case "owner":
+                        if(req.user.role == "owner" || req.user.role == "admin"){
+                            return true
+                        } else {
+                            return false
+                        }
+                    case "admin":
+                        if(req.user.role == "admin"){
+                            return true
+                        } else {
+                            return false
+                        }
+                }
+            })(permissionNeeded, req)
     } catch (err) {
         console.error({error: err.message});
         return false
