@@ -1,6 +1,10 @@
 import { getAllUsersService, getUserByIdService, updateUserService, deleteUserService, loginService, registerService } from "../services/userService.js";
+import admin from "../middleware/authAdmin.js";
 
 async function getAllUsersController(req, res) {
+    if(admin() == false){
+        return res.status(404).json({ message: "Dont have the permissions to do this" });
+    }
     try{
         const users = await getAllUsersService();
         res.status(200).json(users);
@@ -22,6 +26,9 @@ async function getUserByIdController(req, res){
 }
 
 async function updateUserController(req, res){
+    if(admin() == false || admin("owner") == false){
+        return res.status(404).json({ message: "Dont have the permissions to do this" })
+    }
     try{
         const updatedUser = await updateUserService(req.params.id, req.body);
         res.status(200).json(updatedUser);
@@ -34,6 +41,9 @@ async function updateUserController(req, res){
 }
 
 async function deleteUserController(req, res){
+    if(admin() == false || admin("owner") == false){
+        return res.status(404).json({ message: "Dont have the permissions to do this" })
+    }
     try{
         await deleteUserService(req.params.id);
         res.status(200).json({ 
