@@ -3,7 +3,7 @@ import dotenv from "dotenv";
 
 dotenv.config();
 
-function verifyToken(requiredRole = 'admin') {
+function verifyToken() {
     return (req, res, next) => {
         console.log(req)
         const token = req.header('x-auth-token');
