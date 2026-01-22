@@ -68,7 +68,7 @@ async function loginController(req, res){
             user: {
                 id: user._id,
                 email: user.email,
-                isAdmin: user.isAdmin
+                role: user.role
             }
         });
     } catch (error){

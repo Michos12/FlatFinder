@@ -24,7 +24,7 @@ function admin(permissionNeeded = "admin", req = req, res = res) {
                     }
             }
     } catch (err) {
-        console.error('error: ' + err });
+        console.error({error: err.message});
         return false
     }
 };

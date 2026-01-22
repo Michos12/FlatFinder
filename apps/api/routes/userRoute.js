@@ -17,9 +17,9 @@ userRouter.post("/register", registerController);
 
 // Protected routes
 userRouter.get("/:id", getUserByIdController);
-userRouter.patch("/:id", verifyToken, admin, updateUserController);
+userRouter.patch("/:id", verifyToken, updateUserController);
 
 // Admin-only routes
-userRouter.get("/", verifyToken, admin, getAllUsersController);
-userRouter.delete("/:id", verifyToken, admin, deleteUserController);
+userRouter.get("/", verifyToken, getAllUsersController);
+userRouter.delete("/:id", verifyToken, deleteUserController);
 export { userRouter }
