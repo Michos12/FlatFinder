@@ -6,7 +6,7 @@ import {
 } from "../controllers/message.controller.js";
 import { verifyToken } from "../middleware/authToken.js";
 
-const router = Router();
+const router = Router({ mergeParams: true });
 
 router.get("/", verifyToken, getAllMessages);
 router.post("/", verifyToken, addMessage);

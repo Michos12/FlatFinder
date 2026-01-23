@@ -1,16 +1,26 @@
-import { 
+import {
     getAllMessagesService,
     getUserMessagesService,
     addMessageService
 } from "../services/message.service.js";
 
-import { 
+import {
     getFlatByIdService
 } from "../services/flat.service.js";
+
 export async function addMessage(req, res) {
     try {
         const senderId = req.user._id;
         const flatId = req.params.id;
+        const flat = await getFlatByIdService(flatId)
+
+        if (flat.ownerId.equals(req.user._id)) {
+            return res.status(403).json({
+                success: false,
+                message: "You are an owner of this Flat!"
+            });
+        }
+
         const messageData = { ...req.body, senderId: senderId, flatId: flatId };
         const newMessage = await addMessageService(messageData);
         return res.status(201).json({
@@ -20,7 +30,7 @@ export async function addMessage(req, res) {
         });
     } catch (error) {
         return res.status(500).json({
-            success: false, 
+            success: false,
             message: error.message
         })
     }
@@ -31,7 +41,7 @@ export async function getAllMessages(req, res) {
         const flatId = req.params.id;
         const flat = await getFlatByIdService(flatId);
 
-        if(!flat){
+        if (!flat) {
             return res.status(404).json({ message: 'Flat is not found' });
         }
 
@@ -41,7 +51,7 @@ export async function getAllMessages(req, res) {
 
         const messages = await getAllMessagesService(flatId);
 
-        if(!messages){
+        if (!messages) {
             return res.status(404).json({ message: 'Message not found' });
         }
 
@@ -52,7 +62,7 @@ export async function getAllMessages(req, res) {
         });
     } catch (error) {
         return res.status(500).json({
-            success: false, 
+            success: false,
             message: error.message
         })
     }
@@ -69,7 +79,7 @@ export async function getUserMessages(req, res) {
 
         const messages = await getUserMessagesService(flatId, senderId);
 
-        if(!messages){
+        if (!messages) {
             return res.status(404).json({ message: 'Message not found' });
         }
 
@@ -80,7 +90,7 @@ export async function getUserMessages(req, res) {
         });
     } catch (error) {
         return res.status(500).json({
-            success: false, 
+            success: false,
             message: error.message
         })
     }

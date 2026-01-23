@@ -2,7 +2,7 @@ import { getAllUsersService, getUserByIdService, updateUserService, deleteUserSe
 import admin from "../middleware/authAdmin.js";
 
 async function getAllUsersController(req, res) {
-    if(admin() == false){
+    if(admin(req) == false){
         return res.status(404).json({ message: "Dont have the permissions to do this" });
     }
     try{
@@ -26,7 +26,7 @@ async function getUserByIdController(req, res){
 }
 
 async function updateUserController(req, res){
-    if(admin() == false || admin("owner") == false){
+    if(admin(req) == false || admin(req,"owner") == false){
         return res.status(404).json({ message: "Dont have the permissions to do this" })
     }
     try{
@@ -41,7 +41,7 @@ async function updateUserController(req, res){
 }
 
 async function deleteUserController(req, res){
-    if(admin() == false || admin("owner") == false){
+    if(admin(req) == false || admin(req, "owner") == false){
         return res.status(404).json({ message: "Dont have the permissions to do this" })
     }
     try{
