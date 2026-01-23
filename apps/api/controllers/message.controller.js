@@ -2,12 +2,11 @@ import {
     getAllMessagesService,
     getUserMessagesService,
     addMessageService
-} from "../asuka/services/message.service.js";
+} from "../services/message.service.js";
 
 import { 
     getFlatByIdService
-} from "../asuka/services/flat.service.js";
-
+} from "../services/flat.service.js";
 export async function addMessage(req, res) {
     try {
         const senderId = req.user._id;
