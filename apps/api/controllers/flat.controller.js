@@ -4,11 +4,11 @@ import {
     deleteFlatService,
     addFlatService,
     getFlatByIdService
-} from "../services/flat.service.js";
+} from "../asuka/services/flat.service.js";
 
 export async function addFlat(req, res) {
     try {
-        const flatData = { ...req.body, ownerId: req.user.id };
+        const flatData = { ...req.body, ownerId: req.user._id };
         const newFlat = await addFlatService(flatData);
         return res.status(201).json({
             success: true,
@@ -75,7 +75,7 @@ export async function updateFlat(req, res) {
             return res.status(404).json({ message: 'Flat is not found' });
         }
 
-        if (!flat.ownerId.equals(req.user.id)) {
+        if (!flat.ownerId.equals(req.user._id)) {
             return res.status(403).json({ message: "Unauthorized user!" });
         }
 
@@ -103,7 +103,7 @@ export async function deleteFlat(req, res) {
             return res.status(404).json({ message: 'Flat is not found' });
         }
 
-        if (!flat.ownerId.equals(req.user.id)) {
+        if (!flat.ownerId.equals(req.user._id)) {
             return res.status(403).json({ message: "Unauthorized user!" });
         }
 

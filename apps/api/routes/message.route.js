@@ -5,12 +5,11 @@ import {
   getUserMessages
 } from "../controllers/message.controller.js";
 import { verifyToken } from "../middleware/authToken.js";
-import admin from "../middleware/authAdmin.js";
 
 const router = Router();
 
-router.get("/", verifyToken, admin, getAllMessages);
+router.get("/", verifyToken, getAllMessages);
 router.post("/", verifyToken, addMessage);
-router.get("/:senderId", verifyToken, admin, getUserMessages);
+router.get("/:senderId", verifyToken, getUserMessages);
 
 export default router;
