@@ -1,7 +1,9 @@
-server.js
-/node_modules/
-/adminer/
+node_modules/
+dist/
 .env
-/.snapshots/
-/asuka/
-/postman/
+.env.*
+!.env.example
+server.js
+/adminer/
+*.log
+.DS_Store
