@@ -1,0 +1,22 @@
+{
+  "name": "flatfinder",
+  "private": true,
+  "version": "1.0.0",
+  "description": "Marketplace de alquiler de viviendas: Angular + Express + MongoDB",
+  "license": "MIT",
+  "workspaces": [
+    "packages/*",
+    "apps/*"
+  ],
+  "scripts": {
+    "build": "npm run build -w @flatfinder/types && npm run build -w @flatfinder/api && npm run build -w @flatfinder/web",
+    "build:types": "npm run build -w @flatfinder/types",
+    "dev:web": "npm start -w @flatfinder/web",
+    "dev:api": "npm run dev -w @flatfinder/api",
+    "test": "npm test -w @flatfinder/api",
+    "lint": "npm run lint --workspaces --if-present"
+  },
+  "engines": {
+    "node": ">=20"
+  }
+}
