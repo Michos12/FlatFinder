@@ -15,12 +15,33 @@ conservando el historial y la autoria de ambos.
 
 ```
 apps/
-  web/   Angular 20 (SPA + SSR)
-  api/   Express 5 + MongoDB/Mongoose + JWT
+  web/        Angular 20 (SPA)
+  api/        Express 5 + MongoDB/Mongoose + JWT, en TypeScript
+packages/
+  types/      contrato de datos compartido por las dos apps
+```
+
+## Puesta en marcha
+
+```bash
+npm install
+cp apps/api/.env.example apps/api/.env   # rellena MONGO_URL y SECRET_KEY
+npm run build:types
+npm run dev:api    # http://localhost:3000
+npm run dev:web    # http://localhost:4200
 ```
 
 ## Estado
 
-Reestructuracion en curso. El frontend y el backend todavia no estan
-conectados entre si: `apps/web` lee de Firestore y `apps/api` sirve una
-API REST sobre MongoDB. Unificarlos sobre `apps/api` es el siguiente paso.
+Reestructuracion en curso.
+
+- [x] Historiales unificados en un monorepo
+- [x] Build de produccion del frontend arreglado (se retiro el SSR)
+- [x] API migrada a TypeScript, por modulos, con la autorizacion corregida
+- [ ] Frontend conectado al API: hoy `apps/web` sigue leyendo de Firestore
+- [ ] Guards de ruta e interceptor de token en el frontend
+- [ ] Tests, CI y despliegue
+
+## Creditos
+
+Proyecto original de Michael Veliz, Asuka Fukuchi y Rodrigo Ticona.
