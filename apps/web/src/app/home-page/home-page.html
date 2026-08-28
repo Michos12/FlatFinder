@@ -1,0 +1,45 @@
+<div class="box">
+  <app-header></app-header>
+  <div class='body'>
+    <div class="table">
+      <h1>My flats</h1>
+      <div class="filter">
+        <button>City</button>
+        <button>Price</button>
+        <button>Area Size</button>
+      </div>
+      <div class="lands-container">
+        @for (land of lands; track land; let index = $index) {
+          <div class="land-card">
+            <div class="land-head">
+              <img [src]="land.imageUrl" alt="preview of the land">
+            </div>
+            <div class="land-body">
+              <h1 class="tittle">Room in {{ land.city }}</h1>
+            </div>
+            <div class="land-foot">
+              <p>{{ land.description }}'. It has a area size of
+                 {{ land.areaSize }} and were made on {{ land.year }}</p>
+              <p><b>Price:</b> {{ land.price}}</p>
+              <p><b>Address:</b>{{ land.streetName }} {{ land.streetNumber }}.
+                 {{ land.city }}</p>
+              <p>A/C: {{ land.ac }} </p>
+              <p>Available from: {{ land.date }}</p>
+            </div>
+            <div class="land-contact">
+              <h3>Contact the owner:</h3>
+              <div class="owner-info">
+                <p>Name: Jhon Doe</p>
+                <p>Phone: 123-456-7890</p>
+              </div>
+            </div>
+            <div class="land-actions">
+              <button type="button" (click)="addFav(land)">Add to Favourites</button>
+              <button type="button" (click)="viewDetails(index)">See details</button>
+            </div>
+          </div>
+        }
+      </div>
+    </div>
+  </div>
+</div>

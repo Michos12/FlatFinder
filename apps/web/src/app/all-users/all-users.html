@@ -1,0 +1,25 @@
+<section class="all-users">
+  <h2>Todos los Usuarios</h2>
+
+  <table >
+    <thead>
+      <tr>
+        <th>Nombre</th>
+        <th>Apellido</th>
+        <th>Email</th>
+        <th>Fecha de nacimiento</th>
+        <th>Rol</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let user of users">
+        <td>{{ user.firstname }}</td>
+        <td>{{ user.lastname }}</td>
+        <td>{{ user.email }}</td>
+        <td>{{ user.birthdate }}</td>
+        <td>{{ user.role }}</td>
+      </tr>
+    </tbody>
+  </table>
+
+</section>
