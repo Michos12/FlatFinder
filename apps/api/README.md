@@ -1,59 +1,72 @@
-# FlatFinder-BackEnd
-BackEnd of the previous project FlatFinder's Front-end
+# @flatfinder/api
 
-## Tech Stack
-- Node.js
-- Express
-- MongoDB/ Mongoose
-- JWT Authentication
+API REST de FlatFinder. Express 5 + MongoDB (Mongoose) + JWT, en TypeScript.
 
-## API Responsibilities
-- **User API & Auth API** :  Created by Michael  
-  - User registration, login, and authentication
-  - Admin-only actions like fetching all users and deleting a user
+## Puesta en marcha
 
-- **Flat API & Messages API** : Created by Asuka  
-  - Flat creation, update, deletion, and retrieval
-  - Message creation and retrieval per flat
-  - Flat owners can access related to their own flats
-
-  ## Project Structure
-```
-FlatFinder-BackEnd/
-├── controllers/    # Handle route
-├── middleware/     # Auth handling
-├── models/         # Data models
-├── routes/         # API routes
-├── services/       # DB Connection
-├── .env
-└── index.js        # Start server
-```
-
-## Features
-- Only flat owners can update or delete their own Flat data.
-- Flat owners can access all messages related to their flat.
-- Users can only access their own messages.
-
-## How to run
-1. Clone this repository
 ```bash
-git clone https://github.com/Michos12/FlatFinder-BackEnd
-cd FlatFinder-BackEnd
+cp .env.example .env      # y rellena MONGO_URL y SECRET_KEY
+npm install               # desde la raiz del monorepo
+npm run dev -w @flatfinder/api
 ```
 
-2. Install dependencies
-```bash
-npm install
+## Estructura
+
+```
+src/
+├── config/     env (validada con Zod) y conexion a Mongo
+├── lib/        ApiError, asyncHandler, helpers de request
+├── middleware/ auth, validate, errorHandler
+├── modules/    users · flats · messages
+│   └── <modulo>/  model · schema · service · controller · routes
+├── app.ts      la app de Express, sin abrir puerto (testeable)
+└── server.ts   arranque, conexion a BD y cierre ordenado
 ```
 
-3. Create a .env file
-```bash 
-MONGO_URL=your_mongodb_connection_string
-SECRET_KEY=your_jwt_secret
-PORT=3000
-```
+`app.ts` y `server.ts` estan separados a proposito: permite montar la
+aplicacion en tests de integracion sin ocupar un puerto.
 
-4. Start the server
-```bash
-npm start
-```
+## Endpoints
+
+Todas las respuestas siguen el mismo envoltorio: `{ success, data }` en
+exito y `{ success, error: { code, message, details? } }` en error.
+
+| Metodo | Ruta | Acceso |
+| --- | --- | --- |
+| `POST` | `/api/users/register` | publico |
+| `POST` | `/api/users/login` | publico |
+| `GET` | `/api/users/me` | autenticado |
+| `GET` | `/api/users` | admin |
+| `GET` | `/api/users/:id` | el propio usuario o admin |
+| `PATCH` | `/api/users/:id` | el propio usuario o admin |
+| `PATCH` | `/api/users/:id/role` | admin |
+| `DELETE` | `/api/users/:id` | el propio usuario o admin |
+| `GET` | `/api/flats` | autenticado (filtros y paginacion) |
+| `GET` | `/api/flats/mine` | autenticado |
+| `POST` | `/api/flats` | autenticado |
+| `GET` | `/api/flats/:id` | autenticado |
+| `PATCH` | `/api/flats/:id` | propietario o admin |
+| `DELETE` | `/api/flats/:id` | propietario o admin |
+| `GET` | `/api/flats/:id/messages` | el propietario ve todos; el resto, los suyos |
+| `POST` | `/api/flats/:id/messages` | autenticado, salvo el propietario |
+
+La autenticacion viaja en `Authorization: Bearer <token>`.
+
+## Seguridad
+
+- Contrasenas con bcrypt (12 rondas), hasheadas en un unico hook `pre('save')`
+  y excluidas por defecto de toda consulta (`select: false`).
+- El rol nunca se acepta desde el cuerpo de la peticion: el registro siempre
+  crea un `guest` y solo un admin puede cambiar roles.
+- Validacion de entrada con Zod en cuerpo y query.
+- `helmet`, CORS restringido a los origenes de `CORS_ORIGIN`, y limitacion de
+  peticiones (mas estricta en login y registro).
+- Los errores de autorizacion devuelven 403, y el login da un mensaje generico
+  para no permitir enumerar cuentas.
+
+## Historial
+
+Este directorio proviene del repositorio `Michos12/FlatFinder-BackEnd`, con
+las ramas `MichaelBranch` y `asuka` unificadas. El API original la
+construimos Michael Veliz (usuarios y autenticacion) y Asuka Fukuchi (pisos
+y mensajes).
