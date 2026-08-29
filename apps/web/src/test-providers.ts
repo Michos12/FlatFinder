@@ -18,10 +18,15 @@ import { errorInterceptor } from './app/core/interceptors/error.interceptor';
  * network by accident, and carries the same interceptors as the real app —
  * without them a spec would silently exercise a pipeline the browser never
  * runs.
+ *
+ * The router needs a /login route because AuthService.logout() navigates
+ * there, and errorInterceptor calls it on any 401. With an empty route table
+ * that navigation rejects with NG04002, which surfaces as an unhandled
+ * rejection: every test still passes, but the run exits non-zero and fails CI.
  */
 const providers: (Provider | EnvironmentProviders)[] = [
   provideZonelessChangeDetection(),
-  provideRouter([]),
+  provideRouter([{ path: 'login', children: [] }]),
   provideHttpClient(withInterceptors([authInterceptor, errorInterceptor])),
   provideHttpClientTesting(),
 ];
