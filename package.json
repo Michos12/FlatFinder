@@ -13,9 +13,9 @@
     "build:types": "npm run build -w @flatfinder/types",
     "dev:web": "npm start -w @flatfinder/web",
     "dev:api": "npm run dev -w @flatfinder/api",
-    "test": "npm test -w @flatfinder/api",
+    "test": "npm run build:types && npm test -w @flatfinder/api",
     "lint": "npm run lint --workspaces --if-present",
-    "typecheck": "npm run typecheck -w @flatfinder/api"
+    "typecheck": "npm run build:types && npm run typecheck -w @flatfinder/api"
   },
   "engines": {
     "node": ">=20"
