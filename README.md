@@ -3,6 +3,12 @@
 A marketplace for rental housing: list your flats, browse what other owners
 have published, and message them about it.
 
+**[Live demo](https://flat-finder-api-jlsg-seven.vercel.app)** &middot;
+[API health](https://flatfinder-api.onrender.com/api/health)
+
+> The API runs on Render's free tier, so it sleeps after a spell of inactivity.
+> The first request after that waits around a minute for the cold start.
+
 This monorepo unifies the project's two original repositories, preserving the
 history and authorship of both.
 
@@ -70,9 +76,16 @@ for you; `MONGO_URL` is filled in by hand with the Atlas connection string.
 **Frontend (Vercel).** `vercel.json` serves the SPA and rewrites `/api/*` to
 the API. Keeping a single origin means production needs no CORS at all.
 
-> Before the first deploy, replace the placeholder host in `vercel.json` with
-> the real URL of the API service, keeping the `/api/:path*` suffix so the
-> path survives the rewrite.
+`vercel.json` declares `"framework": null` — Vercel's "Other" preset. Without
+it Vercel treats the repository as a Node application and looks for a server
+entrypoint in the output directory, which only ever holds a static SPA. The
+Angular preset is not used either: it expects `angular.json` at the root
+directory, and here that file lives in `apps/web`.
+
+Both the install and the build name their workspaces explicitly. That keeps
+npm from resolving a script against the wrong package, and keeps the API's
+test dependencies — `mongodb-memory-server` downloads a mongod binary — out of
+a frontend build.
 
 ## Status
 
@@ -85,7 +98,7 @@ the API. Keeping a single origin means production needs no CORS at all.
 - [x] CI on GitHub Actions and deployment configuration
 - [x] Interface design pass
 - [x] Frontend tests (63 cases, Vitest on jsdom)
-- [ ] Live deployment
+- [x] Live deployment
 
 ## Credits
 
