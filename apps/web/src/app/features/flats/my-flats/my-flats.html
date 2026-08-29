@@ -1,0 +1,25 @@
+<section class="page">
+  <div class="page__head">
+    <h1 class="page__title">Mis pisos</h1>
+    <a class="btn btn--primary" routerLink="/flats/new">Publicar piso</a>
+  </div>
+
+  @if (errorMessage()) {
+    <p class="alert alert--error">{{ errorMessage() }}</p>
+  }
+
+  @if (loading()) {
+    <p class="empty-state">Cargando tus pisos...</p>
+  } @else if (flats().length === 0) {
+    <p class="empty-state">Todavia no has publicado ningun piso.</p>
+  } @else {
+    <div class="grid">
+      @for (flat of flats(); track flat.id) {
+        <app-flat-card [flat]="flat">
+          <a class="btn" [routerLink]="['/flats', flat.id]">Ver detalle</a>
+          <button type="button" class="btn btn--danger" (click)="remove(flat)">Eliminar</button>
+        </app-flat-card>
+      }
+    </div>
+  }
+</section>

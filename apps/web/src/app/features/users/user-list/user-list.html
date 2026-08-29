@@ -1,0 +1,58 @@
+<section class="page">
+  <h1 class="page__title">Usuarios</h1>
+
+  @if (errorMessage()) {
+    <p class="alert alert--error">{{ errorMessage() }}</p>
+  }
+
+  @if (loading()) {
+    <p class="empty-state">Cargando usuarios...</p>
+  } @else if (users().length === 0) {
+    <p class="empty-state">No hay usuarios registrados.</p>
+  } @else {
+    <div class="table-wrapper">
+      <table class="table">
+        <thead>
+          <tr>
+            <th>Nombre</th>
+            <th>Email</th>
+            <th>Rol</th>
+            <th>Alta</th>
+            <th><span class="visually-hidden">Acciones</span></th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (user of users(); track user.id) {
+            <tr>
+              <td>{{ user.firstName }} {{ user.lastName }}</td>
+              <td>{{ user.email }}</td>
+              <td>
+                <select
+                  [value]="user.role"
+                  [disabled]="isSelf(user)"
+                  (change)="changeRole(user, $event)"
+                  [attr.aria-label]="'Rol de ' + user.email"
+                >
+                  @for (role of roles; track role) {
+                    <option [value]="role">{{ role }}</option>
+                  }
+                </select>
+              </td>
+              <td>{{ user.createdAt | date: 'shortDate' }}</td>
+              <td>
+                <button
+                  type="button"
+                  class="btn btn--danger"
+                  [disabled]="isSelf(user)"
+                  (click)="remove(user)"
+                >
+                  Eliminar
+                </button>
+              </td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+  }
+</section>

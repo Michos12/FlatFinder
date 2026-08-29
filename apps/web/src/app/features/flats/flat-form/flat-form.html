@@ -1,0 +1,94 @@
+<section class="page">
+  <h1 class="page__title">Publicar un piso</h1>
+
+  <form class="flat-form" [formGroup]="form" (ngSubmit)="createFlat()">
+    @if (errorMessage()) {
+      <p class="alert alert--error">{{ errorMessage() }}</p>
+    }
+
+    <div class="flat-form__grid">
+      <div class="field">
+        <label for="city">Ciudad</label>
+        <input id="city" type="text" formControlName="city" />
+        @if (form.controls.city.touched && form.controls.city.invalid) {
+          <span class="field__error">La ciudad es obligatoria</span>
+        }
+      </div>
+
+      <div class="field">
+        <label for="streetName">Calle</label>
+        <input id="streetName" type="text" formControlName="streetName" />
+        @if (form.controls.streetName.touched && form.controls.streetName.invalid) {
+          <span class="field__error">La calle es obligatoria</span>
+        }
+      </div>
+
+      <div class="field">
+        <label for="streetNumber">Numero</label>
+        <input id="streetNumber" type="number" min="0" formControlName="streetNumber" />
+        @if (form.controls.streetNumber.touched && form.controls.streetNumber.invalid) {
+          <span class="field__error">Introduce un numero valido</span>
+        }
+      </div>
+
+      <div class="field">
+        <label for="areaSize">Superficie (m&sup2;)</label>
+        <input id="areaSize" type="number" min="1" formControlName="areaSize" />
+        @if (form.controls.areaSize.touched && form.controls.areaSize.invalid) {
+          <span class="field__error">La superficie debe ser mayor que cero</span>
+        }
+      </div>
+
+      <div class="field">
+        <label for="yearBuilt">Ano de construccion</label>
+        <input
+          id="yearBuilt"
+          type="number"
+          min="1800"
+          [max]="currentYear"
+          formControlName="yearBuilt"
+        />
+        @if (form.controls.yearBuilt.touched && form.controls.yearBuilt.invalid) {
+          <span class="field__error">Entre 1800 y {{ currentYear }}</span>
+        }
+      </div>
+
+      <div class="field">
+        <label for="rentPrice">Precio mensual</label>
+        <input id="rentPrice" type="number" min="0" formControlName="rentPrice" />
+        @if (form.controls.rentPrice.touched && form.controls.rentPrice.invalid) {
+          <span class="field__error">Introduce un precio valido</span>
+        }
+      </div>
+
+      <div class="field">
+        <label for="dateAvailable">Disponible desde</label>
+        <input id="dateAvailable" type="date" formControlName="dateAvailable" />
+        @if (form.controls.dateAvailable.touched && form.controls.dateAvailable.invalid) {
+          <span class="field__error">La fecha es obligatoria</span>
+        }
+      </div>
+
+      <div class="field flat-form__checkbox">
+        <label for="hasAC">
+          <input id="hasAC" type="checkbox" formControlName="hasAC" />
+          Tiene aire acondicionado
+        </label>
+      </div>
+    </div>
+
+    <div class="field">
+      <label for="imageUrl">URL de la imagen (opcional)</label>
+      <input id="imageUrl" type="url" formControlName="imageUrl" placeholder="https://..." />
+    </div>
+
+    <div class="field">
+      <label for="description">Descripcion (opcional)</label>
+      <textarea id="description" rows="4" formControlName="description"></textarea>
+    </div>
+
+    <button type="submit" class="btn btn--primary" [disabled]="submitting()">
+      {{ submitting() ? 'Publicando...' : 'Publicar piso' }}
+    </button>
+  </form>
+</section>

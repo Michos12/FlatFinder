@@ -1,0 +1,30 @@
+.profile {
+  max-width: 32rem;
+  padding: 1.5rem;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+}
+
+.profile__data {
+  display: grid;
+  gap: 0.9rem;
+  margin: 0 0 1.25rem;
+}
+
+.profile__data dt {
+  font-size: 0.78rem;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+  color: var(--text-muted);
+}
+
+.profile__data dd {
+  margin: 0.15rem 0 0;
+  font-weight: 600;
+}
+
+.profile__actions {
+  display: flex;
+  gap: 0.5rem;
+}

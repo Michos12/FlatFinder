@@ -1,0 +1,76 @@
+<section class="page">
+  <h1 class="page__title">Mi perfil</h1>
+
+  @if (user(); as user) {
+    @if (successMessage()) {
+      <p class="alert">{{ successMessage() }}</p>
+    }
+    @if (errorMessage()) {
+      <p class="alert alert--error">{{ errorMessage() }}</p>
+    }
+
+    <div class="profile">
+      @if (editing()) {
+        <form [formGroup]="form" (ngSubmit)="save()">
+          <div class="field">
+            <label for="firstName">Nombre</label>
+            <input id="firstName" type="text" formControlName="firstName" />
+            @if (form.controls.firstName.touched && form.controls.firstName.invalid) {
+              <span class="field__error">Al menos 2 caracteres</span>
+            }
+          </div>
+
+          <div class="field">
+            <label for="lastName">Apellido</label>
+            <input id="lastName" type="text" formControlName="lastName" />
+            @if (form.controls.lastName.touched && form.controls.lastName.invalid) {
+              <span class="field__error">Al menos 2 caracteres</span>
+            }
+          </div>
+
+          <div class="field">
+            <label for="birthDate">Fecha de nacimiento</label>
+            <input id="birthDate" type="date" formControlName="birthDate" />
+            @if (form.controls.birthDate.touched && form.controls.birthDate.invalid) {
+              <span class="field__error">La fecha es obligatoria</span>
+            }
+          </div>
+
+          <div class="field">
+            <label for="password">Nueva contrasena</label>
+            <input
+              id="password"
+              type="password"
+              formControlName="password"
+              autocomplete="new-password"
+              placeholder="Dejala vacia para no cambiarla"
+            />
+            @if (form.controls.password.touched && form.controls.password.invalid) {
+              <span class="field__error">
+                Minimo 8 caracteres, con mayuscula, minuscula y numero
+              </span>
+            }
+          </div>
+
+          <div class="profile__actions">
+            <button type="submit" class="btn btn--primary" [disabled]="saving()">
+              {{ saving() ? 'Guardando...' : 'Guardar cambios' }}
+            </button>
+            <button type="button" class="btn" (click)="toggleEdit()">Cancelar</button>
+          </div>
+        </form>
+      } @else {
+        <dl class="profile__data">
+          <div><dt>Nombre</dt><dd>{{ user.firstName }} {{ user.lastName }}</dd></div>
+          <div><dt>Email</dt><dd>{{ user.email }}</dd></div>
+          <div><dt>Rol</dt><dd>{{ user.role }}</dd></div>
+        </dl>
+        <button type="button" class="btn btn--primary" (click)="toggleEdit()">
+          Editar perfil
+        </button>
+      }
+    </div>
+  } @else {
+    <p class="empty-state">Cargando perfil...</p>
+  }
+</section>

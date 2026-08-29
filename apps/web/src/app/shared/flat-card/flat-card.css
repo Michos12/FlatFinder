@@ -1,0 +1,96 @@
+.flat-card {
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  transition: box-shadow 0.2s ease, transform 0.2s ease;
+}
+
+.flat-card:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-lg);
+}
+
+.flat-card__image {
+  width: 100%;
+  height: 11rem;
+  object-fit: cover;
+  background: var(--surface-muted);
+}
+
+.flat-card__body {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  gap: 0.5rem;
+  padding: 1rem;
+}
+
+.flat-card__header {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 0.75rem;
+}
+
+.flat-card__title {
+  margin: 0;
+  font-size: 1.05rem;
+  font-weight: 600;
+}
+
+.flat-card__price {
+  margin: 0;
+  font-weight: 700;
+  color: var(--accent);
+  white-space: nowrap;
+}
+
+.flat-card__address {
+  margin: 0;
+  font-size: 0.875rem;
+  color: var(--text-muted);
+}
+
+.flat-card__description {
+  margin: 0;
+  font-size: 0.9rem;
+  /* Recorta a tres lineas para que todas las tarjetas midan lo mismo. */
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 3;
+  line-clamp: 3;
+  overflow: hidden;
+}
+
+.flat-card__facts {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem 0.5rem;
+  margin: auto 0 0;
+  padding: 0;
+  list-style: none;
+  font-size: 0.8rem;
+  color: var(--text-muted);
+}
+
+.flat-card__facts li {
+  padding: 0.15rem 0.5rem;
+  background: var(--surface-muted);
+  border-radius: 999px;
+}
+
+.flat-card__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  padding: 0.75rem 1rem;
+  border-top: 1px solid var(--border);
+}
+
+.flat-card__actions:empty {
+  display: none;
+}

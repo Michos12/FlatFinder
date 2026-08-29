@@ -1,0 +1,79 @@
+<section class="page">
+  @if (errorMessage()) {
+    <p class="alert alert--error">{{ errorMessage() }}</p>
+    <a class="btn" routerLink="/">Volver al listado</a>
+  } @else if (flat(); as flat) {
+    <a class="btn detail__back" routerLink="/">Volver al listado</a>
+
+    <article class="detail">
+      <img
+        class="detail__image"
+        [src]="flat.imageUrl || 'assets/houses/house.jpg'"
+        [alt]="'Piso en ' + flat.city"
+      />
+
+      <div class="detail__info">
+        <h1 class="page__title">Piso en {{ flat.city }}</h1>
+        <p class="detail__price">
+          {{ flat.rentPrice | currency: 'CAD' : 'symbol-narrow' }} al mes
+        </p>
+        <p class="detail__address">
+          {{ flat.streetName }} {{ flat.streetNumber }}, {{ flat.city }}
+        </p>
+
+        @if (flat.description) {
+          <p>{{ flat.description }}</p>
+        }
+
+        <dl class="detail__facts">
+          <div><dt>Superficie</dt><dd>{{ flat.areaSize }} m&sup2;</dd></div>
+          <div><dt>Ano de construccion</dt><dd>{{ flat.yearBuilt }}</dd></div>
+          <div><dt>Aire acondicionado</dt><dd>{{ flat.hasAC ? 'Si' : 'No' }}</dd></div>
+          <div>
+            <dt>Disponible desde</dt>
+            <dd>{{ flat.dateAvailable | date: 'longDate' }}</dd>
+          </div>
+        </dl>
+      </div>
+    </article>
+
+    <section class="messages">
+      <h2>{{ isOwner() ? 'Mensajes recibidos' : 'Tu conversacion con el propietario' }}</h2>
+
+      @if (messages().length === 0) {
+        <p class="empty-state">Todavia no hay mensajes.</p>
+      } @else {
+        <ul class="messages__list">
+          @for (message of messages(); track message.id) {
+            <li class="messages__item">
+              <p class="messages__content">{{ message.content }}</p>
+              <time class="messages__date">{{ message.createdAt | date: 'short' }}</time>
+            </li>
+          }
+        </ul>
+      }
+
+      @if (isOwner()) {
+        <p class="empty-state">Este piso es tuyo, por eso no puedes escribirte.</p>
+      } @else {
+        <form class="messages__form" [formGroup]="form" (ngSubmit)="send()">
+          @if (sendError()) {
+            <p class="alert alert--error">{{ sendError() }}</p>
+          }
+          <div class="field">
+            <label for="content">Escribe al propietario</label>
+            <textarea id="content" rows="3" formControlName="content"></textarea>
+            @if (form.controls.content.touched && form.controls.content.invalid) {
+              <span class="field__error">El mensaje no puede estar vacio</span>
+            }
+          </div>
+          <button type="submit" class="btn btn--primary" [disabled]="sending()">
+            {{ sending() ? 'Enviando...' : 'Enviar mensaje' }}
+          </button>
+        </form>
+      }
+    </section>
+  } @else {
+    <p class="empty-state">Cargando piso...</p>
+  }
+</section>

@@ -1,0 +1,27 @@
+@if (isAuthenticated()) {
+  <header class="header">
+    <div class="header__inner">
+      <a class="header__brand" routerLink="/">
+        <img src="assets/logo.png" alt="FlatFinder" />
+      </a>
+
+      <nav class="header__nav">
+        <a routerLink="/" routerLinkActive="is-active" [routerLinkActiveOptions]="{ exact: true }">
+          Pisos
+        </a>
+        <a routerLink="/my-flats" routerLinkActive="is-active">Mis pisos</a>
+        <a routerLink="/favorites" routerLinkActive="is-active">Favoritos</a>
+        @if (isAdmin()) {
+          <a routerLink="/users" routerLinkActive="is-active">Usuarios</a>
+        }
+      </nav>
+
+      <div class="header__user">
+        @if (user(); as currentUser) {
+          <a class="header__name" routerLink="/profile">{{ currentUser.firstName }}</a>
+        }
+        <button type="button" class="btn" (click)="logout()">Salir</button>
+      </div>
+    </div>
+  </header>
+}

@@ -1,0 +1,26 @@
+<section class="page">
+  <h1 class="page__title">Mis favoritos</h1>
+
+  @if (errorMessage()) {
+    <p class="alert alert--error">{{ errorMessage() }}</p>
+  }
+
+  @if (loading()) {
+    <p class="empty-state">Cargando favoritos...</p>
+  } @else if (flats().length === 0) {
+    <p class="empty-state">
+      Todavia no has guardado ningun piso. <a routerLink="/">Explora el listado</a>.
+    </p>
+  } @else {
+    <div class="grid">
+      @for (flat of flats(); track flat.id) {
+        <app-flat-card [flat]="flat">
+          <a class="btn" [routerLink]="['/flats', flat.id]">Ver detalle</a>
+          <button type="button" class="btn btn--danger" (click)="remove(flat)">
+            Quitar de favoritos
+          </button>
+        </app-flat-card>
+      }
+    </div>
+  }
+</section>
