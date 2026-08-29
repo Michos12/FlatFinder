@@ -11,8 +11,8 @@
   "scripts": {
     "build": "npm run build -w @flatfinder/types && npm run build -w @flatfinder/api && npm run build -w @flatfinder/web",
     "build:types": "npm run build -w @flatfinder/types",
-    "dev:web": "npm start -w @flatfinder/web",
-    "dev:api": "npm run dev -w @flatfinder/api",
+    "dev:web": "npm run build:types && npm start -w @flatfinder/web",
+    "dev:api": "npm run build:types && npm run dev -w @flatfinder/api",
     "test": "npm run build:types && npm test -w @flatfinder/api",
     "lint": "npm run lint --workspaces --if-present",
     "typecheck": "npm run build:types && npm run typecheck -w @flatfinder/api"

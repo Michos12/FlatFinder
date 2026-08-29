@@ -1,6 +1,9 @@
 <section class="page">
   <div class="page__head">
-    <h1 class="page__title">Mis pisos</h1>
+    <div>
+      <h1 class="page__title">Mis pisos</h1>
+      <p class="page__subtitle">Los anuncios que has publicado.</p>
+    </div>
     <a class="btn btn--primary" routerLink="/flats/new">Publicar piso</a>
   </div>
 
@@ -11,7 +14,7 @@
   @if (loading()) {
     <p class="empty-state">Cargando tus pisos...</p>
   } @else if (flats().length === 0) {
-    <p class="empty-state">Todavia no has publicado ningun piso.</p>
+    <p class="empty-state">Todavía no has publicado ningún piso.</p>
   } @else {
     <div class="grid">
       @for (flat of flats(); track flat.id) {

@@ -27,7 +27,7 @@ export async function register(input: RegisterInput) {
   const exists = await User.exists({ email: input.email });
   if (exists) throw ApiError.conflict('Ya existe una cuenta con ese email');
 
-  // El rol se fija en el servidor. Nunca se toma del cuerpo de la peticion.
+  // El rol se fija en el servidor. Nunca se toma del cuerpo de la petición.
   const user = await User.create({ ...input, role: 'guest' satisfies UserRole });
   return { user: toUserDto(user), token: signToken(user) };
 }
@@ -36,10 +36,10 @@ export async function login(email: string, password: string) {
   const user = await User.findOne({ email }).select('+password');
 
   // Mismo error y mismo coste aproximado tanto si el email no existe como si
-  // la contrasena no coincide: de lo contrario la API permite enumerar cuentas.
+  // la contraseña no coincide: de lo contrario la API permite enumerar cuentas.
   const valid = user ? await user.comparePassword(password) : false;
   if (!user || !valid) {
-    throw new ApiError(401, 'INVALID_CREDENTIALS', 'Email o contrasena incorrectos');
+    throw new ApiError(401, 'INVALID_CREDENTIALS', 'Email o contraseña incorrectos');
   }
 
   return { user: toUserDto(user), token: signToken(user) };
@@ -61,7 +61,7 @@ export async function updateUser(
   input: { firstName?: string; lastName?: string; birthDate?: Date; password?: string },
 ): Promise<UserDto> {
   // Se carga y se guarda el documento, en lugar de findByIdAndUpdate, para que
-  // el hook pre('save') hashee la contrasena cuando venga en la peticion.
+  // el hook pre('save') hashee la contraseña cuando venga en la petición.
   const user = await User.findById(id).select('+password');
   if (!user) throw ApiError.notFound('Usuario');
 

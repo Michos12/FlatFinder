@@ -2,8 +2,8 @@ import 'dotenv/config';
 import { z } from 'zod';
 
 /**
- * El servidor no arranca con una configuracion incompleta: es preferible
- * fallar aqui, con un mensaje claro, que descubrirlo en la primera peticion.
+ * El servidor no arranca con una configuración incompleta: es preferible
+ * fallar aquí, con un mensaje claro, que descubrirlo en la primera petición.
  */
 const envSchema = z.object({
   NODE_ENV: z.enum(['development', 'test', 'production']).default('development'),
@@ -13,7 +13,7 @@ const envSchema = z.object({
     .string()
     .min(32, 'SECRET_KEY debe tener al menos 32 caracteres'),
   JWT_EXPIRES_IN: z.string().default('2h'),
-  /** Origenes permitidos por CORS, separados por comas. */
+  /** Orígenes permitidos por CORS, separados por comas. */
   CORS_ORIGIN: z.string().default('http://localhost:4200'),
 });
 
@@ -23,7 +23,7 @@ if (!parsed.success) {
   const detail = parsed.error.issues
     .map((i) => `  - ${i.path.join('.')}: ${i.message}`)
     .join('\n');
-  throw new Error(`Configuracion de entorno invalida:\n${detail}`);
+  throw new Error(`Configuración de entorno inválida:\n${detail}`);
 }
 
 export const env = parsed.data;

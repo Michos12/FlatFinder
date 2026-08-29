@@ -14,7 +14,7 @@ export function messageOf(error: unknown): string {
 }
 
 /**
- * Un 401 significa que el token ya no sirve: se cierra la sesion en lugar de
+ * Un 401 significa que el token ya no sirve: se cierra la sesión en lugar de
  * dejar al usuario navegando con credenciales muertas.
  */
 export const errorInterceptor: HttpInterceptorFn = (req, next) => {

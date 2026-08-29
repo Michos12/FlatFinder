@@ -4,7 +4,7 @@ export type UserRole = (typeof USER_ROLES)[number];
 
 /**
  * Usuario tal y como lo devuelve la API.
- * La contrasena nunca sale del backend, por eso no aparece aqui.
+ * La contrasena nunca sale del backend, por eso no aparece aquí.
  */
 export interface User {
   id: string;

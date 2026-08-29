@@ -26,24 +26,24 @@ function extractToken(req: Request): string | null {
   return token;
 }
 
-/** Rechaza la peticion si no llega un JWT valido. */
+/** Rechaza la petición si no llega un JWT válido. */
 export function requireAuth(req: Request, _res: Response, next: NextFunction): void {
   const token = extractToken(req);
   if (!token) {
-    return next(ApiError.unauthorized('Falta el token de autenticacion'));
+    return next(ApiError.unauthorized('Falta el token de autenticación'));
   }
   try {
     const decoded = jwt.verify(token, env.SECRET_KEY) as AuthPayload;
     req.user = { sub: decoded.sub, role: decoded.role };
     next();
   } catch {
-    // No distinguimos entre token caducado, malformado o con firma invalida:
+    // No distinguimos entre token caducado, malformado o con firma inválida:
     // al cliente le basta con saber que debe volver a autenticarse.
-    next(ApiError.unauthorized('Token invalido o caducado'));
+    next(ApiError.unauthorized('Token inválido o caducado'));
   }
 }
 
-/** Restringe la ruta a los roles indicados. Debe ir despues de requireAuth. */
+/** Restringe la ruta a los roles indicados. Debe ir después de requireAuth. */
 export function requireRole(...roles: UserRole[]): RequestHandler {
   return (req, _res, next) => {
     if (!req.user) return next(ApiError.unauthorized());
@@ -53,8 +53,8 @@ export function requireRole(...roles: UserRole[]): RequestHandler {
 }
 
 /**
- * Permite la accion si el usuario autenticado es el dueno del recurso
- * (:id de la ruta) o si es admin. Cubre el caso que la version anterior
+ * Permite la acción si el usuario autenticado es el dueno del recurso
+ * (:id de la ruta) o si es admin. Cubre el caso que la versión anterior
  * tenia invertido: un usuario normal no podia editar su propio perfil.
  */
 export function requireSelfOrAdmin(param = 'id'): RequestHandler {

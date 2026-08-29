@@ -36,9 +36,9 @@ export class FlatList {
 
   /**
    * El listado se recalcula solo cuando cambian los filtros. El debounce evita
-   * lanzar una peticion por cada tecla al escribir la ciudad, y el catchError
+   * lanzar una petición por cada tecla al escribir la ciudad, y el catchError
    * va dentro del switchMap para que un fallo no mate el flujo: si se corta
-   * aqui, los filtros dejan de responder para siempre.
+   * aquí, los filtros dejan de responder para siempre.
    */
   private readonly page = toSignal(
     this.filters.valueChanges.pipe(

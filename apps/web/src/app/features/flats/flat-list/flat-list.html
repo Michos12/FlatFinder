@@ -1,6 +1,9 @@
 <section class="page">
   <div class="page__head">
-    <h1 class="page__title">Pisos disponibles</h1>
+    <div>
+      <h1 class="page__title">Pisos disponibles</h1>
+      <p class="page__subtitle">Filtra por ciudad, precio y superficie.</p>
+    </div>
     <a class="btn btn--primary" routerLink="/flats/new">Publicar piso</a>
   </div>
 
@@ -10,17 +13,17 @@
       <input id="city" type="search" formControlName="city" placeholder="Vancouver" />
     </div>
     <div class="field">
-      <label for="maxPrice">Precio maximo</label>
+      <label for="maxPrice">Precio máximo</label>
       <input id="maxPrice" type="number" min="0" formControlName="maxPrice" />
     </div>
     <div class="field">
-      <label for="minArea">Superficie minima (m&sup2;)</label>
+      <label for="minArea">Superficie mínima (m²)</label>
       <input id="minArea" type="number" min="0" formControlName="minArea" />
     </div>
     <div class="field">
       <label for="sortBy">Ordenar por</label>
       <select id="sortBy" formControlName="sortBy">
-        <option value="createdAt">Mas recientes</option>
+        <option value="createdAt">Más recientes</option>
         <option value="rentPrice">Precio</option>
         <option value="areaSize">Superficie</option>
         <option value="city">Ciudad</option>
@@ -49,7 +52,7 @@
       @for (flat of flats(); track flat.id) {
         <app-flat-card [flat]="flat">
           <button type="button" class="btn" (click)="toggleFavorite(flat)">
-            {{ isFavorite(flat) ? 'Quitar de favoritos' : 'Anadir a favoritos' }}
+            {{ isFavorite(flat) ? 'Quitar de favoritos' : 'Añadir a favoritos' }}
           </button>
           <a class="btn btn--primary" [routerLink]="['/flats', flat.id]">Ver detalle</a>
         </app-flat-card>

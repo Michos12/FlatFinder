@@ -1,13 +1,13 @@
 import { Component, inject, signal } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 import type { CreateFlatInput } from '@flatfinder/types';
 import { FlatsService } from '../../../core/api/flats.service';
 import { messageOf } from '../../../core/interceptors/error.interceptor';
 
 @Component({
   selector: 'app-flat-form',
-  imports: [ReactiveFormsModule],
+  imports: [ReactiveFormsModule, RouterLink],
   templateUrl: './flat-form.html',
   styleUrl: './flat-form.css',
 })
@@ -57,7 +57,7 @@ export class FlatForm {
       rentPrice: Number(raw.rentPrice),
       dateAvailable: raw.dateAvailable,
       // Los opcionales solo se mandan si tienen contenido: el API rechaza
-      // una imageUrl vacia porque exige una URL valida.
+      // una imageUrl vacía porque exige una URL válida.
       ...(raw.description.trim() && { description: raw.description.trim() }),
       ...(raw.imageUrl.trim() && { imageUrl: raw.imageUrl.trim() }),
     };

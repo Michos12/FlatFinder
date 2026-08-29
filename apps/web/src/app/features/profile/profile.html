@@ -37,17 +37,17 @@
           </div>
 
           <div class="field">
-            <label for="password">Nueva contrasena</label>
+            <label for="password">Nueva contraseña</label>
             <input
               id="password"
               type="password"
               formControlName="password"
               autocomplete="new-password"
-              placeholder="Dejala vacia para no cambiarla"
+              placeholder="Déjala vacía para no cambiarla"
             />
             @if (form.controls.password.touched && form.controls.password.invalid) {
               <span class="field__error">
-                Minimo 8 caracteres, con mayuscula, minuscula y numero
+                Mínimo 8 caracteres, con mayúscula, minúscula y número
               </span>
             }
           </div>
@@ -63,11 +63,16 @@
         <dl class="profile__data">
           <div><dt>Nombre</dt><dd>{{ user.firstName }} {{ user.lastName }}</dd></div>
           <div><dt>Email</dt><dd>{{ user.email }}</dd></div>
-          <div><dt>Rol</dt><dd>{{ user.role }}</dd></div>
+          <div>
+            <dt>Rol</dt>
+            <dd><span class="profile__role">{{ user.role }}</span></dd>
+          </div>
         </dl>
-        <button type="button" class="btn btn--primary" (click)="toggleEdit()">
-          Editar perfil
-        </button>
+        <div class="profile__actions">
+          <button type="button" class="btn btn--primary" (click)="toggleEdit()">
+            Editar perfil
+          </button>
+        </div>
       }
     </div>
   } @else {

@@ -1,20 +1,40 @@
-/* Tokens y estilos base. El archivo estaba vacio (0 bytes): cada componente
-   redefinia sus propios colores y espaciados. */
+/* Tokens y estilos base de FlatFinder.
+
+   Paleta cálida de marketplace: la foto del piso manda, y el color se usa
+   para guiar la accion, no para decorar. */
 
 :root {
-  --bg: #f6f7f9;
+  /* Superficies */
+  --bg: #faf7f2;
   --surface: #ffffff;
-  --surface-muted: #eef1f5;
-  --border: #d9dee6;
-  --text: #1b2330;
-  --text-muted: #5b6675;
-  --accent: #1d6f5c;
-  --accent-hover: #17594a;
+  --surface-muted: #f2ece3;
+  --border: #e5dbcd;
+
+  /* Texto */
+  --text: #2b2320;
+  --text-muted: #6f6259;
+
+  /* Acento */
+  --accent: #c2410c;
+  --accent-hover: #9a330a;
+  --accent-soft: #fdf1ea;
   --accent-contrast: #ffffff;
+
+  /* Estados */
   --danger: #b3261e;
-  --radius: 10px;
-  --shadow: 0 1px 2px rgb(16 24 40 / 6%);
-  --shadow-lg: 0 8px 24px rgb(16 24 40 / 10%);
+  --danger-soft: #fdeceb;
+  --success: #1d6f5c;
+  --success-soft: #e8f3f0;
+
+  /* Forma */
+  --radius: 14px;
+  --radius-sm: 10px;
+  --radius-pill: 999px;
+
+  /* Sombras teñidas de cálido: una sombra gris sobre fondo arena se ve sucia */
+  --shadow: 0 1px 2px rgb(67 45 32 / 6%);
+  --shadow-lg: 0 10px 28px rgb(67 45 32 / 12%);
+
   --max-width: 1180px;
 }
 
@@ -29,7 +49,9 @@ body {
   background: var(--bg);
   color: var(--text);
   font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
-  line-height: 1.5;
+  font-size: 1rem;
+  line-height: 1.55;
+  -webkit-font-smoothing: antialiased;
 }
 
 img {
@@ -41,36 +63,88 @@ input,
 select,
 textarea {
   font: inherit;
+  color: inherit;
 }
+
+/* Un único anillo de foco para todo. Antes no había ninguno: navegar con
+   teclado era imposible. */
+:where(a, button, input, select, textarea, [tabindex]):focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+h1,
+h2,
+h3 {
+  line-height: 1.25;
+  text-wrap: balance;
+}
+
+/* ---------- Estructura de página ---------- */
 
 .page {
   max-width: var(--max-width);
   margin: 0 auto;
-  padding: 1.5rem 1rem 3rem;
+  padding: 2rem 1.25rem 4rem;
 }
 
 .page__title {
-  margin: 0 0 1.25rem;
-  font-size: 1.5rem;
+  margin: 0 0 0.35rem;
+  font-size: 1.75rem;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+}
+
+.page__subtitle {
+  margin: 0 0 1.75rem;
+  color: var(--text-muted);
+}
+
+.page__head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-bottom: 1.75rem;
+}
+
+.page__head .page__title,
+.page__head .page__subtitle {
+  margin-bottom: 0;
 }
 
 .grid {
   display: grid;
-  gap: 1rem;
-  grid-template-columns: repeat(auto-fill, minmax(17rem, 1fr));
+  gap: 1.25rem;
+  grid-template-columns: repeat(auto-fill, minmax(18rem, 1fr));
 }
+
+.card {
+  padding: 1.5rem;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+}
+
+/* ---------- Botones ---------- */
 
 .btn {
   display: inline-flex;
   align-items: center;
+  justify-content: center;
   gap: 0.4rem;
-  padding: 0.5rem 0.9rem;
+  padding: 0.55rem 1rem;
   border: 1px solid var(--border);
-  border-radius: 8px;
+  border-radius: var(--radius-sm);
   background: var(--surface);
   color: var(--text);
-  cursor: pointer;
+  font-weight: 500;
   text-decoration: none;
+  cursor: pointer;
+  transition: background-color 0.15s ease, border-color 0.15s ease;
 }
 
 .btn:hover:not(:disabled) {
@@ -90,18 +164,25 @@ textarea {
 
 .btn--primary:hover:not(:disabled) {
   background: var(--accent-hover);
+  border-color: var(--accent-hover);
 }
 
 .btn--danger {
   color: var(--danger);
-  border-color: var(--danger);
+  border-color: color-mix(in srgb, var(--danger) 35%, var(--border));
 }
+
+.btn--danger:hover:not(:disabled) {
+  background: var(--danger-soft);
+}
+
+/* ---------- Formularios ---------- */
 
 .field {
   display: flex;
   flex-direction: column;
-  gap: 0.3rem;
-  margin-bottom: 0.9rem;
+  gap: 0.35rem;
+  margin-bottom: 1rem;
 }
 
 .field label {
@@ -112,17 +193,19 @@ textarea {
 .field input,
 .field select,
 .field textarea {
-  padding: 0.55rem 0.7rem;
+  padding: 0.6rem 0.75rem;
   border: 1px solid var(--border);
-  border-radius: 8px;
+  border-radius: var(--radius-sm);
   background: var(--surface);
 }
 
-.field input:focus-visible,
-.field select:focus-visible,
-.field textarea:focus-visible {
-  outline: 2px solid var(--accent);
-  outline-offset: 1px;
+.field textarea {
+  resize: vertical;
+}
+
+.field input::placeholder,
+.field textarea::placeholder {
+  color: color-mix(in srgb, var(--text-muted) 65%, transparent);
 }
 
 .field__error {
@@ -130,21 +213,48 @@ textarea {
   color: var(--danger);
 }
 
+/* ---------- Avisos y estados ---------- */
+
 .alert {
-  padding: 0.7rem 0.9rem;
-  border-radius: 8px;
+  padding: 0.75rem 1rem;
+  margin-bottom: 1.25rem;
   border: 1px solid var(--border);
-  background: var(--surface);
-  margin-bottom: 1rem;
+  border-radius: var(--radius-sm);
+  background: var(--success-soft);
+  border-color: color-mix(in srgb, var(--success) 30%, var(--border));
+  color: var(--success);
 }
 
 .alert--error {
-  border-color: var(--danger);
+  background: var(--danger-soft);
+  border-color: color-mix(in srgb, var(--danger) 30%, var(--border));
   color: var(--danger);
 }
 
 .empty-state {
-  padding: 2.5rem 1rem;
+  padding: 3rem 1.25rem;
   text-align: center;
   color: var(--text-muted);
+  background: var(--surface);
+  border: 1px dashed var(--border);
+  border-radius: var(--radius);
+}
+
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+/* Quien prefiera menos movimiento no debería sufrir las transiciones. */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
 }

@@ -10,11 +10,11 @@ export const createFlatSchema = z.object({
     .number()
     .int()
     .min(1800)
-    .max(new Date().getFullYear(), 'El ano de construccion no puede ser futuro'),
+    .max(new Date().getFullYear(), 'El año de construcción no puede ser futuro'),
   rentPrice: z.coerce.number().min(0),
   dateAvailable: z.coerce.date(),
   description: z.string().trim().max(2000).optional(),
-  imageUrl: z.string().trim().url('La imagen debe ser una URL valida').optional(),
+  imageUrl: z.string().trim().url('La imagen debe ser una URL válida').optional(),
 });
 
 export const updateFlatSchema = createFlatSchema.partial().strict();

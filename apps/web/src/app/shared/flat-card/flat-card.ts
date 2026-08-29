@@ -4,7 +4,7 @@ import type { Flat } from '@flatfinder/types';
 
 /**
  * Tarjeta de piso. El mismo bloque estaba copiado en el listado, en mis
- * pisos, en favoritos y en el detalle; aqui vive una sola vez y cada pantalla
+ * pisos, en favoritos y en el detalle; aquí vive una sola vez y cada pantalla
  * proyecta sus propias acciones.
  */
 @Component({

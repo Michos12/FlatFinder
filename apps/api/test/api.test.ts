@@ -8,7 +8,7 @@ import type { Express } from 'express';
  * Recorrido completo del contrato que consume apps/web. Se levanta una Mongo
  * en memoria, de modo que los tests no dependen de ninguna base externa.
  *
- * El entorno se prepara antes de importar la app, porque config/env valida
+ * El entorno se prepara antes de importar la app, porque config/env válida
  * process.env en el momento de cargarse.
  */
 let mongo: MongoMemoryServer;
@@ -17,7 +17,7 @@ let connectDatabase: (uri: string) => Promise<void>;
 let disconnectDatabase: () => Promise<void>;
 
 before(async () => {
-  // Margen amplio: la primera ejecucion en una maquina limpia (o en CI)
+  // Margen amplio: la primera ejecución en una máquina limpia (o en CI)
   // descarga el binario de mongod antes de poder arrancar.
   mongo = await MongoMemoryServer.create({ instance: { launchTimeout: 180_000 } });
 
@@ -73,8 +73,8 @@ let flatId = '';
 
 const auth = (token: string) => ({ Authorization: `Bearer ${token}` });
 
-describe('registro y autenticacion', () => {
-  it('registra un usuario y devuelve token sin filtrar la contrasena', async () => {
+describe('registro y autenticación', () => {
+  it('registra un usuario y devuelve token sin filtrar la contraseña', async () => {
     const res = await request(app).post('/api/users/register').send(owner).expect(201);
 
     assert.equal(res.body.success, true);
@@ -101,7 +101,7 @@ describe('registro y autenticacion', () => {
     assert.equal(res.body.error.code, 'CONFLICT');
   });
 
-  it('rechaza una contrasena debil con detalle por campo', async () => {
+  it('rechaza una contraseña debil con detalle por campo', async () => {
     const res = await request(app)
       .post('/api/users/register')
       .send({ ...owner, email: 'otro@flatfinder.test', password: 'corta' })
@@ -110,7 +110,7 @@ describe('registro y autenticacion', () => {
     assert.ok(res.body.error.details.password.length > 0);
   });
 
-  it('da el mismo error con email inexistente que con contrasena incorrecta', async () => {
+  it('da el mismo error con email inexistente que con contraseña incorrecta', async () => {
     const desconocido = await request(app)
       .post('/api/users/login')
       .send({ email: 'nadie@flatfinder.test', password: 'Contrasena1' })
@@ -124,7 +124,7 @@ describe('registro y autenticacion', () => {
     assert.equal(desconocido.body.error.message, incorrecta.body.error.message);
   });
 
-  it('inicia sesion con credenciales validas', async () => {
+  it('inicia sesión con credenciales válidas', async () => {
     const res = await request(app)
       .post('/api/users/login')
       .send({ email: owner.email, password: owner.password })
@@ -170,7 +170,7 @@ describe('pisos', () => {
     flatId = res.body.data.id;
   });
 
-  it('rechaza un piso con datos invalidos', async () => {
+  it('rechaza un piso con datos inválidos', async () => {
     const res = await request(app)
       .post('/api/flats')
       .set(auth(ownerToken))
@@ -181,7 +181,7 @@ describe('pisos', () => {
     assert.ok(res.body.error.details.yearBuilt);
   });
 
-  it('filtra y pagina el listado', async () => {
+  it('filtra y página el listado', async () => {
     const res = await request(app)
       .get('/api/flats')
       .query({ city: 'vancouver', maxPrice: 3000, limit: 10 })
@@ -192,7 +192,7 @@ describe('pisos', () => {
     assert.equal(res.body.data.items[0].id, flatId);
   });
 
-  it('devuelve vacio cuando el filtro no encaja', async () => {
+  it('devuelve vacío cuando el filtro no encaja', async () => {
     const res = await request(app)
       .get('/api/flats')
       .query({ maxPrice: 100 })
@@ -269,7 +269,7 @@ describe('mensajes', () => {
       .expect(403);
   });
 
-  it('rechaza un mensaje vacio', async () => {
+  it('rechaza un mensaje vacío', async () => {
     await request(app)
       .post(`/api/flats/${flatId}/messages`)
       .set(auth(tenantToken))
@@ -277,7 +277,7 @@ describe('mensajes', () => {
       .expect(400);
   });
 
-  it('el propietario ve la conversacion del piso', async () => {
+  it('el propietario ve la conversación del piso', async () => {
     const res = await request(app)
       .get(`/api/flats/${flatId}/messages`)
       .set(auth(ownerToken))
@@ -288,7 +288,7 @@ describe('mensajes', () => {
 });
 
 describe('perfil', () => {
-  it('permite al usuario cambiar su contrasena y volver a entrar con ella', async () => {
+  it('permite al usuario cambiar su contraseña y volver a entrar con ella', async () => {
     const me = await request(app).get('/api/users/me').set(auth(ownerToken)).expect(200);
 
     await request(app)
@@ -297,7 +297,7 @@ describe('perfil', () => {
       .send({ password: 'NuevaClave9' })
       .expect(200);
 
-    // Si updateUser volviera a usar findByIdAndUpdate, la contrasena quedaria
+    // Si updateUser volviera a usar findByIdAndUpdate, la contraseña quedaria
     // sin hashear y este login fallaria.
     await request(app)
       .post('/api/users/login')

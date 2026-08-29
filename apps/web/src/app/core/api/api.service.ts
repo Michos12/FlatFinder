@@ -7,7 +7,7 @@ import { environment } from '../../../environments/environment';
 type ParamValue = string | number | boolean | undefined | null;
 
 /**
- * Envoltura fina sobre HttpClient. Su unico trabajo es desenvolver el
+ * Envoltura fina sobre HttpClient. Su único trabajo es desenvolver el
  * `{ success, data }` que devuelve el API, para que los servicios de dominio
  * trabajen con el dato limpio. Los errores los traduce errorInterceptor.
  */
@@ -19,7 +19,7 @@ export class ApiService {
   private toParams(params?: Record<string, ParamValue>): HttpParams {
     let httpParams = new HttpParams();
     for (const [key, value] of Object.entries(params ?? {})) {
-      // Un filtro sin valor no debe viajar como cadena vacia.
+      // Un filtro sin valor no debe viajar como cadena vacía.
       if (value === undefined || value === null || value === '') continue;
       httpParams = httpParams.set(key, String(value));
     }

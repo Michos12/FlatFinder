@@ -1,5 +1,6 @@
 <section class="page">
   <h1 class="page__title">Publicar un piso</h1>
+  <p class="page__subtitle">Cuántos más datos, más fácil será que te escriban.</p>
 
   <form class="flat-form" [formGroup]="form" (ngSubmit)="createFlat()">
     @if (errorMessage()) {
@@ -24,15 +25,15 @@
       </div>
 
       <div class="field">
-        <label for="streetNumber">Numero</label>
+        <label for="streetNumber">Número</label>
         <input id="streetNumber" type="number" min="0" formControlName="streetNumber" />
         @if (form.controls.streetNumber.touched && form.controls.streetNumber.invalid) {
-          <span class="field__error">Introduce un numero valido</span>
+          <span class="field__error">Introduce un número válido</span>
         }
       </div>
 
       <div class="field">
-        <label for="areaSize">Superficie (m&sup2;)</label>
+        <label for="areaSize">Superficie (m²)</label>
         <input id="areaSize" type="number" min="1" formControlName="areaSize" />
         @if (form.controls.areaSize.touched && form.controls.areaSize.invalid) {
           <span class="field__error">La superficie debe ser mayor que cero</span>
@@ -40,7 +41,7 @@
       </div>
 
       <div class="field">
-        <label for="yearBuilt">Ano de construccion</label>
+        <label for="yearBuilt">Año de construcción</label>
         <input
           id="yearBuilt"
           type="number"
@@ -57,7 +58,7 @@
         <label for="rentPrice">Precio mensual</label>
         <input id="rentPrice" type="number" min="0" formControlName="rentPrice" />
         @if (form.controls.rentPrice.touched && form.controls.rentPrice.invalid) {
-          <span class="field__error">Introduce un precio valido</span>
+          <span class="field__error">Introduce un precio válido</span>
         }
       </div>
 
@@ -83,12 +84,15 @@
     </div>
 
     <div class="field">
-      <label for="description">Descripcion (opcional)</label>
+      <label for="description">Descripción (opcional)</label>
       <textarea id="description" rows="4" formControlName="description"></textarea>
     </div>
 
-    <button type="submit" class="btn btn--primary" [disabled]="submitting()">
-      {{ submitting() ? 'Publicando...' : 'Publicar piso' }}
-    </button>
+    <div class="flat-form__actions">
+      <button type="submit" class="btn btn--primary" [disabled]="submitting()">
+        {{ submitting() ? 'Publicando...' : 'Publicar piso' }}
+      </button>
+      <a class="btn" routerLink="/my-flats">Cancelar</a>
+    </div>
   </form>
 </section>

@@ -38,7 +38,7 @@ export class AuthService {
     try {
       localStorage.setItem(TOKEN_KEY, response.token);
     } catch {
-      // Modo privado o almacenamiento bloqueado: la sesion dura lo que la pestana.
+      // Modo privado o almacenamiento bloqueado: la sesión dura lo que la pestaña.
     }
   }
 
@@ -55,7 +55,7 @@ export class AuthService {
   }
 
   /**
-   * Al recargar la pagina solo sobrevive el token, no el usuario. Esto lo
+   * Al recargar la página solo sobrevive el token, no el usuario. Esto lo
    * recupera del API antes de que se pinte la primera ruta protegida.
    */
   loadCurrentUser() {

@@ -22,7 +22,7 @@ export class UserList {
 
   constructor() {
     // Antes esta pantalla leia una clave 'users' de localStorage que nadie
-    // escribia nunca, asi que siempre salia vacia. Ahora la sirve el API,
+    // escribia nunca, así que siempre salia vacía. Ahora la sirve el API,
     // y solo a administradores.
     this.usersService.list().subscribe({
       next: (users) => {

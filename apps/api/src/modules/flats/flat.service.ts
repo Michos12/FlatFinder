@@ -37,8 +37,8 @@ export function toFlatDto(doc: FlatDocument): FlatDto {
 
 function buildFilter(q: FlatQuery): FilterQuery<FlatDoc> {
   const filter: FilterQuery<FlatDoc> = {};
-  // Escapamos la entrada antes de construir la expresion regular: sin esto,
-  // una busqueda con metacaracteres puede degradar la consulta.
+  // Escapamos la entrada antes de construir la expresión regular: sin esto,
+  // una búsqueda con metacaracteres puede degradar la consulta.
   if (q.city) filter.city = new RegExp(q.city.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'), 'i');
   if (q.minPrice !== undefined || q.maxPrice !== undefined) {
     filter.rentPrice = {

@@ -3,7 +3,7 @@ import { adminGuard } from './core/guards/admin.guard';
 import { authGuard } from './core/guards/auth.guard';
 
 /**
- * Todo lo que no sea login o registro exige sesion. Antes ninguna ruta
+ * Todo lo que no sea login o registro exige sesión. Antes ninguna ruta
  * estaba protegida: bastaba escribir /users en la barra de direcciones.
  * Se cargan de forma diferida para no arrastrar toda la app en el bundle
  * inicial.

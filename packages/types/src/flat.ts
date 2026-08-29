@@ -9,7 +9,11 @@ export interface Flat {
   yearBuilt: number;
   /** Precio mensual de alquiler. */
   rentPrice: number;
-  /** Fecha de disponibilidad, ISO 8601. */
+  /**
+   * Fecha de disponibilidad, ISO 8601. Es una fecha de calendario, no un
+   * instante: se guarda a medianoche UTC y debe formatearse en UTC, o a
+   * quien esté en un huso negativo le aparecerá el día anterior.
+   */
   dateAvailable: string;
   description?: string;
   imageUrl?: string;

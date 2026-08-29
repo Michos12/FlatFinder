@@ -1,5 +1,6 @@
 <section class="page">
   <h1 class="page__title">Mis favoritos</h1>
+  <p class="page__subtitle">Los pisos que has guardado para volver a mirarlos.</p>
 
   @if (errorMessage()) {
     <p class="alert alert--error">{{ errorMessage() }}</p>
@@ -9,7 +10,7 @@
     <p class="empty-state">Cargando favoritos...</p>
   } @else if (flats().length === 0) {
     <p class="empty-state">
-      Todavia no has guardado ningun piso. <a routerLink="/">Explora el listado</a>.
+      Todavía no has guardado ningún piso. <a routerLink="/">Explora el listado</a>.
     </p>
   } @else {
     <div class="grid">

@@ -13,13 +13,13 @@ function toDetails(error: ZodError): Record<string, string[]> {
   return details;
 }
 
-/** Valida y normaliza una parte de la peticion contra un esquema de Zod. */
+/** Valida y normaliza una parte de la petición contra un esquema de Zod. */
 export function validate(schema: ZodType, target: Target = 'body'): RequestHandler {
   return (req, _res, next) => {
     const result = schema.safeParse(req[target]);
     if (!result.success) {
       return next(
-        ApiError.badRequest('Los datos enviados no son validos', toDetails(result.error)),
+        ApiError.badRequest('Los datos enviados no son válidos', toDetails(result.error)),
       );
     }
     // Se reasigna para quedarnos con el dato ya parseado (fechas, numeros,

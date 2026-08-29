@@ -1,40 +1,54 @@
 .table-wrapper {
-  /* La tabla desborda en movil: que scrolle ella, no la pagina. */
+  /* La tabla desborda en movil: que scrolle ella, no la página. */
   overflow-x: auto;
   background: var(--surface);
   border: 1px solid var(--border);
   border-radius: var(--radius);
+  box-shadow: var(--shadow);
 }
 
 .table {
   width: 100%;
+  min-width: 40rem;
   border-collapse: collapse;
-  min-width: 38rem;
 }
 
 .table th,
 .table td {
-  padding: 0.65rem 0.9rem;
+  padding: 0.8rem 1rem;
   text-align: left;
   border-bottom: 1px solid var(--border);
 }
 
 .table th {
-  font-size: 0.78rem;
+  font-size: 0.75rem;
   text-transform: uppercase;
-  letter-spacing: 0.03em;
+  letter-spacing: 0.04em;
   color: var(--text-muted);
+  background: var(--surface-muted);
 }
 
 .table tbody tr:last-child td {
   border-bottom: none;
 }
 
-.visually-hidden {
-  position: absolute;
-  width: 1px;
-  height: 1px;
-  overflow: hidden;
-  clip: rect(0 0 0 0);
-  white-space: nowrap;
+.table tbody tr:hover {
+  background: color-mix(in srgb, var(--surface-muted) 45%, transparent);
+}
+
+.table select {
+  padding: 0.35rem 0.5rem;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  background: var(--surface);
+}
+
+.user-list__self {
+  margin-left: 0.4rem;
+  padding: 0.1rem 0.5rem;
+  background: var(--accent-soft);
+  border-radius: var(--radius-pill);
+  color: var(--accent);
+  font-size: 0.72rem;
+  font-weight: 600;
 }

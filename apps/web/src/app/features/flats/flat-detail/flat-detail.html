@@ -6,16 +6,18 @@
     <a class="btn detail__back" routerLink="/">Volver al listado</a>
 
     <article class="detail">
-      <img
-        class="detail__image"
-        [src]="flat.imageUrl || 'assets/houses/house.jpg'"
-        [alt]="'Piso en ' + flat.city"
-      />
+      <div class="detail__media">
+        <img
+          class="detail__image"
+          [src]="flat.imageUrl || 'assets/houses/house.jpg'"
+          [alt]="'Piso en ' + flat.city"
+        />
+      </div>
 
       <div class="detail__info">
         <h1 class="page__title">Piso en {{ flat.city }}</h1>
         <p class="detail__price">
-          {{ flat.rentPrice | currency: 'CAD' : 'symbol-narrow' }} al mes
+          {{ flat.rentPrice | currency: 'CAD' : 'symbol-narrow' : '1.0-0' }} al mes
         </p>
         <p class="detail__address">
           {{ flat.streetName }} {{ flat.streetNumber }}, {{ flat.city }}
@@ -26,22 +28,22 @@
         }
 
         <dl class="detail__facts">
-          <div><dt>Superficie</dt><dd>{{ flat.areaSize }} m&sup2;</dd></div>
-          <div><dt>Ano de construccion</dt><dd>{{ flat.yearBuilt }}</dd></div>
+          <div><dt>Superficie</dt><dd>{{ flat.areaSize }} m²</dd></div>
+          <div><dt>Año de construcción</dt><dd>{{ flat.yearBuilt }}</dd></div>
           <div><dt>Aire acondicionado</dt><dd>{{ flat.hasAC ? 'Si' : 'No' }}</dd></div>
           <div>
             <dt>Disponible desde</dt>
-            <dd>{{ flat.dateAvailable | date: 'longDate' }}</dd>
+            <dd>{{ flat.dateAvailable | date: 'longDate' : 'UTC' }}</dd>
           </div>
         </dl>
       </div>
     </article>
 
     <section class="messages">
-      <h2>{{ isOwner() ? 'Mensajes recibidos' : 'Tu conversacion con el propietario' }}</h2>
+      <h2>{{ isOwner() ? 'Mensajes recibidos' : 'Tu conversación con el propietario' }}</h2>
 
       @if (messages().length === 0) {
-        <p class="empty-state">Todavia no hay mensajes.</p>
+        <p class="empty-state">Todavía no hay mensajes.</p>
       } @else {
         <ul class="messages__list">
           @for (message of messages(); track message.id) {
@@ -64,7 +66,7 @@
             <label for="content">Escribe al propietario</label>
             <textarea id="content" rows="3" formControlName="content"></textarea>
             @if (form.controls.content.touched && form.controls.content.invalid) {
-              <span class="field__error">El mensaje no puede estar vacio</span>
+              <span class="field__error">El mensaje no puede estar vacío</span>
             }
           </div>
           <button type="submit" class="btn btn--primary" [disabled]="sending()">

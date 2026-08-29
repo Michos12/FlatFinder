@@ -1,29 +1,33 @@
 <article class="flat-card">
-  <img
-    class="flat-card__image"
-    [src]="flat().imageUrl || 'assets/houses/house.jpg'"
-    [alt]="'Piso en ' + flat().city"
-  />
+  <div class="flat-card__media">
+    <img
+      class="flat-card__image"
+      [src]="flat().imageUrl || 'assets/houses/house.jpg'"
+      [alt]="'Piso en ' + flat().city"
+      loading="lazy"
+    />
+    <p class="flat-card__price">
+      {{ flat().rentPrice | currency: 'CAD' : 'symbol-narrow' : '1.0-0' }}<span>/mes</span>
+    </p>
+  </div>
 
   <div class="flat-card__body">
-    <header class="flat-card__header">
-      <h2 class="flat-card__title">Piso en {{ flat().city }}</h2>
-      <p class="flat-card__price">{{ flat().rentPrice | currency: 'CAD' : 'symbol-narrow' }}/mes</p>
-    </header>
-
-    <p class="flat-card__address">
-      {{ flat().streetName }} {{ flat().streetNumber }}, {{ flat().city }}
-    </p>
+    <h2 class="flat-card__title">Piso en {{ flat().city }}</h2>
+    <p class="flat-card__address">{{ flat().streetName }} {{ flat().streetNumber }}</p>
 
     @if (flat().description) {
       <p class="flat-card__description">{{ flat().description }}</p>
     }
 
     <ul class="flat-card__facts">
-      <li>{{ flat().areaSize }} m&sup2;</li>
-      <li>Construido en {{ flat().yearBuilt }}</li>
-      <li>{{ flat().hasAC ? 'Con aire acondicionado' : 'Sin aire acondicionado' }}</li>
-      <li>Disponible desde {{ flat().dateAvailable | date: 'longDate' }}</li>
+      <li>{{ flat().areaSize }} m²</li>
+      <li>{{ flat().yearBuilt }}</li>
+      @if (flat().hasAC) {
+        <li>Aire acondicionado</li>
+      }
+      <!-- En UTC a propósito: es una fecha de calendario, no un instante. Sin
+           esto, a un usuario en UTC-7 el día 30 le aparecía como el 29. -->
+      <li>Desde {{ flat().dateAvailable | date: 'd MMM y' : 'UTC' }}</li>
     </ul>
   </div>
 

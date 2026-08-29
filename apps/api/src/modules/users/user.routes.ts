@@ -11,7 +11,7 @@ export const userRouter = Router();
 userRouter.post('/register', validate(registerSchema), asyncHandler(c.registerController));
 userRouter.post('/login', validate(loginSchema), asyncHandler(c.loginController));
 
-// A partir de aqui todo exige token. Antes GET /users/:id quedaba abierta.
+// A partir de aquí todo exige token. Antes GET /users/:id quedaba abierta.
 userRouter.use(requireAuth);
 
 userRouter.get('/me', asyncHandler(c.meController));

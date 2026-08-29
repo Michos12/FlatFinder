@@ -1,19 +1,19 @@
 import { z } from 'zod';
 import { USER_ROLES } from '@flatfinder/types';
 
-const email = z.string().trim().toLowerCase().email('Email invalido');
+const email = z.string().trim().toLowerCase().email('Email inválido');
 
 /**
- * Minimo razonable para una app de portafolio: longitud suficiente y algo de
- * variedad. No se limita el maximo por arriba mas alla del limite de bcrypt.
+ * Mínimo razonable para una app de portafolio: longitud suficiente y algo de
+ * variedad. No se limita el máximo por arriba más alla del límite de bcrypt.
  */
 const password = z
   .string()
-  .min(8, 'La contrasena debe tener al menos 8 caracteres')
-  .max(72, 'La contrasena no puede superar los 72 caracteres')
-  .regex(/[a-z]/, 'Debe incluir una minuscula')
-  .regex(/[A-Z]/, 'Debe incluir una mayuscula')
-  .regex(/[0-9]/, 'Debe incluir un numero');
+  .min(8, 'La contraseña debe tener al menos 8 caracteres')
+  .max(72, 'La contraseña no puede superar los 72 caracteres')
+  .regex(/[a-z]/, 'Debe incluir una minúscula')
+  .regex(/[A-Z]/, 'Debe incluir una mayúscula')
+  .regex(/[0-9]/, 'Debe incluir un número');
 
 const birthDate = z.coerce
   .date()
@@ -26,13 +26,13 @@ export const registerSchema = z.object({
   firstName: z.string().trim().min(1, 'El nombre es obligatorio').max(80),
   lastName: z.string().trim().min(1, 'El apellido es obligatorio').max(80),
   birthDate,
-  // 'role' se omite deliberadamente: aceptarlo aqui permitia registrarse
-  // como admin enviandolo en el cuerpo de la peticion.
+  // 'role' se omite deliberadamente: aceptarlo aquí permitia registrarse
+  // como admin enviandolo en el cuerpo de la petición.
 });
 
 export const loginSchema = z.object({
   email,
-  password: z.string().min(1, 'La contrasena es obligatoria'),
+  password: z.string().min(1, 'La contraseña es obligatoria'),
 });
 
 export const updateUserSchema = z

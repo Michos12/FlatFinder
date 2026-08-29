@@ -1,5 +1,13 @@
+/* El elemento de la rejilla es <app-flat-card>, no .flat-card. Sin esto la
+   tarjeta no estira hasta el alto de la fila y los botones de cada tarjeta
+   quedan a distinta altura. */
+:host {
+  display: flex;
+}
+
 .flat-card {
   display: flex;
+  flex: 1;
   flex-direction: column;
   overflow: hidden;
   background: var(--surface);
@@ -10,43 +18,54 @@
 }
 
 .flat-card:hover {
-  transform: translateY(-2px);
+  transform: translateY(-3px);
   box-shadow: var(--shadow-lg);
+}
+
+/* La foto manda: 16:10 a sangre, sin margen alrededor. */
+.flat-card__media {
+  position: relative;
+  aspect-ratio: 16 / 10;
+  background: var(--surface-muted);
 }
 
 .flat-card__image {
   width: 100%;
-  height: 11rem;
+  height: 100%;
   object-fit: cover;
-  background: var(--surface-muted);
+  display: block;
+}
+
+.flat-card__price {
+  position: absolute;
+  left: 0.75rem;
+  bottom: 0.75rem;
+  padding: 0.3rem 0.7rem;
+  background: var(--surface);
+  border-radius: var(--radius-pill);
+  box-shadow: var(--shadow-lg);
+  font-weight: 700;
+  font-size: 0.95rem;
+}
+
+.flat-card__price span {
+  font-weight: 500;
+  color: var(--text-muted);
 }
 
 .flat-card__body {
   display: flex;
   flex: 1;
   flex-direction: column;
-  gap: 0.5rem;
-  padding: 1rem;
-}
-
-.flat-card__header {
-  display: flex;
-  align-items: baseline;
-  justify-content: space-between;
-  gap: 0.75rem;
+  gap: 0.4rem;
+  padding: 1rem 1.1rem;
 }
 
 .flat-card__title {
   margin: 0;
-  font-size: 1.05rem;
-  font-weight: 600;
-}
-
-.flat-card__price {
-  margin: 0;
+  font-size: 1.1rem;
   font-weight: 700;
-  color: var(--accent);
-  white-space: nowrap;
+  letter-spacing: -0.01em;
 }
 
 .flat-card__address {
@@ -56,41 +75,47 @@
 }
 
 .flat-card__description {
-  margin: 0;
+  margin: 0.15rem 0 0;
   font-size: 0.9rem;
-  /* Recorta a tres lineas para que todas las tarjetas midan lo mismo. */
+  color: var(--text-muted);
+  /* Recorta a dos líneas para que todas las tarjetas midan lo mismo. */
   display: -webkit-box;
   -webkit-box-orient: vertical;
-  -webkit-line-clamp: 3;
-  line-clamp: 3;
+  -webkit-line-clamp: 2;
+  line-clamp: 2;
   overflow: hidden;
 }
 
 .flat-card__facts {
   display: flex;
   flex-wrap: wrap;
-  gap: 0.35rem 0.5rem;
+  gap: 0.35rem;
   margin: auto 0 0;
-  padding: 0;
+  padding: 0.85rem 0 0;
   list-style: none;
-  font-size: 0.8rem;
+  font-size: 0.78rem;
   color: var(--text-muted);
 }
 
 .flat-card__facts li {
-  padding: 0.15rem 0.5rem;
+  padding: 0.2rem 0.6rem;
   background: var(--surface-muted);
-  border-radius: 999px;
+  border-radius: var(--radius-pill);
 }
 
 .flat-card__actions {
   display: flex;
   flex-wrap: wrap;
   gap: 0.5rem;
-  padding: 0.75rem 1rem;
+  padding: 0.9rem 1.1rem;
   border-top: 1px solid var(--border);
 }
 
 .flat-card__actions:empty {
   display: none;
+}
+
+.flat-card__actions > * {
+  flex: 1;
+  min-width: max-content;
 }

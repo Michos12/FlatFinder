@@ -2,7 +2,7 @@ import { inject } from '@angular/core';
 import { Router, type CanActivateFn } from '@angular/router';
 import { AuthService } from '../api/auth.service';
 
-/** Exige sesion iniciada y recuerda el destino para volver tras el login. */
+/** Exige sesión iniciada y recuerda el destino para volver tras el login. */
 export const authGuard: CanActivateFn = (_route, state) => {
   const auth = inject(AuthService);
   const router = inject(Router);

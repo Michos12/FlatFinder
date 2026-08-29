@@ -58,7 +58,7 @@ export class FlatDetail {
   });
 
   constructor() {
-    // El propietario recibe toda la conversacion del piso; cualquier otro
+    // El propietario recibe toda la conversación del piso; cualquier otro
     // usuario, solo los mensajes que ha enviado el mismo. Quien decide es el API.
     effect(() => {
       const flat = this.flat();

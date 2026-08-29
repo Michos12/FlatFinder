@@ -23,7 +23,7 @@ export class Register {
     lastName: ['', [Validators.required, Validators.minLength(2)]],
     email: ['', [Validators.required, Validators.email]],
     birthDate: ['', [Validators.required]],
-    // Mismas reglas que el esquema del API, para que el error salte aqui
+    // Mismas reglas que el esquema del API, para que el error salte aquí
     // en vez de volver del servidor.
     password: [
       '',

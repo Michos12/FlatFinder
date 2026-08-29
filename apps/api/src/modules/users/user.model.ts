@@ -33,14 +33,14 @@ const userSchema = new Schema<UserDoc, UserModel, UserMethods>(
       trim: true,
       index: true,
     },
-    // select: false evita que la contrasena viaje por accidente en cualquier
+    // select: false evita que la contraseña viaje por accidente en cualquier
     // consulta; hay que pedirla de forma explicita para el login.
     password: { type: String, required: true, select: false },
     firstName: { type: String, required: true, trim: true },
     lastName: { type: String, required: true, trim: true },
     birthDate: { type: Date, required: true },
     role: { type: String, enum: USER_ROLES, default: 'guest' },
-    // Antes era un unico ObjectId, lo que impedia guardar mas de un favorito.
+    // Antes era un único ObjectId, lo que impedia guardar más de un favorito.
     favoriteFlatIds: [{ type: Schema.Types.ObjectId, ref: 'Flat' }],
   },
   {
@@ -59,10 +59,10 @@ const userSchema = new Schema<UserDoc, UserModel, UserMethods>(
 );
 
 /**
- * Unico punto donde se hashea. Cualquier ruta que quiera cambiar la
- * contrasena debe asignarla al documento y llamar a save(); por eso el
+ * Único punto donde se hashea. Cualquier ruta que quiera cambiar la
+ * contraseña debe asignarla al documento y llamar a save(); por eso el
  * servicio ya no usa findByIdAndUpdate, que se saltaba este hook y dejaba
- * la contrasena en texto plano.
+ * la contraseña en texto plano.
  */
 userSchema.pre('save', async function hashPassword(next) {
   if (!this.isModified('password')) return next();

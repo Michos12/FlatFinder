@@ -8,7 +8,7 @@ export interface ApiSuccess<T> {
 export interface ApiError {
   success: false;
   error: {
-    /** Codigo estable, apto para comparar en el frontend. */
+    /** Código estable, apto para comparar en el frontend. */
     code: string;
     message: string;
     /** Errores de validacion por campo, cuando aplican. */

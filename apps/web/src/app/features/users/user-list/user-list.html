@@ -1,5 +1,6 @@
 <section class="page">
   <h1 class="page__title">Usuarios</h1>
+  <p class="page__subtitle">Gestión de cuentas y roles. Solo para administradores.</p>
 
   @if (errorMessage()) {
     <p class="alert alert--error">{{ errorMessage() }}</p>
@@ -24,7 +25,12 @@
         <tbody>
           @for (user of users(); track user.id) {
             <tr>
-              <td>{{ user.firstName }} {{ user.lastName }}</td>
+              <td>
+                {{ user.firstName }} {{ user.lastName }}
+                @if (isSelf(user)) {
+                  <span class="user-list__self">tu</span>
+                }
+              </td>
               <td>{{ user.email }}</td>
               <td>
                 <select

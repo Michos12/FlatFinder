@@ -10,7 +10,7 @@ export const notFoundHandler: RequestHandler = (req, res) => {
   });
 };
 
-/** Punto unico de traduccion de errores a respuestas HTTP. */
+/** Punto único de traduccion de errores a respuestas HTTP. */
 export const errorHandler: ErrorRequestHandler = (err, _req, res, _next) => {
   if (err instanceof ApiError) {
     res.status(err.status).json({
@@ -24,7 +24,7 @@ export const errorHandler: ErrorRequestHandler = (err, _req, res, _next) => {
   if (err instanceof mongoose.Error.CastError) {
     res.status(400).json({
       success: false,
-      error: { code: 'INVALID_ID', message: `Identificador invalido: ${err.value}` },
+      error: { code: 'INVALID_ID', message: `Identificador inválido: ${err.value}` },
     });
     return;
   }
@@ -36,12 +36,12 @@ export const errorHandler: ErrorRequestHandler = (err, _req, res, _next) => {
     }
     res.status(400).json({
       success: false,
-      error: { code: 'VALIDATION_ERROR', message: 'Datos invalidos', details },
+      error: { code: 'VALIDATION_ERROR', message: 'Datos inválidos', details },
     });
     return;
   }
 
-  // Indice unico violado (email repetido en una carrera entre dos registros).
+  // Indice único violado (email repetido en una carrera entre dos registros).
   if (typeof err === 'object' && err !== null && (err as { code?: number }).code === 11000) {
     res.status(409).json({
       success: false,

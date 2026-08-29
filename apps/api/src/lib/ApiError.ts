@@ -1,5 +1,5 @@
 /**
- * Error con codigo HTTP y un codigo estable que el frontend puede comparar
+ * Error con código HTTP y un código estable que el frontend puede comparar
  * sin depender del texto del mensaje.
  */
 export class ApiError extends Error {
@@ -21,7 +21,7 @@ export class ApiError extends Error {
     return new ApiError(401, 'UNAUTHORIZED', message);
   }
 
-  static forbidden(message = 'No tienes permiso para realizar esta accion') {
+  static forbidden(message = 'No tienes permiso para realizar esta acción') {
     return new ApiError(403, 'FORBIDDEN', message);
   }
 

@@ -13,8 +13,8 @@ export async function listMessagesController(req: Request, res: Response) {
   const flat = await getFlatDocument(flatIdOf(req));
   const isOwner = flat.ownerId.toString() === req.user!.sub;
 
-  // El propietario ve toda la conversacion del piso; cualquier otro usuario
-  // ve unicamente los mensajes que ha enviado el mismo.
+  // El propietario ve toda la conversación del piso; cualquier otro usuario
+  // ve únicamente los mensajes que ha enviado el mismo.
   const messages = isOwner
     ? await messageService.listMessagesByFlat(flat.id as string)
     : await messageService.listMessagesByFlatAndSender(flat.id as string, req.user!.sub);

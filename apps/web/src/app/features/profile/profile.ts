@@ -26,7 +26,7 @@ export class Profile {
     firstName: ['', [Validators.required, Validators.minLength(2)]],
     lastName: ['', [Validators.required, Validators.minLength(2)]],
     birthDate: ['', [Validators.required]],
-    // Vacia significa "no cambiar". Antes el formulario exigia la contrasena
+    // Vacia significa "no cambiar". Antes el formulario exigia la contraseña
     // para cualquier edicion y la reescribia en cada guardado.
     password: ['', [Validators.minLength(8), Validators.pattern(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).+$/)]],
   });
