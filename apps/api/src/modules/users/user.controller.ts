@@ -1,5 +1,6 @@
 import type { Request, Response } from 'express';
 import { param } from '../../lib/params.js';
+import * as favoriteService from './favorite.service.js';
 import * as userService from './user.service.js';
 
 export async function registerController(req: Request, res: Response) {
@@ -41,4 +42,19 @@ export async function updateUserRoleController(req: Request, res: Response) {
 export async function deleteUserController(req: Request, res: Response) {
   await userService.deleteUser(param(req, 'id'));
   res.status(204).send();
+}
+
+export async function listFavoritesController(req: Request, res: Response) {
+  const flats = await favoriteService.listFavorites(req.user!.sub);
+  res.status(200).json({ success: true, data: flats });
+}
+
+export async function addFavoriteController(req: Request, res: Response) {
+  const flats = await favoriteService.addFavorite(req.user!.sub, param(req, 'flatId'));
+  res.status(200).json({ success: true, data: flats });
+}
+
+export async function removeFavoriteController(req: Request, res: Response) {
+  const flats = await favoriteService.removeFavorite(req.user!.sub, param(req, 'flatId'));
+  res.status(200).json({ success: true, data: flats });
 }

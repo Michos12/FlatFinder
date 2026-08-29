@@ -41,6 +41,9 @@ exito y `{ success, error: { code, message, details? } }` en error.
 | `PATCH` | `/api/users/:id` | el propio usuario o admin |
 | `PATCH` | `/api/users/:id/role` | admin |
 | `DELETE` | `/api/users/:id` | el propio usuario o admin |
+| `GET` | `/api/users/me/favorites` | autenticado |
+| `PUT` | `/api/users/me/favorites/:flatId` | autenticado |
+| `DELETE` | `/api/users/me/favorites/:flatId` | autenticado |
 | `GET` | `/api/flats` | autenticado (filtros y paginacion) |
 | `GET` | `/api/flats/mine` | autenticado |
 | `POST` | `/api/flats` | autenticado |
@@ -63,6 +66,16 @@ La autenticacion viaja en `Authorization: Bearer <token>`.
   peticiones (mas estricta en login y registro).
 - Los errores de autorizacion devuelven 403, y el login da un mensaje generico
   para no permitir enumerar cuentas.
+
+## Tests
+
+```bash
+npm test -w @flatfinder/api
+```
+
+Tests de integracion sobre la app real y una MongoDB en memoria: cubren
+registro, login, permisos por rol y propiedad, filtros, favoritos y
+mensajes. No necesitan ninguna base de datos externa.
 
 ## Historial
 

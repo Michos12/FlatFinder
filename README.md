@@ -31,6 +31,14 @@ npm run dev:api    # http://localhost:3000
 npm run dev:web    # http://localhost:4200
 ```
 
+## Comprobaciones
+
+```bash
+npm run typecheck   # tipos del API, incluidos los tests
+npm test            # tests de integracion del API
+npm run build       # types + api + web
+```
+
 ## Estado
 
 Reestructuracion en curso.
@@ -38,9 +46,11 @@ Reestructuracion en curso.
 - [x] Historiales unificados en un monorepo
 - [x] Build de produccion del frontend arreglado (se retiro el SSR)
 - [x] API migrada a TypeScript, por modulos, con la autorizacion corregida
-- [ ] Frontend conectado al API: hoy `apps/web` sigue leyendo de Firestore
-- [ ] Guards de ruta e interceptor de token en el frontend
-- [ ] Tests, CI y despliegue
+- [x] Frontend conectado al API; Firestore eliminado
+- [x] Guards de ruta, interceptor de token y rutas diferidas
+- [x] Tests de integracion del API (22 casos, MongoDB en memoria)
+- [ ] Pasada de diseno de la interfaz
+- [ ] CI y despliegue
 
 ## Creditos
 

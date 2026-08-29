@@ -15,6 +15,11 @@ userRouter.post('/login', validate(loginSchema), asyncHandler(c.loginController)
 userRouter.use(requireAuth);
 
 userRouter.get('/me', asyncHandler(c.meController));
+
+// Van antes de '/:id' para que 'me' no se interprete como un identificador.
+userRouter.get('/me/favorites', asyncHandler(c.listFavoritesController));
+userRouter.put('/me/favorites/:flatId', asyncHandler(c.addFavoriteController));
+userRouter.delete('/me/favorites/:flatId', asyncHandler(c.removeFavoriteController));
 userRouter.get('/', requireRole('admin'), asyncHandler(c.listUsersController));
 userRouter.get('/:id', requireSelfOrAdmin(), asyncHandler(c.getUserController));
 userRouter.patch(
