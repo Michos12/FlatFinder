@@ -81,7 +81,7 @@ the API. Keeping a single origin means production needs no CORS at all.
 - [x] API migrated to TypeScript, split into modules, authorisation corrected
 - [x] Frontend wired to the API; Firestore removed
 - [x] Route guards, token interceptor and lazily loaded routes
-- [x] API integration tests (22 cases, in-memory MongoDB)
+- [x] API integration tests (28 cases, in-memory MongoDB)
 - [x] CI on GitHub Actions and deployment configuration
 - [x] Interface design pass
 - [x] Frontend tests (63 cases, Vitest on jsdom)
