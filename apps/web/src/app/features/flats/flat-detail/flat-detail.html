@@ -1,23 +1,23 @@
 <section class="page">
   @if (errorMessage()) {
     <p class="alert alert--error">{{ errorMessage() }}</p>
-    <a class="btn" routerLink="/">Volver al listado</a>
+    <a class="btn" routerLink="/">Back to listings</a>
   } @else if (flat(); as flat) {
-    <a class="btn detail__back" routerLink="/">Volver al listado</a>
+    <a class="btn detail__back" routerLink="/">Back to listings</a>
 
     <article class="detail">
       <div class="detail__media">
         <img
           class="detail__image"
           [src]="flat.imageUrl || 'assets/houses/house.jpg'"
-          [alt]="'Piso en ' + flat.city"
+          [alt]="'Flat in ' + flat.city"
         />
       </div>
 
       <div class="detail__info">
-        <h1 class="page__title">Piso en {{ flat.city }}</h1>
+        <h1 class="page__title">Flat in {{ flat.city }}</h1>
         <p class="detail__price">
-          {{ flat.rentPrice | currency: 'CAD' : 'symbol-narrow' : '1.0-0' }} al mes
+          {{ flat.rentPrice | currency: 'CAD' : 'symbol-narrow' : '1.0-0' }} per month
         </p>
         <p class="detail__address">
           {{ flat.streetName }} {{ flat.streetNumber }}, {{ flat.city }}
@@ -28,11 +28,11 @@
         }
 
         <dl class="detail__facts">
-          <div><dt>Superficie</dt><dd>{{ flat.areaSize }} m²</dd></div>
-          <div><dt>Año de construcción</dt><dd>{{ flat.yearBuilt }}</dd></div>
-          <div><dt>Aire acondicionado</dt><dd>{{ flat.hasAC ? 'Si' : 'No' }}</dd></div>
+          <div><dt>Floor area</dt><dd>{{ flat.areaSize }} m²</dd></div>
+          <div><dt>Year built</dt><dd>{{ flat.yearBuilt }}</dd></div>
+          <div><dt>Air conditioning</dt><dd>{{ flat.hasAC ? 'Yes' : 'No' }}</dd></div>
           <div>
-            <dt>Disponible desde</dt>
+            <dt>Available from</dt>
             <dd>{{ flat.dateAvailable | date: 'longDate' : 'UTC' }}</dd>
           </div>
         </dl>
@@ -40,10 +40,10 @@
     </article>
 
     <section class="messages">
-      <h2>{{ isOwner() ? 'Mensajes recibidos' : 'Tu conversación con el propietario' }}</h2>
+      <h2>{{ isOwner() ? 'Messages received' : 'Your conversation with the owner' }}</h2>
 
       @if (messages().length === 0) {
-        <p class="empty-state">Todavía no hay mensajes.</p>
+        <p class="empty-state">No messages yet.</p>
       } @else {
         <ul class="messages__list">
           @for (message of messages(); track message.id) {
@@ -56,26 +56,26 @@
       }
 
       @if (isOwner()) {
-        <p class="empty-state">Este piso es tuyo, por eso no puedes escribirte.</p>
+        <p class="empty-state">This is your own flat, so you can't message yourself.</p>
       } @else {
         <form class="messages__form" [formGroup]="form" (ngSubmit)="send()">
           @if (sendError()) {
             <p class="alert alert--error">{{ sendError() }}</p>
           }
           <div class="field">
-            <label for="content">Escribe al propietario</label>
+            <label for="content">Message the owner</label>
             <textarea id="content" rows="3" formControlName="content"></textarea>
             @if (form.controls.content.touched && form.controls.content.invalid) {
-              <span class="field__error">El mensaje no puede estar vacío</span>
+              <span class="field__error">The message cannot be empty</span>
             }
           </div>
           <button type="submit" class="btn btn--primary" [disabled]="sending()">
-            {{ sending() ? 'Enviando...' : 'Enviar mensaje' }}
+            {{ sending() ? 'Sending…' : 'Send message' }}
           </button>
         </form>
       }
     </section>
   } @else {
-    <p class="empty-state">Cargando piso...</p>
+    <p class="empty-state">Loading flat…</p>
   }
 </section>

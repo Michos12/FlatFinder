@@ -25,7 +25,7 @@ export async function listMessagesController(req: Request, res: Response) {
 export async function createMessageController(req: Request, res: Response) {
   const flat = await getFlatDocument(flatIdOf(req));
   if (flat.ownerId.toString() === req.user!.sub) {
-    throw ApiError.forbidden('No puedes enviarte un mensaje sobre tu propio piso');
+    throw ApiError.forbidden('You cannot message yourself about your own flat');
   }
   const message = await messageService.createMessage(
     flat.id as string,

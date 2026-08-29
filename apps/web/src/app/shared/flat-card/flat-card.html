@@ -3,16 +3,16 @@
     <img
       class="flat-card__image"
       [src]="flat().imageUrl || 'assets/houses/house.jpg'"
-      [alt]="'Piso en ' + flat().city"
+      [alt]="'Flat in ' + flat().city"
       loading="lazy"
     />
     <p class="flat-card__price">
-      {{ flat().rentPrice | currency: 'CAD' : 'symbol-narrow' : '1.0-0' }}<span>/mes</span>
+      {{ flat().rentPrice | currency: 'CAD' : 'symbol-narrow' : '1.0-0' }}<span>/mo</span>
     </p>
   </div>
 
   <div class="flat-card__body">
-    <h2 class="flat-card__title">Piso en {{ flat().city }}</h2>
+    <h2 class="flat-card__title">Flat in {{ flat().city }}</h2>
     <p class="flat-card__address">{{ flat().streetName }} {{ flat().streetNumber }}</p>
 
     @if (flat().description) {
@@ -21,13 +21,13 @@
 
     <ul class="flat-card__facts">
       <li>{{ flat().areaSize }} m²</li>
-      <li>{{ flat().yearBuilt }}</li>
+      <li>Built {{ flat().yearBuilt }}</li>
       @if (flat().hasAC) {
-        <li>Aire acondicionado</li>
+        <li>Air conditioning</li>
       }
       <!-- En UTC a propósito: es una fecha de calendario, no un instante. Sin
            esto, a un usuario en UTC-7 el día 30 le aparecía como el 29. -->
-      <li>Desde {{ flat().dateAvailable | date: 'd MMM y' : 'UTC' }}</li>
+      <li>From {{ flat().dateAvailable | date: 'd MMM y' : 'UTC' }}</li>
     </ul>
   </div>
 

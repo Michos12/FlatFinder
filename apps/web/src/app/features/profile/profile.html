@@ -1,5 +1,5 @@
 <section class="page">
-  <h1 class="page__title">Mi perfil</h1>
+  <h1 class="page__title">My profile</h1>
 
   @if (user(); as user) {
     @if (successMessage()) {
@@ -13,69 +13,69 @@
       @if (editing()) {
         <form [formGroup]="form" (ngSubmit)="save()">
           <div class="field">
-            <label for="firstName">Nombre</label>
+            <label for="firstName">First name</label>
             <input id="firstName" type="text" formControlName="firstName" />
             @if (form.controls.firstName.touched && form.controls.firstName.invalid) {
-              <span class="field__error">Al menos 2 caracteres</span>
+              <span class="field__error">At least 2 characters</span>
             }
           </div>
 
           <div class="field">
-            <label for="lastName">Apellido</label>
+            <label for="lastName">Last name</label>
             <input id="lastName" type="text" formControlName="lastName" />
             @if (form.controls.lastName.touched && form.controls.lastName.invalid) {
-              <span class="field__error">Al menos 2 caracteres</span>
+              <span class="field__error">At least 2 characters</span>
             }
           </div>
 
           <div class="field">
-            <label for="birthDate">Fecha de nacimiento</label>
+            <label for="birthDate">Date of birth</label>
             <input id="birthDate" type="date" formControlName="birthDate" />
             @if (form.controls.birthDate.touched && form.controls.birthDate.invalid) {
-              <span class="field__error">La fecha es obligatoria</span>
+              <span class="field__error">Date of birth is required</span>
             }
           </div>
 
           <div class="field">
-            <label for="password">Nueva contraseña</label>
+            <label for="password">New password</label>
             <input
               id="password"
               type="password"
               formControlName="password"
               autocomplete="new-password"
-              placeholder="Déjala vacía para no cambiarla"
+              placeholder="Leave blank to keep your current one"
             />
             @if (form.controls.password.touched && form.controls.password.invalid) {
               <span class="field__error">
-                Mínimo 8 caracteres, con mayúscula, minúscula y número
+                At least 8 characters, with an uppercase letter, a lowercase letter and a number
               </span>
             }
           </div>
 
           <div class="profile__actions">
             <button type="submit" class="btn btn--primary" [disabled]="saving()">
-              {{ saving() ? 'Guardando...' : 'Guardar cambios' }}
+              {{ saving() ? 'Saving…' : 'Save changes' }}
             </button>
-            <button type="button" class="btn" (click)="toggleEdit()">Cancelar</button>
+            <button type="button" class="btn" (click)="toggleEdit()">Cancel</button>
           </div>
         </form>
       } @else {
         <dl class="profile__data">
-          <div><dt>Nombre</dt><dd>{{ user.firstName }} {{ user.lastName }}</dd></div>
+          <div><dt>Name</dt><dd>{{ user.firstName }} {{ user.lastName }}</dd></div>
           <div><dt>Email</dt><dd>{{ user.email }}</dd></div>
           <div>
-            <dt>Rol</dt>
+            <dt>Role</dt>
             <dd><span class="profile__role">{{ user.role }}</span></dd>
           </div>
         </dl>
         <div class="profile__actions">
           <button type="button" class="btn btn--primary" (click)="toggleEdit()">
-            Editar perfil
+            Edit profile
           </button>
         </div>
       }
     </div>
   } @else {
-    <p class="empty-state">Cargando perfil...</p>
+    <p class="empty-state">Loading profile…</p>
   }
 </section>

@@ -16,10 +16,31 @@
   padding: 0.7rem 1.25rem;
 }
 
-.header__brand img {
-  display: block;
-  height: 2rem;
-  width: auto;
+/* El logotipo era un PNG de 1,4 MB con la errata "FlanFinder" dentro. Ahora
+   es un icono en línea más texto: nítido a cualquier resolución y corregible. */
+.header__brand {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: var(--text);
+  text-decoration: none;
+}
+
+.header__mark {
+  width: 1.6rem;
+  height: 1.6rem;
+  color: var(--accent);
+  flex-shrink: 0;
+}
+
+.header__wordmark {
+  font-size: 1.05rem;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+}
+
+.header__wordmark span {
+  color: var(--accent);
 }
 
 .header__nav {

@@ -6,7 +6,7 @@ import { User } from './user.model.js';
 
 async function loadUser(userId: string) {
   const user = await User.findById(userId);
-  if (!user) throw ApiError.notFound('Usuario');
+  if (!user) throw ApiError.notFound('User');
   return user;
 }
 
@@ -18,7 +18,7 @@ export async function listFavorites(userId: string): Promise<FlatDto[]> {
 
 export async function addFavorite(userId: string, flatId: string): Promise<FlatDto[]> {
   const exists = await Flat.exists({ _id: flatId });
-  if (!exists) throw ApiError.notFound('Piso');
+  if (!exists) throw ApiError.notFound('Flat');
 
   // $addToSet en lugar de push: repetir la llamada no duplica el favorito.
   await User.updateOne({ _id: userId }, { $addToSet: { favoriteFlatIds: flatId } });

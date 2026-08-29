@@ -17,16 +17,16 @@ export class ApiError extends Error {
     return new ApiError(400, 'BAD_REQUEST', message, details);
   }
 
-  static unauthorized(message = 'No autenticado') {
+  static unauthorized(message = 'Not authenticated') {
     return new ApiError(401, 'UNAUTHORIZED', message);
   }
 
-  static forbidden(message = 'No tienes permiso para realizar esta acción') {
+  static forbidden(message = 'You do not have permission to do that') {
     return new ApiError(403, 'FORBIDDEN', message);
   }
 
   static notFound(resource: string) {
-    return new ApiError(404, 'NOT_FOUND', `${resource} no encontrado`);
+    return new ApiError(404, 'NOT_FOUND', `${resource} not found`);
   }
 
   static conflict(message: string) {

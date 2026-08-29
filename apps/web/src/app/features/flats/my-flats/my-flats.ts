@@ -38,7 +38,7 @@ export class MyFlats {
   }
 
   remove(flat: Flat): void {
-    if (!confirm(`Seguro que quieres eliminar el piso de ${flat.city}?`)) return;
+    if (!confirm(`Delete the flat in ${flat.city}? This cannot be undone.`)) return;
 
     this.flatsService.remove(flat.id).subscribe({
       next: () => this.flats.update((list) => list.filter((f) => f.id !== flat.id)),

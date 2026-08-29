@@ -7,7 +7,7 @@ import * as flatService from './flat.service.js';
 function assertCanManage(flat: { ownerId: { toString(): string } }, req: Request) {
   const isOwner = flat.ownerId.toString() === req.user!.sub;
   if (!isOwner && req.user!.role !== 'admin') {
-    throw ApiError.forbidden('Este piso no te pertenece');
+    throw ApiError.forbidden('This flat does not belong to you');
   }
 }
 

@@ -8,10 +8,10 @@ import { z } from 'zod';
 const envSchema = z.object({
   NODE_ENV: z.enum(['development', 'test', 'production']).default('development'),
   PORT: z.coerce.number().int().positive().default(3000),
-  MONGO_URL: z.string().min(1, 'MONGO_URL es obligatoria'),
+  MONGO_URL: z.string().min(1, 'MONGO_URL is required'),
   SECRET_KEY: z
     .string()
-    .min(32, 'SECRET_KEY debe tener al menos 32 caracteres'),
+    .min(32, 'SECRET_KEY must be at least 32 characters long'),
   JWT_EXPIRES_IN: z.string().default('2h'),
   /** Orígenes permitidos por CORS, separados por comas. */
   CORS_ORIGIN: z.string().default('http://localhost:4200'),
@@ -23,7 +23,7 @@ if (!parsed.success) {
   const detail = parsed.error.issues
     .map((i) => `  - ${i.path.join('.')}: ${i.message}`)
     .join('\n');
-  throw new Error(`Configuración de entorno inválida:\n${detail}`);
+  throw new Error(`Invalid environment configuration:\n${detail}`);
 }
 
 export const env = parsed.data;

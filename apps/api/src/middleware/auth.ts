@@ -30,7 +30,7 @@ function extractToken(req: Request): string | null {
 export function requireAuth(req: Request, _res: Response, next: NextFunction): void {
   const token = extractToken(req);
   if (!token) {
-    return next(ApiError.unauthorized('Falta el token de autenticación'));
+    return next(ApiError.unauthorized('Missing authentication token'));
   }
   try {
     const decoded = jwt.verify(token, env.SECRET_KEY) as AuthPayload;
@@ -39,7 +39,7 @@ export function requireAuth(req: Request, _res: Response, next: NextFunction): v
   } catch {
     // No distinguimos entre token caducado, malformado o con firma inválida:
     // al cliente le basta con saber que debe volver a autenticarse.
-    next(ApiError.unauthorized('Token inválido o caducado'));
+    next(ApiError.unauthorized('Invalid or expired token'));
   }
 }
 

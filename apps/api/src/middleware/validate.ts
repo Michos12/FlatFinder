@@ -19,7 +19,7 @@ export function validate(schema: ZodType, target: Target = 'body'): RequestHandl
     const result = schema.safeParse(req[target]);
     if (!result.success) {
       return next(
-        ApiError.badRequest('Los datos enviados no son válidos', toDetails(result.error)),
+        ApiError.badRequest('The submitted data is not valid', toDetails(result.error)),
       );
     }
     // Se reasigna para quedarnos con el dato ya parseado (fechas, numeros,

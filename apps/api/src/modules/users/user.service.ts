@@ -25,7 +25,7 @@ function signToken(doc: UserDocument): string {
 
 export async function register(input: RegisterInput) {
   const exists = await User.exists({ email: input.email });
-  if (exists) throw ApiError.conflict('Ya existe una cuenta con ese email');
+  if (exists) throw ApiError.conflict('An account with that email already exists');
 
   // El rol se fija en el servidor. Nunca se toma del cuerpo de la petición.
   const user = await User.create({ ...input, role: 'guest' satisfies UserRole });
@@ -39,7 +39,7 @@ export async function login(email: string, password: string) {
   // la contraseña no coincide: de lo contrario la API permite enumerar cuentas.
   const valid = user ? await user.comparePassword(password) : false;
   if (!user || !valid) {
-    throw new ApiError(401, 'INVALID_CREDENTIALS', 'Email o contraseña incorrectos');
+    throw new ApiError(401, 'INVALID_CREDENTIALS', 'Incorrect email or password');
   }
 
   return { user: toUserDto(user), token: signToken(user) };
@@ -52,7 +52,7 @@ export async function listUsers(): Promise<UserDto[]> {
 
 export async function getUserById(id: string): Promise<UserDto> {
   const user = await User.findById(id);
-  if (!user) throw ApiError.notFound('Usuario');
+  if (!user) throw ApiError.notFound('User');
   return toUserDto(user);
 }
 
@@ -63,7 +63,7 @@ export async function updateUser(
   // Se carga y se guarda el documento, en lugar de findByIdAndUpdate, para que
   // el hook pre('save') hashee la contraseña cuando venga en la petición.
   const user = await User.findById(id).select('+password');
-  if (!user) throw ApiError.notFound('Usuario');
+  if (!user) throw ApiError.notFound('User');
 
   Object.assign(user, input);
   await user.save();
@@ -72,7 +72,7 @@ export async function updateUser(
 
 export async function updateUserRole(id: string, role: UserRole): Promise<UserDto> {
   const user = await User.findById(id);
-  if (!user) throw ApiError.notFound('Usuario');
+  if (!user) throw ApiError.notFound('User');
   user.role = role;
   await user.save();
   return toUserDto(user);
@@ -80,5 +80,5 @@ export async function updateUserRole(id: string, role: UserRole): Promise<UserDt
 
 export async function deleteUser(id: string): Promise<void> {
   const deleted = await User.findByIdAndDelete(id);
-  if (!deleted) throw ApiError.notFound('Usuario');
+  if (!deleted) throw ApiError.notFound('User');
 }

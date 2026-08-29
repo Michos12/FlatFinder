@@ -72,7 +72,7 @@ export class Profile {
         this.auth.setCurrentUser(updated);
         this.saving.set(false);
         this.editing.set(false);
-        this.successMessage.set('Perfil actualizado');
+        this.successMessage.set('Profile updated');
       },
       error: (error: unknown) => {
         this.saving.set(false);

@@ -76,7 +76,7 @@ export async function listFlatsByOwner(ownerId: string): Promise<FlatDto[]> {
 /** Devuelve el documento, no el DTO: los controladores necesitan el ownerId. */
 export async function getFlatDocument(id: string): Promise<FlatDocument> {
   const flat = await Flat.findById(id);
-  if (!flat) throw ApiError.notFound('Piso');
+  if (!flat) throw ApiError.notFound('Flat');
   return flat;
 }
 

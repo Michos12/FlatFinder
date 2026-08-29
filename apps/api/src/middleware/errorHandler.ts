@@ -6,7 +6,7 @@ import { ApiError } from '../lib/ApiError.js';
 export const notFoundHandler: RequestHandler = (req, res) => {
   res.status(404).json({
     success: false,
-    error: { code: 'NOT_FOUND', message: `Ruta no encontrada: ${req.method} ${req.originalUrl}` },
+    error: { code: 'NOT_FOUND', message: `Route not found: ${req.method} ${req.originalUrl}` },
   });
 };
 
@@ -24,7 +24,7 @@ export const errorHandler: ErrorRequestHandler = (err, _req, res, _next) => {
   if (err instanceof mongoose.Error.CastError) {
     res.status(400).json({
       success: false,
-      error: { code: 'INVALID_ID', message: `Identificador inválido: ${err.value}` },
+      error: { code: 'INVALID_ID', message: `Invalid identifier: ${err.value}` },
     });
     return;
   }
@@ -36,7 +36,7 @@ export const errorHandler: ErrorRequestHandler = (err, _req, res, _next) => {
     }
     res.status(400).json({
       success: false,
-      error: { code: 'VALIDATION_ERROR', message: 'Datos inválidos', details },
+      error: { code: 'VALIDATION_ERROR', message: 'Invalid data', details },
     });
     return;
   }
@@ -45,7 +45,7 @@ export const errorHandler: ErrorRequestHandler = (err, _req, res, _next) => {
   if (typeof err === 'object' && err !== null && (err as { code?: number }).code === 11000) {
     res.status(409).json({
       success: false,
-      error: { code: 'CONFLICT', message: 'El recurso ya existe' },
+      error: { code: 'CONFLICT', message: 'That resource already exists' },
     });
     return;
   }
@@ -58,7 +58,7 @@ export const errorHandler: ErrorRequestHandler = (err, _req, res, _next) => {
       // En produccion no se filtra el detalle interno al cliente.
       message:
         env.NODE_ENV === 'production'
-          ? 'Error interno del servidor'
+          ? 'Internal server error'
           : err instanceof Error
             ? err.message
             : String(err),

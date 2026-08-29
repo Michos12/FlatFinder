@@ -1,5 +1,5 @@
 import { registerLocaleData } from '@angular/common';
-import localeEs from '@angular/common/locales/es';
+import localeEnCa from '@angular/common/locales/en-CA';
 import { provideHttpClient, withInterceptors } from '@angular/common/http';
 import {
   ApplicationConfig,
@@ -16,14 +16,13 @@ import { authInterceptor } from './core/interceptors/auth.interceptor';
 import { errorInterceptor } from './core/interceptors/error.interceptor';
 import { routes } from './app.routes';
 
-// Sin esto, DatePipe y CurrencyPipe formatean en en-US: las fechas salían
-// como "January 9, 2027" y los precios como "$2,000.00" en una interfaz
-// enteramente en español.
-registerLocaleData(localeEs);
+// en-CA para que CurrencyPipe muestre CAD como "$2,000" y no como "CA$2,000",
+// que es lo que hace el en-US por defecto.
+registerLocaleData(localeEnCa);
 
 export const appConfig: ApplicationConfig = {
   providers: [
-    { provide: LOCALE_ID, useValue: 'es' },
+    { provide: LOCALE_ID, useValue: 'en-CA' },
     provideBrowserGlobalErrorListeners(),
     provideZonelessChangeDetection(),
     provideRouter(routes, withComponentInputBinding()),

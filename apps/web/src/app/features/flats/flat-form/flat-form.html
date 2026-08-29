@@ -1,6 +1,6 @@
 <section class="page">
-  <h1 class="page__title">Publicar un piso</h1>
-  <p class="page__subtitle">Cuántos más datos, más fácil será que te escriban.</p>
+  <h1 class="page__title">List a flat</h1>
+  <p class="page__subtitle">The more detail you give, the more likely people are to write.</p>
 
   <form class="flat-form" [formGroup]="form" (ngSubmit)="createFlat()">
     @if (errorMessage()) {
@@ -9,39 +9,39 @@
 
     <div class="flat-form__grid">
       <div class="field">
-        <label for="city">Ciudad</label>
+        <label for="city">City</label>
         <input id="city" type="text" formControlName="city" />
         @if (form.controls.city.touched && form.controls.city.invalid) {
-          <span class="field__error">La ciudad es obligatoria</span>
+          <span class="field__error">City is required</span>
         }
       </div>
 
       <div class="field">
-        <label for="streetName">Calle</label>
+        <label for="streetName">Street</label>
         <input id="streetName" type="text" formControlName="streetName" />
         @if (form.controls.streetName.touched && form.controls.streetName.invalid) {
-          <span class="field__error">La calle es obligatoria</span>
+          <span class="field__error">Street is required</span>
         }
       </div>
 
       <div class="field">
-        <label for="streetNumber">Número</label>
+        <label for="streetNumber">Number</label>
         <input id="streetNumber" type="number" min="0" formControlName="streetNumber" />
         @if (form.controls.streetNumber.touched && form.controls.streetNumber.invalid) {
-          <span class="field__error">Introduce un número válido</span>
+          <span class="field__error">Enter a valid number</span>
         }
       </div>
 
       <div class="field">
-        <label for="areaSize">Superficie (m²)</label>
+        <label for="areaSize">Floor area (m²)</label>
         <input id="areaSize" type="number" min="1" formControlName="areaSize" />
         @if (form.controls.areaSize.touched && form.controls.areaSize.invalid) {
-          <span class="field__error">La superficie debe ser mayor que cero</span>
+          <span class="field__error">Area must be greater than zero</span>
         }
       </div>
 
       <div class="field">
-        <label for="yearBuilt">Año de construcción</label>
+        <label for="yearBuilt">Year built</label>
         <input
           id="yearBuilt"
           type="number"
@@ -50,49 +50,49 @@
           formControlName="yearBuilt"
         />
         @if (form.controls.yearBuilt.touched && form.controls.yearBuilt.invalid) {
-          <span class="field__error">Entre 1800 y {{ currentYear }}</span>
+          <span class="field__error">Between 1800 and {{ currentYear }}</span>
         }
       </div>
 
       <div class="field">
-        <label for="rentPrice">Precio mensual</label>
+        <label for="rentPrice">Monthly rent</label>
         <input id="rentPrice" type="number" min="0" formControlName="rentPrice" />
         @if (form.controls.rentPrice.touched && form.controls.rentPrice.invalid) {
-          <span class="field__error">Introduce un precio válido</span>
+          <span class="field__error">Enter a valid price</span>
         }
       </div>
 
       <div class="field">
-        <label for="dateAvailable">Disponible desde</label>
+        <label for="dateAvailable">Available from</label>
         <input id="dateAvailable" type="date" formControlName="dateAvailable" />
         @if (form.controls.dateAvailable.touched && form.controls.dateAvailable.invalid) {
-          <span class="field__error">La fecha es obligatoria</span>
+          <span class="field__error">The date is required</span>
         }
       </div>
 
       <div class="field flat-form__checkbox">
         <label for="hasAC">
           <input id="hasAC" type="checkbox" formControlName="hasAC" />
-          Tiene aire acondicionado
+          Has air conditioning
         </label>
       </div>
     </div>
 
     <div class="field">
-      <label for="imageUrl">URL de la imagen (opcional)</label>
-      <input id="imageUrl" type="url" formControlName="imageUrl" placeholder="https://..." />
+      <label for="imageUrl">Image URL (optional)</label>
+      <input id="imageUrl" type="url" formControlName="imageUrl" placeholder="https://…" />
     </div>
 
     <div class="field">
-      <label for="description">Descripción (opcional)</label>
+      <label for="description">Description (optional)</label>
       <textarea id="description" rows="4" formControlName="description"></textarea>
     </div>
 
     <div class="flat-form__actions">
       <button type="submit" class="btn btn--primary" [disabled]="submitting()">
-        {{ submitting() ? 'Publicando...' : 'Publicar piso' }}
+        {{ submitting() ? 'Publishing…' : 'Publish flat' }}
       </button>
-      <a class="btn" routerLink="/my-flats">Cancelar</a>
+      <a class="btn" routerLink="/my-flats">Cancel</a>
     </div>
   </form>
 </section>

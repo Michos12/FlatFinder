@@ -1,10 +1,10 @@
 <section class="page">
   <div class="page__head">
     <div>
-      <h1 class="page__title">Mis pisos</h1>
-      <p class="page__subtitle">Los anuncios que has publicado.</p>
+      <h1 class="page__title">My flats</h1>
+      <p class="page__subtitle">The listings you have published.</p>
     </div>
-    <a class="btn btn--primary" routerLink="/flats/new">Publicar piso</a>
+    <a class="btn btn--primary" routerLink="/flats/new">List a flat</a>
   </div>
 
   @if (errorMessage()) {
@@ -12,15 +12,15 @@
   }
 
   @if (loading()) {
-    <p class="empty-state">Cargando tus pisos...</p>
+    <p class="empty-state">Loading your flats…</p>
   } @else if (flats().length === 0) {
-    <p class="empty-state">Todavía no has publicado ningún piso.</p>
+    <p class="empty-state">You haven't published any flats yet.</p>
   } @else {
     <div class="grid">
       @for (flat of flats(); track flat.id) {
         <app-flat-card [flat]="flat">
-          <a class="btn" [routerLink]="['/flats', flat.id]">Ver detalle</a>
-          <button type="button" class="btn btn--danger" (click)="remove(flat)">Eliminar</button>
+          <a class="btn" [routerLink]="['/flats', flat.id]">View details</a>
+          <button type="button" class="btn btn--danger" (click)="remove(flat)">Delete</button>
         </app-flat-card>
       }
     </div>

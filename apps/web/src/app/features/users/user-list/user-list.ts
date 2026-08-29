@@ -50,7 +50,7 @@ export class UserList {
   }
 
   remove(user: User): void {
-    if (!confirm(`Eliminar la cuenta de ${user.email}?`)) return;
+    if (!confirm(`Delete the account for ${user.email}? This cannot be undone.`)) return;
     this.usersService.remove(user.id).subscribe({
       next: () => this.users.update((list) => list.filter((u) => u.id !== user.id)),
       error: (error: unknown) => this.errorMessage.set(messageOf(error)),

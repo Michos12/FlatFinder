@@ -1,39 +1,39 @@
 <section class="page">
   <div class="page__head">
     <div>
-      <h1 class="page__title">Pisos disponibles</h1>
-      <p class="page__subtitle">Filtra por ciudad, precio y superficie.</p>
+      <h1 class="page__title">Flats available</h1>
+      <p class="page__subtitle">Filter by city, price and floor area.</p>
     </div>
-    <a class="btn btn--primary" routerLink="/flats/new">Publicar piso</a>
+    <a class="btn btn--primary" routerLink="/flats/new">List a flat</a>
   </div>
 
   <form class="filters" [formGroup]="filters">
     <div class="field">
-      <label for="city">Ciudad</label>
+      <label for="city">City</label>
       <input id="city" type="search" formControlName="city" placeholder="Vancouver" />
     </div>
     <div class="field">
-      <label for="maxPrice">Precio máximo</label>
+      <label for="maxPrice">Max price</label>
       <input id="maxPrice" type="number" min="0" formControlName="maxPrice" />
     </div>
     <div class="field">
-      <label for="minArea">Superficie mínima (m²)</label>
+      <label for="minArea">Min area (m²)</label>
       <input id="minArea" type="number" min="0" formControlName="minArea" />
     </div>
     <div class="field">
-      <label for="sortBy">Ordenar por</label>
+      <label for="sortBy">Sort by</label>
       <select id="sortBy" formControlName="sortBy">
-        <option value="createdAt">Más recientes</option>
-        <option value="rentPrice">Precio</option>
-        <option value="areaSize">Superficie</option>
-        <option value="city">Ciudad</option>
+        <option value="createdAt">Newest</option>
+        <option value="rentPrice">Price</option>
+        <option value="areaSize">Floor area</option>
+        <option value="city">City</option>
       </select>
     </div>
     <div class="field">
-      <label for="order">Orden</label>
+      <label for="order">Order</label>
       <select id="order" formControlName="order">
-        <option value="desc">Descendente</option>
-        <option value="asc">Ascendente</option>
+        <option value="desc">Descending</option>
+        <option value="asc">Ascending</option>
       </select>
     </div>
   </form>
@@ -43,18 +43,18 @@
   }
 
   @if (loading()) {
-    <p class="empty-state">Cargando pisos...</p>
+    <p class="empty-state">Loading flats…</p>
   } @else if (flats().length === 0) {
-    <p class="empty-state">No hay pisos que coincidan con estos filtros.</p>
+    <p class="empty-state">No flats match these filters.</p>
   } @else {
-    <p class="filters__count">{{ total() }} piso(s) encontrados</p>
+    <p class="filters__count">{{ total() }} flat(s) found</p>
     <div class="grid">
       @for (flat of flats(); track flat.id) {
         <app-flat-card [flat]="flat">
           <button type="button" class="btn" (click)="toggleFavorite(flat)">
-            {{ isFavorite(flat) ? 'Quitar de favoritos' : 'Añadir a favoritos' }}
+            {{ isFavorite(flat) ? 'Remove from favourites' : 'Add to favourites' }}
           </button>
-          <a class="btn btn--primary" [routerLink]="['/flats', flat.id]">Ver detalle</a>
+          <a class="btn btn--primary" [routerLink]="['/flats', flat.id]">View details</a>
         </app-flat-card>
       }
     </div>

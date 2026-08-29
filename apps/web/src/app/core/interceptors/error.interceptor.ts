@@ -8,9 +8,9 @@ export function messageOf(error: unknown): string {
   if (error instanceof HttpErrorResponse) {
     const body = error.error as { error?: { message?: string } } | null;
     if (body?.error?.message) return body.error.message;
-    if (error.status === 0) return 'No se pudo contactar con el servidor';
+    if (error.status === 0) return 'Could not reach the server';
   }
-  return 'Ha ocurrido un error inesperado';
+  return 'Something went wrong';
 }
 
 /**

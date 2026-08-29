@@ -1,25 +1,25 @@
 <section class="page">
-  <h1 class="page__title">Usuarios</h1>
-  <p class="page__subtitle">Gestión de cuentas y roles. Solo para administradores.</p>
+  <h1 class="page__title">Users</h1>
+  <p class="page__subtitle">Account and role management. Administrators only.</p>
 
   @if (errorMessage()) {
     <p class="alert alert--error">{{ errorMessage() }}</p>
   }
 
   @if (loading()) {
-    <p class="empty-state">Cargando usuarios...</p>
+    <p class="empty-state">Loading users…</p>
   } @else if (users().length === 0) {
-    <p class="empty-state">No hay usuarios registrados.</p>
+    <p class="empty-state">No users registered.</p>
   } @else {
     <div class="table-wrapper">
       <table class="table">
         <thead>
           <tr>
-            <th>Nombre</th>
+            <th>Name</th>
             <th>Email</th>
-            <th>Rol</th>
-            <th>Alta</th>
-            <th><span class="visually-hidden">Acciones</span></th>
+            <th>Role</th>
+            <th>Joined</th>
+            <th><span class="visually-hidden">Actions</span></th>
           </tr>
         </thead>
         <tbody>
@@ -28,7 +28,7 @@
               <td>
                 {{ user.firstName }} {{ user.lastName }}
                 @if (isSelf(user)) {
-                  <span class="user-list__self">tu</span>
+                  <span class="user-list__self">you</span>
                 }
               </td>
               <td>{{ user.email }}</td>
@@ -37,7 +37,7 @@
                   [value]="user.role"
                   [disabled]="isSelf(user)"
                   (change)="changeRole(user, $event)"
-                  [attr.aria-label]="'Rol de ' + user.email"
+                  [attr.aria-label]="'Role for ' + user.email"
                 >
                   @for (role of roles; track role) {
                     <option [value]="role">{{ role }}</option>
@@ -52,7 +52,7 @@
                   [disabled]="isSelf(user)"
                   (click)="remove(user)"
                 >
-                  Eliminar
+                  Delete
                 </button>
               </td>
             </tr>

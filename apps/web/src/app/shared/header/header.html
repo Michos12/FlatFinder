@@ -1,18 +1,32 @@
 @if (isAuthenticated()) {
   <header class="header">
     <div class="header__inner">
-      <a class="header__brand" routerLink="/">
-        <img src="assets/logo.png" alt="FlatFinder" />
+      <a class="header__brand" routerLink="/" aria-label="FlatFinder, go to home">
+        <svg
+          class="header__mark"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="1.8"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          aria-hidden="true"
+        >
+          <path d="M3 10.5 12 3l9 7.5" />
+          <path d="M5.5 9.6V20a1 1 0 0 0 1 1h11a1 1 0 0 0 1-1V9.6" />
+          <path d="M9.5 21v-6h5v6" />
+        </svg>
+        <span class="header__wordmark">Flat<span>Finder</span></span>
       </a>
 
       <nav class="header__nav">
         <a routerLink="/" routerLinkActive="is-active" [routerLinkActiveOptions]="{ exact: true }">
-          Pisos
+          Browse
         </a>
-        <a routerLink="/my-flats" routerLinkActive="is-active">Mis pisos</a>
-        <a routerLink="/favorites" routerLinkActive="is-active">Favoritos</a>
+        <a routerLink="/my-flats" routerLinkActive="is-active">My flats</a>
+        <a routerLink="/favorites" routerLinkActive="is-active">Favourites</a>
         @if (isAdmin()) {
-          <a routerLink="/users" routerLinkActive="is-active">Usuarios</a>
+          <a routerLink="/users" routerLinkActive="is-active">Users</a>
         }
       </nav>
 
@@ -20,7 +34,7 @@
         @if (user(); as currentUser) {
           <a class="header__name" routerLink="/profile">{{ currentUser.firstName }}</a>
         }
-        <button type="button" class="btn" (click)="logout()">Salir</button>
+        <button type="button" class="btn" (click)="logout()">Log out</button>
       </div>
     </div>
   </header>

@@ -9,5 +9,5 @@ import { ApiError } from './ApiError.js';
 export function param(req: Request, name: string): string {
   const value = req.params[name];
   if (typeof value === 'string' && value.length > 0) return value;
-  throw ApiError.badRequest(`Falta el parámetro de ruta "${name}"`);
+  throw ApiError.badRequest(`Missing route parameter "${name}"`);
 }

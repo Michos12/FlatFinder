@@ -1,7 +1,7 @@
 import { z } from 'zod';
 import { USER_ROLES } from '@flatfinder/types';
 
-const email = z.string().trim().toLowerCase().email('Email inválido');
+const email = z.string().trim().toLowerCase().email('Invalid email');
 
 /**
  * Mínimo razonable para una app de portafolio: longitud suficiente y algo de
@@ -9,22 +9,22 @@ const email = z.string().trim().toLowerCase().email('Email inválido');
  */
 const password = z
   .string()
-  .min(8, 'La contraseña debe tener al menos 8 caracteres')
-  .max(72, 'La contraseña no puede superar los 72 caracteres')
-  .regex(/[a-z]/, 'Debe incluir una minúscula')
-  .regex(/[A-Z]/, 'Debe incluir una mayúscula')
-  .regex(/[0-9]/, 'Debe incluir un número');
+  .min(8, 'Password must be at least 8 characters long')
+  .max(72, 'Password cannot exceed 72 characters')
+  .regex(/[a-z]/, 'Must include a lowercase letter')
+  .regex(/[A-Z]/, 'Must include an uppercase letter')
+  .regex(/[0-9]/, 'Must include a number');
 
 const birthDate = z.coerce
   .date()
-  .max(new Date(), 'La fecha de nacimiento no puede ser futura')
-  .refine((d) => d.getFullYear() > 1900, 'Fecha de nacimiento poco plausible');
+  .max(new Date(), 'Date of birth cannot be in the future')
+  .refine((d) => d.getFullYear() > 1900, 'Date of birth is not plausible');
 
 export const registerSchema = z.object({
   email,
   password,
-  firstName: z.string().trim().min(1, 'El nombre es obligatorio').max(80),
-  lastName: z.string().trim().min(1, 'El apellido es obligatorio').max(80),
+  firstName: z.string().trim().min(1, 'First name is required').max(80),
+  lastName: z.string().trim().min(1, 'Last name is required').max(80),
   birthDate,
   // 'role' se omite deliberadamente: aceptarlo aquí permitia registrarse
   // como admin enviandolo en el cuerpo de la petición.
@@ -32,7 +32,7 @@ export const registerSchema = z.object({
 
 export const loginSchema = z.object({
   email,
-  password: z.string().min(1, 'La contraseña es obligatoria'),
+  password: z.string().min(1, 'Password is required'),
 });
 
 export const updateUserSchema = z
