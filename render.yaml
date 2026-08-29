@@ -1,0 +1,24 @@
+# Blueprint de Render para el API. La base de datos va aparte, en MongoDB
+# Atlas: MONGO_URL se rellena a mano en el panel.
+services:
+  - type: web
+    name: flatfinder-api
+    runtime: docker
+    dockerfilePath: ./apps/api/Dockerfile
+    dockerContext: .
+    healthCheckPath: /api/health
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: PORT
+        value: 3000
+      - key: MONGO_URL
+        sync: false
+      - key: SECRET_KEY
+        generateValue: true
+      - key: JWT_EXPIRES_IN
+        value: 2h
+      # El frontend se sirve desde Vercel y llama al API por un rewrite del
+      # mismo origen, asi que CORS solo hace falta para desarrollo local.
+      - key: CORS_ORIGIN
+        value: http://localhost:4200

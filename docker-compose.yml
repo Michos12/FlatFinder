@@ -1,0 +1,19 @@
+# Mongo para desarrollo local. El API y el frontend se arrancan con
+# `npm run dev:api` y `npm run dev:web`, que recargan al guardar.
+services:
+  mongo:
+    image: mongo:7
+    container_name: flatfinder-mongo
+    restart: unless-stopped
+    ports:
+      - '27017:27017'
+    volumes:
+      - mongo-data:/data/db
+    healthcheck:
+      test: ['CMD', 'mongosh', '--quiet', '--eval', "db.adminCommand('ping')"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+volumes:
+  mongo-data:
