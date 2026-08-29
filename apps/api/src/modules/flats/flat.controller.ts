@@ -3,7 +3,7 @@ import { ApiError } from '../../lib/ApiError.js';
 import { param } from '../../lib/params.js';
 import * as flatService from './flat.service.js';
 
-/** Solo el propietario del piso o un admin pueden modificarlo o borrarlo. */
+/** Only the flat's owner or an admin may edit or delete it. */
 function assertCanManage(flat: { ownerId: { toString(): string } }, req: Request) {
   const isOwner = flat.ownerId.toString() === req.user!.sub;
   if (!isOwner && req.user!.role !== 'admin') {

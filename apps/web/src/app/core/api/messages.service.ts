@@ -6,7 +6,7 @@ import { ApiService } from './api.service';
 export class MessagesService {
   private readonly api = inject(ApiService);
 
-  /** El propietario recibe toda la conversación; el resto, solo lo suyo. */
+  /** The owner gets the whole conversation; everyone else only their own. */
   listByFlat(flatId: string) {
     return this.api.get<Message[]>(`/flats/${flatId}/messages`);
   }

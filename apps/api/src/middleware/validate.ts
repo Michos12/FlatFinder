@@ -13,7 +13,7 @@ function toDetails(error: ZodError): Record<string, string[]> {
   return details;
 }
 
-/** Valida y normaliza una parte de la petición contra un esquema de Zod. */
+/** Validates and normalises one part of the request against a Zod schema. */
 export function validate(schema: ZodType, target: Target = 'body'): RequestHandler {
   return (req, _res, next) => {
     const result = schema.safeParse(req[target]);
@@ -22,8 +22,8 @@ export function validate(schema: ZodType, target: Target = 'body'): RequestHandl
         ApiError.badRequest('The submitted data is not valid', toDetails(result.error)),
       );
     }
-    // Se reasigna para quedarnos con el dato ya parseado (fechas, numeros,
-    // booleanos) y sin las claves que el esquema no contempla.
+    // Reassigned so we keep the parsed value (dates, numbers, booleans) and
+    // drop any keys the schema does not describe.
     Object.defineProperty(req, target, { value: result.data, writable: true });
     next();
   };

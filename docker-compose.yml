@@ -1,5 +1,5 @@
-# Mongo para desarrollo local. El API y el frontend se arrancan con
-# `npm run dev:api` y `npm run dev:web`, que recargan al guardar.
+# Mongo for local development. The API and the frontend are started with
+# `npm run dev:api` and `npm run dev:web`, which reload on save.
 services:
   mongo:
     image: mongo:7

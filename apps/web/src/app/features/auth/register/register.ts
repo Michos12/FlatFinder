@@ -23,8 +23,8 @@ export class Register {
     lastName: ['', [Validators.required, Validators.minLength(2)]],
     email: ['', [Validators.required, Validators.email]],
     birthDate: ['', [Validators.required]],
-    // Mismas reglas que el esquema del API, para que el error salte aquí
-    // en vez de volver del servidor.
+    // Same rules as the API schema, so the error shows up here instead of
+    // coming back from the server.
     password: [
       '',
       [
@@ -33,7 +33,7 @@ export class Register {
         Validators.pattern(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).+$/),
       ],
     ],
-    // El campo 'role' desaparece del formulario: el rol lo asigna el servidor.
+    // The 'role' field is gone from the form: the server assigns the role.
   });
 
   onSubmit(): void {

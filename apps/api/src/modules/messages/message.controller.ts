@@ -4,7 +4,7 @@ import { param } from '../../lib/params.js';
 import { getFlatDocument } from '../flats/flat.service.js';
 import * as messageService from './message.service.js';
 
-/** El id del piso llega del router padre gracias a mergeParams. */
+/** The flat id comes from the parent router thanks to mergeParams. */
 function flatIdOf(req: Request): string {
   return param(req, 'id');
 }
@@ -13,8 +13,8 @@ export async function listMessagesController(req: Request, res: Response) {
   const flat = await getFlatDocument(flatIdOf(req));
   const isOwner = flat.ownerId.toString() === req.user!.sub;
 
-  // El propietario ve toda la conversación del piso; cualquier otro usuario
-  // ve únicamente los mensajes que ha enviado el mismo.
+  // The owner sees the whole conversation for the flat; anyone else sees only
+  // the messages they sent themselves.
   const messages = isOwner
     ? await messageService.listMessagesByFlat(flat.id as string)
     : await messageService.listMessagesByFlatAndSender(flat.id as string, req.user!.sub);

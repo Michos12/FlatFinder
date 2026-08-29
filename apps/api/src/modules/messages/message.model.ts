@@ -30,7 +30,7 @@ const messageSchema = new Schema<MessageDoc>(
   },
 );
 
-// Las dos consultas del modulo filtran por piso y ordenan por fecha.
+// Both queries in this module filter by flat and sort by date.
 messageSchema.index({ flatId: 1, createdAt: 1 });
 
 export const Message: Model<MessageDoc> = mongoose.model<MessageDoc>('Message', messageSchema);

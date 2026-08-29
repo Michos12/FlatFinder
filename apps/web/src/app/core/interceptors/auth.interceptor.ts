@@ -2,7 +2,7 @@ import type { HttpInterceptorFn } from '@angular/common/http';
 import { inject } from '@angular/core';
 import { AuthService } from '../api/auth.service';
 
-/** Adjunta el token a toda petición saliente hacia el API. */
+/** Attaches the token to every outgoing request to the API. */
 export const authInterceptor: HttpInterceptorFn = (req, next) => {
   const token = inject(AuthService).token();
   if (!token) return next(req);

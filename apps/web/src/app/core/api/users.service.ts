@@ -6,7 +6,7 @@ import { ApiService } from './api.service';
 export class UsersService {
   private readonly api = inject(ApiService);
 
-  /** Solo accesible para administradores. */
+  /** Administrators only. */
   list() {
     return this.api.get<User[]>('/users');
   }

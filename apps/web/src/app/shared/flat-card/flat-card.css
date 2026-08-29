@@ -1,6 +1,6 @@
-/* El elemento de la rejilla es <app-flat-card>, no .flat-card. Sin esto la
-   tarjeta no estira hasta el alto de la fila y los botones de cada tarjeta
-   quedan a distinta altura. */
+/* The grid item is <app-flat-card>, not .flat-card. Without this the card
+   does not stretch to the row height and the buttons on each card end up at
+   different heights. */
 :host {
   display: flex;
 }
@@ -22,7 +22,7 @@
   box-shadow: var(--shadow-lg);
 }
 
-/* La foto manda: 16:10 a sangre, sin margen alrededor. */
+/* The photo leads: 16:10, full bleed, no margin around it. */
 .flat-card__media {
   position: relative;
   aspect-ratio: 16 / 10;
@@ -78,7 +78,7 @@
   margin: 0.15rem 0 0;
   font-size: 0.9rem;
   color: var(--text-muted);
-  /* Recorta a dos líneas para que todas las tarjetas midan lo mismo. */
+  /* Clamped to two lines so every card measures the same. */
   display: -webkit-box;
   -webkit-box-orient: vertical;
   -webkit-line-clamp: 2;

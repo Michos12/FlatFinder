@@ -1,5 +1,5 @@
-# Blueprint de Render para el API. La base de datos va aparte, en MongoDB
-# Atlas: MONGO_URL se rellena a mano en el panel.
+# Render blueprint for the API. The database lives separately on MongoDB
+# Atlas: MONGO_URL is filled in by hand from the dashboard.
 services:
   - type: web
     name: flatfinder-api
@@ -18,7 +18,7 @@ services:
         generateValue: true
       - key: JWT_EXPIRES_IN
         value: 2h
-      # El frontend se sirve desde Vercel y llama al API por un rewrite del
-      # mismo origen, asi que CORS solo hace falta para desarrollo local.
+      # The frontend is served from Vercel and reaches the API through a
+      # same-origin rewrite, so CORS is only needed for local development.
       - key: CORS_ORIGIN
         value: http://localhost:4200

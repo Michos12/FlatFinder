@@ -1,71 +1,71 @@
 # @flatfinder/api
 
-API REST de FlatFinder. Express 5 + MongoDB (Mongoose) + JWT, en TypeScript.
+FlatFinder's REST API. Express 5 + MongoDB (Mongoose) + JWT, in TypeScript.
 
-## Puesta en marcha
+## Getting started
 
 ```bash
-cp .env.example .env      # y rellena MONGO_URL y SECRET_KEY
-npm install               # desde la raiz del monorepo
+cp .env.example .env      # fill in MONGO_URL and SECRET_KEY
+npm install               # from the root of the monorepo
 npm run dev -w @flatfinder/api
 ```
 
-## Estructura
+## Layout
 
 ```
 src/
-├── config/     env (validada con Zod) y conexion a Mongo
-├── lib/        ApiError, asyncHandler, helpers de request
+├── config/     environment (validated with Zod) and the Mongo connection
+├── lib/        ApiError, asyncHandler, request helpers
 ├── middleware/ auth, validate, errorHandler
 ├── modules/    users · flats · messages
-│   └── <modulo>/  model · schema · service · controller · routes
-├── app.ts      la app de Express, sin abrir puerto (testeable)
-└── server.ts   arranque, conexion a BD y cierre ordenado
+│   └── <module>/  model · schema · service · controller · routes
+├── app.ts      the Express app, without opening a port (testable)
+└── server.ts   startup, database connection and graceful shutdown
 ```
 
-`app.ts` y `server.ts` estan separados a proposito: permite montar la
-aplicacion en tests de integracion sin ocupar un puerto.
+`app.ts` and `server.ts` are deliberately separate: it lets the integration
+tests mount the application without occupying a port.
 
 ## Endpoints
 
-Todas las respuestas siguen el mismo envoltorio: `{ success, data }` en
-exito y `{ success, error: { code, message, details? } }` en error.
+Every response uses the same envelope: `{ success, data }` on success and
+`{ success, error: { code, message, details? } }` on failure.
 
-| Metodo | Ruta | Acceso |
+| Method | Path | Access |
 | --- | --- | --- |
-| `POST` | `/api/users/register` | publico |
-| `POST` | `/api/users/login` | publico |
-| `GET` | `/api/users/me` | autenticado |
+| `POST` | `/api/users/register` | public |
+| `POST` | `/api/users/login` | public |
+| `GET` | `/api/users/me` | authenticated |
 | `GET` | `/api/users` | admin |
-| `GET` | `/api/users/:id` | el propio usuario o admin |
-| `PATCH` | `/api/users/:id` | el propio usuario o admin |
+| `GET` | `/api/users/:id` | the user themselves, or an admin |
+| `PATCH` | `/api/users/:id` | the user themselves, or an admin |
 | `PATCH` | `/api/users/:id/role` | admin |
-| `DELETE` | `/api/users/:id` | el propio usuario o admin |
-| `GET` | `/api/users/me/favorites` | autenticado |
-| `PUT` | `/api/users/me/favorites/:flatId` | autenticado |
-| `DELETE` | `/api/users/me/favorites/:flatId` | autenticado |
-| `GET` | `/api/flats` | autenticado (filtros y paginacion) |
-| `GET` | `/api/flats/mine` | autenticado |
-| `POST` | `/api/flats` | autenticado |
-| `GET` | `/api/flats/:id` | autenticado |
-| `PATCH` | `/api/flats/:id` | propietario o admin |
-| `DELETE` | `/api/flats/:id` | propietario o admin |
-| `GET` | `/api/flats/:id/messages` | el propietario ve todos; el resto, los suyos |
-| `POST` | `/api/flats/:id/messages` | autenticado, salvo el propietario |
+| `DELETE` | `/api/users/:id` | the user themselves, or an admin |
+| `GET` | `/api/users/me/favorites` | authenticated |
+| `PUT` | `/api/users/me/favorites/:flatId` | authenticated |
+| `DELETE` | `/api/users/me/favorites/:flatId` | authenticated |
+| `GET` | `/api/flats` | authenticated (filters and pagination) |
+| `GET` | `/api/flats/mine` | authenticated |
+| `POST` | `/api/flats` | authenticated |
+| `GET` | `/api/flats/:id` | authenticated |
+| `PATCH` | `/api/flats/:id` | owner or admin |
+| `DELETE` | `/api/flats/:id` | owner or admin |
+| `GET` | `/api/flats/:id/messages` | the owner sees all; everyone else sees their own |
+| `POST` | `/api/flats/:id/messages` | authenticated, except the owner |
 
-La autenticacion viaja en `Authorization: Bearer <token>`.
+Authentication travels in `Authorization: Bearer <token>`.
 
-## Seguridad
+## Security
 
-- Contrasenas con bcrypt (12 rondas), hasheadas en un unico hook `pre('save')`
-  y excluidas por defecto de toda consulta (`select: false`).
-- El rol nunca se acepta desde el cuerpo de la peticion: el registro siempre
-  crea un `guest` y solo un admin puede cambiar roles.
-- Validacion de entrada con Zod en cuerpo y query.
-- `helmet`, CORS restringido a los origenes de `CORS_ORIGIN`, y limitacion de
-  peticiones (mas estricta en login y registro).
-- Los errores de autorizacion devuelven 403, y el login da un mensaje generico
-  para no permitir enumerar cuentas.
+- Passwords hashed with bcrypt (12 rounds) in a single `pre('save')` hook, and
+  excluded from every query by default (`select: false`).
+- The role is never accepted from the request body: registration always
+  creates a `guest`, and only an admin can change roles.
+- Input validated with Zod, on both body and query.
+- `helmet`, CORS restricted to the origins in `CORS_ORIGIN`, and rate limiting
+  that is much stricter on login and registration.
+- Authorisation failures answer 403, and login returns a generic message so
+  accounts cannot be enumerated.
 
 ## Tests
 
@@ -73,13 +73,13 @@ La autenticacion viaja en `Authorization: Bearer <token>`.
 npm test -w @flatfinder/api
 ```
 
-Tests de integracion sobre la app real y una MongoDB en memoria: cubren
-registro, login, permisos por rol y propiedad, filtros, favoritos y
-mensajes. No necesitan ninguna base de datos externa.
+Integration tests against the real app and an in-memory MongoDB, covering
+registration, login, permissions by role and by ownership, filters, favourites
+and messages. They need no external database.
 
-## Historial
+## History
 
-Este directorio proviene del repositorio `Michos12/FlatFinder-BackEnd`, con
-las ramas `MichaelBranch` y `asuka` unificadas. El API original la
-construimos Michael Veliz (usuarios y autenticacion) y Asuka Fukuchi (pisos
-y mensajes).
+This directory comes from the `Michos12/FlatFinder-BackEnd` repository, with
+the `MichaelBranch` and `asuka` branches unified. The original API was built
+by Michael Veliz (users and authentication) and Asuka Fukuchi (flats and
+messages).

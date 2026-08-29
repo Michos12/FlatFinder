@@ -12,7 +12,7 @@ concurrency:
 
 jobs:
   verify:
-    name: Tipos, tests y build
+    name: Types, tests and build
     runs-on: ubuntu-latest
 
     steps:
@@ -23,9 +23,9 @@ jobs:
           node-version: 22
           cache: npm
 
-      # Los tests levantan una MongoDB en memoria; sin cache, cada ejecucion
-      # se descarga el binario de mongod otra vez.
-      - name: Cachear el binario de mongod
+      # The tests spin up an in-memory MongoDB; without a cache, every run
+      # downloads the mongod binary again.
+      - name: Cache the mongod binary
         uses: actions/cache@v4
         with:
           path: ~/.cache/mongodb-binaries
@@ -33,11 +33,11 @@ jobs:
 
       - run: npm ci
 
-      - name: Comprobar tipos
+      - name: Type check
         run: npm run typecheck
 
-      - name: Tests del API
+      - name: API tests
         run: npm test
 
-      - name: Build de produccion
+      - name: Production build
         run: npm run build

@@ -1,37 +1,37 @@
-/* Tokens y estilos base de FlatFinder.
+/* FlatFinder design tokens and base styles.
 
-   Paleta cálida de marketplace: la foto del piso manda, y el color se usa
-   para guiar la accion, no para decorar. */
+   Warm marketplace palette: the photo of the flat leads, and colour is used to
+   guide action rather than to decorate. */
 
 :root {
-  /* Superficies */
+  /* Surfaces */
   --bg: #faf7f2;
   --surface: #ffffff;
   --surface-muted: #f2ece3;
   --border: #e5dbcd;
 
-  /* Texto */
+  /* Text */
   --text: #2b2320;
   --text-muted: #6f6259;
 
-  /* Acento */
+  /* Accent */
   --accent: #c2410c;
   --accent-hover: #9a330a;
   --accent-soft: #fdf1ea;
   --accent-contrast: #ffffff;
 
-  /* Estados */
+  /* States */
   --danger: #b3261e;
   --danger-soft: #fdeceb;
   --success: #1d6f5c;
   --success-soft: #e8f3f0;
 
-  /* Forma */
+  /* Shape */
   --radius: 14px;
   --radius-sm: 10px;
   --radius-pill: 999px;
 
-  /* Sombras teñidas de cálido: una sombra gris sobre fondo arena se ve sucia */
+  /* Warm-tinted shadows: a grey shadow over a sand background looks dirty. */
   --shadow: 0 1px 2px rgb(67 45 32 / 6%);
   --shadow-lg: 0 10px 28px rgb(67 45 32 / 12%);
 
@@ -66,8 +66,8 @@ textarea {
   color: inherit;
 }
 
-/* Un único anillo de foco para todo. Antes no había ninguno: navegar con
-   teclado era imposible. */
+/* One focus ring for everything. There was none at all before: navigating by
+   keyboard was impossible. */
 :where(a, button, input, select, textarea, [tabindex]):focus-visible {
   outline: 2px solid var(--accent);
   outline-offset: 2px;
@@ -81,7 +81,7 @@ h3 {
   text-wrap: balance;
 }
 
-/* ---------- Estructura de página ---------- */
+/* ---------- Page structure ---------- */
 
 .page {
   max-width: var(--max-width);
@@ -129,7 +129,7 @@ h3 {
   box-shadow: var(--shadow);
 }
 
-/* ---------- Botones ---------- */
+/* ---------- Buttons ---------- */
 
 .btn {
   display: inline-flex;
@@ -176,7 +176,7 @@ h3 {
   background: var(--danger-soft);
 }
 
-/* ---------- Formularios ---------- */
+/* ---------- Forms ---------- */
 
 .field {
   display: flex;
@@ -213,7 +213,7 @@ h3 {
   color: var(--danger);
 }
 
-/* ---------- Avisos y estados ---------- */
+/* ---------- Alerts and states ---------- */
 
 .alert {
   padding: 0.75rem 1rem;
@@ -249,7 +249,7 @@ h3 {
   white-space: nowrap;
 }
 
-/* Quien prefiera menos movimiento no debería sufrir las transiciones. */
+/* Anyone who asked for less motion should not have to sit through transitions. */
 @media (prefers-reduced-motion: reduce) {
   *,
   *::before,

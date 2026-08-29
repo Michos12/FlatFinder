@@ -5,11 +5,11 @@ import request from 'supertest';
 import type { Express } from 'express';
 
 /**
- * Recorrido completo del contrato que consume apps/web. Se levanta una Mongo
- * en memoria, de modo que los tests no dependen de ninguna base externa.
+ * A full pass over the contract apps/web consumes. An in-memory MongoDB is
+ * started, so these tests depend on no external database.
  *
- * El entorno se prepara antes de importar la app, porque config/env válida
- * process.env en el momento de cargarse.
+ * The environment is prepared before importing the app, because config/env
+ * validates process.env the moment it is loaded.
  */
 let mongo: MongoMemoryServer;
 let app: Express;
@@ -17,8 +17,8 @@ let connectDatabase: (uri: string) => Promise<void>;
 let disconnectDatabase: () => Promise<void>;
 
 before(async () => {
-  // Margen amplio: la primera ejecución en una máquina limpia (o en CI)
-  // descarga el binario de mongod antes de poder arrancar.
+  // Generous window: on a clean machine (or in CI) the first run downloads the
+  // mongod binary before it can start.
   mongo = await MongoMemoryServer.create({ instance: { launchTimeout: 180_000 } });
 
   process.env['NODE_ENV'] = 'test';
@@ -73,8 +73,8 @@ let flatId = '';
 
 const auth = (token: string) => ({ Authorization: `Bearer ${token}` });
 
-describe('registro y autenticación', () => {
-  it('registra un usuario y devuelve token sin filtrar la contraseña', async () => {
+describe('registration and authentication', () => {
+  it('registers a user and returns a token without leaking the password', async () => {
     const res = await request(app).post('/api/users/register').send(owner).expect(201);
 
     assert.equal(res.body.success, true);
@@ -86,7 +86,7 @@ describe('registro y autenticación', () => {
     ownerToken = res.body.data.token;
   });
 
-  it('no permite autoasignarse el rol de admin al registrarse', async () => {
+  it('does not let you grant yourself the admin role at registration', async () => {
     const res = await request(app)
       .post('/api/users/register')
       .send({ ...tenant, role: 'admin' })
@@ -96,12 +96,12 @@ describe('registro y autenticación', () => {
     tenantToken = res.body.data.token;
   });
 
-  it('rechaza un email repetido', async () => {
+  it('rejects a duplicate email', async () => {
     const res = await request(app).post('/api/users/register').send(owner).expect(409);
     assert.equal(res.body.error.code, 'CONFLICT');
   });
 
-  it('rechaza una contraseña debil con detalle por campo', async () => {
+  it('rejects a weak password with per-field detail', async () => {
     const res = await request(app)
       .post('/api/users/register')
       .send({ ...owner, email: 'otro@flatfinder.test', password: 'corta' })
@@ -110,7 +110,7 @@ describe('registro y autenticación', () => {
     assert.ok(res.body.error.details.password.length > 0);
   });
 
-  it('da el mismo error con email inexistente que con contraseña incorrecta', async () => {
+  it('gives the same error for an unknown email as for a wrong password', async () => {
     const desconocido = await request(app)
       .post('/api/users/login')
       .send({ email: 'nadie@flatfinder.test', password: 'Contrasena1' })
@@ -124,7 +124,7 @@ describe('registro y autenticación', () => {
     assert.equal(desconocido.body.error.message, incorrecta.body.error.message);
   });
 
-  it('inicia sesión con credenciales válidas', async () => {
+  it('logs in with valid credentials', async () => {
     const res = await request(app)
       .post('/api/users/login')
       .send({ email: owner.email, password: owner.password })
@@ -136,25 +136,25 @@ describe('registro y autenticación', () => {
 });
 
 describe('proteccion de rutas', () => {
-  it('rechaza el listado de pisos sin token', async () => {
+  it('rejects the flat listing without a token', async () => {
     const res = await request(app).get('/api/flats').expect(401);
     assert.equal(res.body.error.code, 'UNAUTHORIZED');
   });
 
-  it('rechaza el listado de usuarios a quien no es admin', async () => {
+  it('rejects the user listing for anyone who is not an admin', async () => {
     const res = await request(app).get('/api/users').set(auth(ownerToken)).expect(403);
     assert.equal(res.body.error.code, 'FORBIDDEN');
   });
 
-  it('no deja consultar la ficha de otro usuario', async () => {
+  it('does not allow reading another user record', async () => {
     const me = await request(app).get('/api/users/me').set(auth(tenantToken)).expect(200);
 
     await request(app).get(`/api/users/${me.body.data.id}`).set(auth(ownerToken)).expect(403);
   });
 });
 
-describe('pisos', () => {
-  it('crea un piso y lo atribuye a quien lo publica', async () => {
+describe('flats', () => {
+  it('creates a flat and attributes it to whoever published it', async () => {
     const me = await request(app).get('/api/users/me').set(auth(ownerToken)).expect(200);
 
     const res = await request(app)
@@ -170,7 +170,7 @@ describe('pisos', () => {
     flatId = res.body.data.id;
   });
 
-  it('rechaza un piso con datos inválidos', async () => {
+  it('rejects a flat with invalid data', async () => {
     const res = await request(app)
       .post('/api/flats')
       .set(auth(ownerToken))
@@ -181,7 +181,7 @@ describe('pisos', () => {
     assert.ok(res.body.error.details.yearBuilt);
   });
 
-  it('filtra y página el listado', async () => {
+  it('filters and paginates the listing', async () => {
     const res = await request(app)
       .get('/api/flats')
       .query({ city: 'vancouver', maxPrice: 3000, limit: 10 })
@@ -192,7 +192,7 @@ describe('pisos', () => {
     assert.equal(res.body.data.items[0].id, flatId);
   });
 
-  it('devuelve vacío cuando el filtro no encaja', async () => {
+  it('comes back empty when nothing matches the filter', async () => {
     const res = await request(app)
       .get('/api/flats')
       .query({ maxPrice: 100 })
@@ -202,7 +202,7 @@ describe('pisos', () => {
     assert.equal(res.body.data.total, 0);
   });
 
-  it('impide que otro usuario edite o borre el piso', async () => {
+  it('stops another user from editing or deleting the flat', async () => {
     await request(app)
       .patch(`/api/flats/${flatId}`)
       .set(auth(tenantToken))
@@ -212,7 +212,7 @@ describe('pisos', () => {
     await request(app).delete(`/api/flats/${flatId}`).set(auth(tenantToken)).expect(403);
   });
 
-  it('permite al propietario editar su piso', async () => {
+  it('lets the owner edit their own flat', async () => {
     const res = await request(app)
       .patch(`/api/flats/${flatId}`)
       .set(auth(ownerToken))
@@ -222,14 +222,14 @@ describe('pisos', () => {
     assert.equal(res.body.data.rentPrice, 2400);
   });
 
-  it('devuelve 400 ante un identificador malformado', async () => {
+  it('answers 400 for a malformed identifier', async () => {
     const res = await request(app).get('/api/flats/no-es-un-id').set(auth(ownerToken)).expect(400);
     assert.equal(res.body.error.code, 'INVALID_ID');
   });
 });
 
-describe('favoritos', () => {
-  it('anade, no duplica y elimina', async () => {
+describe('favourites', () => {
+  it('adds, does not duplicate, and removes', async () => {
     const added = await request(app)
       .put(`/api/users/me/favorites/${flatId}`)
       .set(auth(tenantToken))
@@ -250,26 +250,26 @@ describe('favoritos', () => {
   });
 });
 
-describe('mensajes', () => {
-  it('un interesado escribe al propietario', async () => {
+describe('messages', () => {
+  it('an interested user writes to the owner', async () => {
     const res = await request(app)
       .post(`/api/flats/${flatId}/messages`)
       .set(auth(tenantToken))
-      .send({ content: 'Hola, sigue disponible?' })
+      .send({ content: 'Hi, is this still available?' })
       .expect(201);
 
-    assert.equal(res.body.data.content, 'Hola, sigue disponible?');
+    assert.equal(res.body.data.content, 'Hi, is this still available?');
   });
 
-  it('el propietario no puede escribirse a si mismo', async () => {
+  it('the owner cannot message themselves', async () => {
     await request(app)
       .post(`/api/flats/${flatId}/messages`)
       .set(auth(ownerToken))
-      .send({ content: 'Hola yo' })
+      .send({ content: 'Hello me' })
       .expect(403);
   });
 
-  it('rechaza un mensaje vacío', async () => {
+  it('rejects an empty message', async () => {
     await request(app)
       .post(`/api/flats/${flatId}/messages`)
       .set(auth(tenantToken))
@@ -277,7 +277,7 @@ describe('mensajes', () => {
       .expect(400);
   });
 
-  it('el propietario ve la conversación del piso', async () => {
+  it('the owner sees the conversation for the flat', async () => {
     const res = await request(app)
       .get(`/api/flats/${flatId}/messages`)
       .set(auth(ownerToken))
@@ -287,8 +287,8 @@ describe('mensajes', () => {
   });
 });
 
-describe('perfil', () => {
-  it('permite al usuario cambiar su contraseña y volver a entrar con ella', async () => {
+describe('profile', () => {
+  it('lets a user change their password and log in with the new one', async () => {
     const me = await request(app).get('/api/users/me').set(auth(ownerToken)).expect(200);
 
     await request(app)
@@ -297,8 +297,8 @@ describe('perfil', () => {
       .send({ password: 'NuevaClave9' })
       .expect(200);
 
-    // Si updateUser volviera a usar findByIdAndUpdate, la contraseña quedaria
-    // sin hashear y este login fallaria.
+    // If updateUser went back to findByIdAndUpdate, the password would be
+    // stored unhashed and this login would fail.
     await request(app)
       .post('/api/users/login')
       .send({ email: owner.email, password: 'NuevaClave9' })

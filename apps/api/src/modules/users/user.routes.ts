@@ -7,16 +7,16 @@ import { loginSchema, registerSchema, updateRoleSchema, updateUserSchema } from 
 
 export const userRouter = Router();
 
-// Publicas
+// Public
 userRouter.post('/register', validate(registerSchema), asyncHandler(c.registerController));
 userRouter.post('/login', validate(loginSchema), asyncHandler(c.loginController));
 
-// A partir de aquí todo exige token. Antes GET /users/:id quedaba abierta.
+// Everything below requires a token. GET /users/:id used to be wide open.
 userRouter.use(requireAuth);
 
 userRouter.get('/me', asyncHandler(c.meController));
 
-// Van antes de '/:id' para que 'me' no se interprete como un identificador.
+// These come before '/:id' so that 'me' is not read as an identifier.
 userRouter.get('/me/favorites', asyncHandler(c.listFavoritesController));
 userRouter.put('/me/favorites/:flatId', asyncHandler(c.addFavoriteController));
 userRouter.delete('/me/favorites/:flatId', asyncHandler(c.removeFavoriteController));

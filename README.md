@@ -1,88 +1,90 @@
 # FlatFinder
 
-Marketplace de alquiler de viviendas: publica tus pisos, consulta los de
-otros propietarios y contacta con ellos.
+A marketplace for rental housing: list your flats, browse what other owners
+have published, and message them about it.
 
-Monorepo que unifica los dos repositorios originales del proyecto,
-conservando el historial y la autoria de ambos.
+This monorepo unifies the project's two original repositories, preserving the
+history and authorship of both.
 
-| Origen | Destino |
+| Origin | Destination |
 | --- | --- |
 | `FED-104-6/Michael--Rodrigo` (Angular) | `apps/web` |
 | `Michos12/FlatFinder-BackEnd` (Express) | `apps/api` |
 
-## Estructura
+## Layout
 
 ```
 apps/
   web/        Angular 20 (SPA)
     src/app/
-      core/       servicios de API, guardas e interceptores
+      core/       API services, guards and interceptors
       features/   auth · flats · users · profile
-      shared/     cabecera y tarjeta de piso
-  api/        Express 5 + MongoDB/Mongoose + JWT, en TypeScript
+      shared/     header and flat card
+  api/        Express 5 + MongoDB/Mongoose + JWT, in TypeScript
     src/
-      config/     entorno validado y conexion a Mongo
-      middleware/ auth, validacion y manejo de errores
+      config/     validated environment and Mongo connection
+      middleware/ auth, validation and error handling
       modules/    users · flats · messages
 packages/
-  types/      contrato de datos compartido por las dos apps
+  types/      the data contract shared by both apps
 ```
 
-`packages/types` es la pieza que mantiene alineadas las dos mitades: los
-nombres de campo de `Flat`, `User` y `Message` se declaran una sola vez y
-el compilador detecta cualquier divergencia.
+`packages/types` is what keeps the two halves aligned: the field names for
+`Flat`, `User` and `Message` are declared once, and the compiler catches any
+drift between them.
 
-## Puesta en marcha
+## Getting started
 
 ```bash
 npm install
-docker compose up -d                     # MongoDB en localhost:27017
-cp apps/api/.env.example apps/api/.env    # rellena SECRET_KEY
-npm run dev:api                           # http://localhost:3000
-npm run dev:web                           # http://localhost:4200
+docker compose up -d                      # MongoDB on localhost:27017
+cp apps/api/.env.example apps/api/.env     # fill in SECRET_KEY
+npm run dev:api                            # http://localhost:3000
+npm run dev:web                            # http://localhost:4200
 ```
 
-Sin Docker, apunta `MONGO_URL` a un cluster de MongoDB Atlas.
+Without Docker, point `MONGO_URL` at a MongoDB Atlas cluster.
 
-## Comprobaciones
+## Checks
 
 ```bash
-npm run typecheck   # tipos del API, incluidos los tests
-npm test            # tests de integracion del API
+npm run typecheck   # API types, tests included
+npm test            # API integration tests
 npm run build       # types + api + web
 ```
 
-Las tres se ejecutan en cada push y cada pull request
+All three run on every push and every pull request
 (`.github/workflows/ci.yml`).
 
-## Despliegue
+## Deployment
 
-El frontend se sirve desde Vercel y el API desde Render, con la base de
-datos en MongoDB Atlas.
+The frontend is served from Vercel and the API from Render, with the database
+on MongoDB Atlas.
 
-**API (Render).** `render.yaml` describe el servicio; usa
-`apps/api/Dockerfile`, construido desde la raiz del monorepo. `SECRET_KEY`
-se genera sola; `MONGO_URL` se rellena a mano con la cadena de Atlas.
+**API (Render).** `render.yaml` describes the service; it builds
+`apps/api/Dockerfile` from the root of the monorepo. `SECRET_KEY` is generated
+for you; `MONGO_URL` is filled in by hand with the Atlas connection string.
 
-**Frontend (Vercel).** `vercel.json` sirve la SPA y redirige `/api/*` al
-API. Al mantener un solo origen no hace falta CORS en produccion.
+**Frontend (Vercel).** `vercel.json` serves the SPA and rewrites `/api/*` to
+the API. Keeping a single origin means production needs no CORS at all.
 
-> Antes del primer despliegue hay que sustituir en `vercel.json` el
-> `flatfinder-api.onrender.com` de ejemplo por la URL real del servicio.
+> Before the first deploy, replace the placeholder host in `vercel.json` with
+> the real URL of the API service, keeping the `/api/:path*` suffix so the
+> path survives the rewrite.
 
-## Estado
+## Status
 
-- [x] Historiales unificados en un monorepo
-- [x] Build de produccion del frontend arreglado (se retiro el SSR)
-- [x] API migrada a TypeScript, por modulos, con la autorizacion corregida
-- [x] Frontend conectado al API; Firestore eliminado
-- [x] Guards de ruta, interceptor de token y rutas diferidas
-- [x] Tests de integracion del API (22 casos, MongoDB en memoria)
-- [x] CI en GitHub Actions y configuracion de despliegue
-- [ ] Pasada de diseno de la interfaz
-- [ ] Tests del frontend
+- [x] Both histories unified into one monorepo
+- [x] Frontend production build fixed (SSR removed)
+- [x] API migrated to TypeScript, split into modules, authorisation corrected
+- [x] Frontend wired to the API; Firestore removed
+- [x] Route guards, token interceptor and lazily loaded routes
+- [x] API integration tests (22 cases, in-memory MongoDB)
+- [x] CI on GitHub Actions and deployment configuration
+- [x] Interface design pass
+- [ ] Frontend tests
+- [ ] Live deployment
 
-## Creditos
+## Credits
 
-Proyecto original de Michael Veliz, Asuka Fukuchi y Rodrigo Ticona.
+Originally built by Michael Veliz, Asuka Fukuchi and Rodrigo Ticona.

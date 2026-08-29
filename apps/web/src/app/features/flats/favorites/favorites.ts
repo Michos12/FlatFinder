@@ -19,8 +19,8 @@ export class Favorites {
   readonly errorMessage = signal('');
 
   constructor() {
-    // Los favoritos viven en el usuario del servidor, no en el objeto que
-    // antes se serializaba entero en localStorage.
+    // Favourites live on the server-side user, not on the object that used to
+    // be serialised wholesale into localStorage.
     this.usersService.listFavorites().subscribe({
       next: (flats) => {
         this.flats.set(flats);

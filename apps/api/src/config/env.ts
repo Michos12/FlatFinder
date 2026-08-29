@@ -2,8 +2,8 @@ import 'dotenv/config';
 import { z } from 'zod';
 
 /**
- * El servidor no arranca con una configuración incompleta: es preferible
- * fallar aquí, con un mensaje claro, que descubrirlo en la primera petición.
+ * The server refuses to start on an incomplete configuration: better to fail
+ * here, with a clear message, than to find out on the first request.
  */
 const envSchema = z.object({
   NODE_ENV: z.enum(['development', 'test', 'production']).default('development'),
@@ -13,7 +13,7 @@ const envSchema = z.object({
     .string()
     .min(32, 'SECRET_KEY must be at least 32 characters long'),
   JWT_EXPIRES_IN: z.string().default('2h'),
-  /** Orígenes permitidos por CORS, separados por comas. */
+  /** Comma-separated list of origins allowed by CORS. */
   CORS_ORIGIN: z.string().default('http://localhost:4200'),
 });
 

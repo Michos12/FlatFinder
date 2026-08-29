@@ -3,10 +3,9 @@ import { adminGuard } from './core/guards/admin.guard';
 import { authGuard } from './core/guards/auth.guard';
 
 /**
- * Todo lo que no sea login o registro exige sesión. Antes ninguna ruta
- * estaba protegida: bastaba escribir /users en la barra de direcciones.
- * Se cargan de forma diferida para no arrastrar toda la app en el bundle
- * inicial.
+ * Everything but login and register requires a session. No route used to be
+ * protected at all: typing /users in the address bar was enough. Routes are
+ * lazily loaded so the initial bundle does not carry the whole app.
  */
 export const routes: Routes = [
   {

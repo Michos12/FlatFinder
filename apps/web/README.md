@@ -1,38 +1,41 @@
 # @flatfinder/web
 
-Frontend de FlatFinder. Angular 20, standalone, sin zonas y con rutas
-diferidas.
+FlatFinder's frontend. Angular 20, standalone, zoneless, with lazily loaded
+routes.
 
-## Puesta en marcha
+## Getting started
 
-Desde la raiz del monorepo:
+From the root of the monorepo:
 
 ```bash
 npm run dev:web      # http://localhost:4200
 ```
 
-Necesita el API en marcha (`npm run dev:api`). La URL se configura en
-`src/environments/`: en desarrollo apunta a `http://localhost:3000/api` y
-en produccion a `/api`, servido por un redireccionamiento del mismo origen.
+It needs the API running (`npm run dev:api`). The URL is configured in
+`src/environments/`: in development it points at `http://localhost:3000/api`,
+and in production at `/api`, served by a same-origin rewrite.
 
-## Estructura
+## Layout
 
 ```
 src/app/
 ├── core/
-│   ├── api/          ApiService y los servicios de dominio
+│   ├── api/          ApiService and the domain services
 │   ├── guards/       authGuard · adminGuard
-│   └── interceptors/ token saliente · manejo de 401
+│   └── interceptors/ outgoing token · 401 handling
 ├── features/         auth · flats · users · profile
 └── shared/           header · flat-card
 ```
 
-Cada ruta se carga bajo demanda, asi que el bundle inicial solo contiene
-el armazon y lo comun.
+Every route is loaded on demand, so the initial bundle carries only the shell
+and what is common to all of it.
 
-## Estilos
+## Styling
 
-`src/styles.css` define los tokens (color, forma, sombra) y un puñado de
-clases de uso general: `.page`, `.grid`, `.card`, `.btn`, `.field`,
-`.alert`, `.empty-state`. Los componentes solo declaran lo que es suyo y
-consumen los tokens; no hay colores sueltos repartidos por los archivos.
+`src/styles.css` defines the design tokens (colour, shape, shadow) and a small
+set of general-purpose classes: `.page`, `.grid`, `.card`, `.btn`, `.field`,
+`.alert`, `.empty-state`. Components declare only what belongs to them and
+consume the tokens; there are no loose colours scattered across the files.
+
+The palette is a warm marketplace one, built so the photograph of the flat
+leads and colour is reserved for guiding action.

@@ -17,5 +17,5 @@ flatRouter.get('/:id', asyncHandler(c.getFlatController));
 flatRouter.patch('/:id', validate(updateFlatSchema), asyncHandler(c.updateFlatController));
 flatRouter.delete('/:id', asyncHandler(c.deleteFlatController));
 
-// Los mensajes cuelgan de un piso: /flats/:id/messages
+// Messages hang off a flat: /flats/:id/messages
 flatRouter.use('/:id/messages', messageRouter);

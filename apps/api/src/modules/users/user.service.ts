@@ -27,7 +27,7 @@ export async function register(input: RegisterInput) {
   const exists = await User.exists({ email: input.email });
   if (exists) throw ApiError.conflict('An account with that email already exists');
 
-  // El rol se fija en el servidor. Nunca se toma del cuerpo de la petición.
+  // The role is decided by the server. It is never read from the request body.
   const user = await User.create({ ...input, role: 'guest' satisfies UserRole });
   return { user: toUserDto(user), token: signToken(user) };
 }
@@ -35,8 +35,8 @@ export async function register(input: RegisterInput) {
 export async function login(email: string, password: string) {
   const user = await User.findOne({ email }).select('+password');
 
-  // Mismo error y mismo coste aproximado tanto si el email no existe como si
-  // la contraseña no coincide: de lo contrario la API permite enumerar cuentas.
+  // Same error and roughly the same cost whether the email does not exist or
+  // the password is wrong: otherwise the API lets you enumerate accounts.
   const valid = user ? await user.comparePassword(password) : false;
   if (!user || !valid) {
     throw new ApiError(401, 'INVALID_CREDENTIALS', 'Incorrect email or password');
@@ -60,8 +60,8 @@ export async function updateUser(
   id: string,
   input: { firstName?: string; lastName?: string; birthDate?: Date; password?: string },
 ): Promise<UserDto> {
-  // Se carga y se guarda el documento, en lugar de findByIdAndUpdate, para que
-  // el hook pre('save') hashee la contraseña cuando venga en la petición.
+  // Load and save the document rather than findByIdAndUpdate, so the
+  // pre('save') hook hashes the password whenever one is supplied.
   const user = await User.findById(id).select('+password');
   if (!user) throw ApiError.notFound('User');
 

@@ -4,8 +4,8 @@ import { USER_ROLES } from '@flatfinder/types';
 const email = z.string().trim().toLowerCase().email('Invalid email');
 
 /**
- * Mínimo razonable para una app de portafolio: longitud suficiente y algo de
- * variedad. No se limita el máximo por arriba más alla del límite de bcrypt.
+ * A sensible floor for a portfolio app: enough length and some variety. There
+ * is no upper bound beyond the limit bcrypt itself imposes.
  */
 const password = z
   .string()
@@ -26,8 +26,8 @@ export const registerSchema = z.object({
   firstName: z.string().trim().min(1, 'First name is required').max(80),
   lastName: z.string().trim().min(1, 'Last name is required').max(80),
   birthDate,
-  // 'role' se omite deliberadamente: aceptarlo aquí permitia registrarse
-  // como admin enviandolo en el cuerpo de la petición.
+  // 'role' is left out on purpose: accepting it here let anyone register as
+  // an admin just by putting it in the request body.
 });
 
 export const loginSchema = z.object({
@@ -44,7 +44,7 @@ export const updateUserSchema = z
   })
   .strict();
 
-/** Solo un admin puede tocar el rol, y por eso vive en un esquema aparte. */
+/** Only an admin can touch the role, which is why it lives in its own schema. */
 export const updateRoleSchema = z.object({
   role: z.enum(USER_ROLES),
 });

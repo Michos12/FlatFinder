@@ -7,9 +7,9 @@ import { ApiService } from './api.service';
 const TOKEN_KEY = 'flatfinder.token';
 
 /**
- * El token se guarda en localStorage. Es vulnerable a XSS, pero la
- * alternativa (cookie httpOnly) exige que el API y el front compartan
- * dominio o gestionar CSRF, y eso queda fuera del alcance actual.
+ * The token lives in localStorage. That is exposed to XSS, but the
+ * alternative (an httpOnly cookie) needs the API and the frontend to share a
+ * domain, or CSRF handling, and neither is in scope yet.
  */
 function readStoredToken(): string | null {
   try {
@@ -38,7 +38,7 @@ export class AuthService {
     try {
       localStorage.setItem(TOKEN_KEY, response.token);
     } catch {
-      // Modo privado o almacenamiento bloqueado: la sesión dura lo que la pestaña.
+      // Private mode or blocked storage: the session lasts as long as the tab.
     }
   }
 
@@ -55,8 +55,8 @@ export class AuthService {
   }
 
   /**
-   * Al recargar la página solo sobrevive el token, no el usuario. Esto lo
-   * recupera del API antes de que se pinte la primera ruta protegida.
+   * Only the token survives a reload, not the user. This fetches them from the
+   * API before the first protected route is painted.
    */
   loadCurrentUser() {
     return this.api.get<User>('/users/me').pipe(tap((user) => this.userSignal.set(user)));
@@ -72,7 +72,7 @@ export class AuthService {
     try {
       localStorage.removeItem(TOKEN_KEY);
     } catch {
-      // Nada que limpiar si el almacenamiento no esta disponible.
+      // Nothing to clear when storage is unavailable.
     }
     if (redirectTo) void this.router.navigate([redirectTo]);
   }

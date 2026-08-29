@@ -20,9 +20,9 @@ export type FlatDocument = HydratedDocument<FlatDoc>;
 
 const flatSchema = new Schema<FlatDoc>(
   {
-    // Los nombres de campo pasan a ser los del contrato compartido
-    // (@flatfinder/types): antes el backend usaba stName / stNum / size /
-    // hasAc / availDate y el frontend otros distintos.
+    // Field names now come from the shared contract (@flatfinder/types): the
+    // backend used to say stName / stNum / size / hasAc / availDate while the
+    // frontend said something else entirely.
     city: { type: String, required: true, trim: true, index: true },
     streetName: { type: String, required: true, trim: true },
     streetNumber: { type: Number, required: true, min: 0 },

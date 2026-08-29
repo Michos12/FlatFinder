@@ -1,6 +1,6 @@
 /**
- * Error con código HTTP y un código estable que el frontend puede comparar
- * sin depender del texto del mensaje.
+ * An error carrying an HTTP status and a stable code the frontend can compare
+ * against without depending on the wording of the message.
  */
 export class ApiError extends Error {
   constructor(

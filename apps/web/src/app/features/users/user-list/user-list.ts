@@ -21,9 +21,9 @@ export class UserList {
   readonly roles: UserRole[] = ['guest', 'owner', 'admin'];
 
   constructor() {
-    // Antes esta pantalla leia una clave 'users' de localStorage que nadie
-    // escribia nunca, así que siempre salia vacía. Ahora la sirve el API,
-    // y solo a administradores.
+    // This screen used to read a 'users' key from localStorage that nothing
+    // ever wrote, so it always came up empty. The API serves it now, and only
+    // to administrators.
     this.usersService.list().subscribe({
       next: (users) => {
         this.users.set(users);

@@ -3,9 +3,9 @@ import { CurrencyPipe, DatePipe } from '@angular/common';
 import type { Flat } from '@flatfinder/types';
 
 /**
- * Tarjeta de piso. El mismo bloque estaba copiado en el listado, en mis
- * pisos, en favoritos y en el detalle; aquí vive una sola vez y cada pantalla
- * proyecta sus propias acciones.
+ * Flat card. The same block was copied across the listing, my flats,
+ * favourites and the detail page; here it lives once and each screen projects
+ * its own actions.
  */
 @Component({
   selector: 'app-flat-card',

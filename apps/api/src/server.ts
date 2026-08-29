@@ -4,16 +4,16 @@ import { env } from './config/env.js';
 
 async function main(): Promise<void> {
   await connectDatabase();
-  console.log('MongoDB conectado');
+  console.log('MongoDB connected');
 
   const server = createApp().listen(env.PORT, () => {
-    console.log(`API escuchando en http://localhost:${env.PORT} (${env.NODE_ENV})`);
+    console.log(`API listening on http://localhost:${env.PORT} (${env.NODE_ENV})`);
   });
 
-  // Cierre ordenado: se deja de aceptar conexiones y se suelta la base de
-  // datos antes de salir, para no dejar sockets colgando en el despliegue.
+  // Graceful shutdown: stop accepting connections and release the database
+  // before exiting, so deploys do not leave sockets hanging.
   const shutdown = (signal: string) => {
-    console.log(`${signal} recibido, cerrando...`);
+    console.log(`${signal} received, shutting down...`);
     server.close(() => {
       void disconnectDatabase().then(() => process.exit(0));
     });
@@ -24,6 +24,6 @@ async function main(): Promise<void> {
 }
 
 main().catch((error) => {
-  console.error('No se pudo arrancar el servidor:', error);
+  console.error('Could not start the server:', error);
   process.exit(1);
 });

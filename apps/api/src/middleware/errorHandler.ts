@@ -10,7 +10,7 @@ export const notFoundHandler: RequestHandler = (req, res) => {
   });
 };
 
-/** Punto único de traduccion de errores a respuestas HTTP. */
+/** The single place where errors become HTTP responses. */
 export const errorHandler: ErrorRequestHandler = (err, _req, res, _next) => {
   if (err instanceof ApiError) {
     res.status(err.status).json({
@@ -20,7 +20,7 @@ export const errorHandler: ErrorRequestHandler = (err, _req, res, _next) => {
     return;
   }
 
-  // Un ObjectId malformado es culpa del cliente, no del servidor.
+  // A malformed ObjectId is the client's fault, not the server's.
   if (err instanceof mongoose.Error.CastError) {
     res.status(400).json({
       success: false,
@@ -41,7 +41,7 @@ export const errorHandler: ErrorRequestHandler = (err, _req, res, _next) => {
     return;
   }
 
-  // Indice único violado (email repetido en una carrera entre dos registros).
+  // Unique index violated (a duplicate email from two racing registrations).
   if (typeof err === 'object' && err !== null && (err as { code?: number }).code === 11000) {
     res.status(409).json({
       success: false,
@@ -50,12 +50,12 @@ export const errorHandler: ErrorRequestHandler = (err, _req, res, _next) => {
     return;
   }
 
-  console.error('[error no controlado]', err);
+  console.error('[unhandled error]', err);
   res.status(500).json({
     success: false,
     error: {
       code: 'INTERNAL_ERROR',
-      // En produccion no se filtra el detalle interno al cliente.
+      // In production the internal detail never reaches the client.
       message:
         env.NODE_ENV === 'production'
           ? 'Internal server error'

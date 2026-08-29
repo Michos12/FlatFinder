@@ -1,5 +1,5 @@
 .table-wrapper {
-  /* La tabla desborda en movil: que scrolle ella, no la página. */
+  /* The table overflows on mobile: let it scroll, not the page. */
   overflow-x: auto;
   background: var(--surface);
   border: 1px solid var(--border);

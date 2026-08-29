@@ -1,5 +1,5 @@
 export const environment = {
   production: true,
-  /** En produccion se sirve detras del mismo dominio, via proxy inverso. */
+  /** In production it is served from the same domain, behind a rewrite. */
   apiUrl: '/api',
 };

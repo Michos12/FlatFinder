@@ -23,8 +23,8 @@ export class MyFlats {
   }
 
   private load(): void {
-    // Los pisos ya no salen del objeto de usuario en localStorage: los sirve
-    // el API filtrando por propietario.
+    // Flats no longer come from the user object in localStorage: the API
+    // serves them, filtered by owner.
     this.flatsService.listMine().subscribe({
       next: (flats) => {
         this.flats.set(flats);

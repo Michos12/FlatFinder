@@ -4,7 +4,7 @@ import { validate } from '../../middleware/validate.js';
 import * as c from './message.controller.js';
 import { createMessageSchema } from './message.schema.js';
 
-// mergeParams para heredar el :id del piso desde el router de flats.
+// mergeParams so the flat's :id is inherited from the flats router.
 export const messageRouter = Router({ mergeParams: true });
 
 messageRouter.get('/', asyncHandler(c.listMessagesController));

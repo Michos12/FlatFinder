@@ -1,17 +1,17 @@
-/** Envoltorio de exito de la API. */
+/** Successful API envelope. */
 export interface ApiSuccess<T> {
   success: true;
   data: T;
 }
 
-/** Envoltorio de error de la API. */
+/** Failed API envelope. */
 export interface ApiError {
   success: false;
   error: {
-    /** Código estable, apto para comparar en el frontend. */
+    /** Stable code, safe for the frontend to compare against. */
     code: string;
     message: string;
-    /** Errores de validacion por campo, cuando aplican. */
+    /** Per-field validation errors, where they apply. */
     details?: Record<string, string[]>;
   };
 }

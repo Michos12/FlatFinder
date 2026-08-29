@@ -33,14 +33,14 @@ const userSchema = new Schema<UserDoc, UserModel, UserMethods>(
       trim: true,
       index: true,
     },
-    // select: false evita que la contraseña viaje por accidente en cualquier
-    // consulta; hay que pedirla de forma explicita para el login.
+    // select: false keeps the password from leaking into arbitrary queries;
+    // login has to ask for it explicitly.
     password: { type: String, required: true, select: false },
     firstName: { type: String, required: true, trim: true },
     lastName: { type: String, required: true, trim: true },
     birthDate: { type: Date, required: true },
     role: { type: String, enum: USER_ROLES, default: 'guest' },
-    // Antes era un único ObjectId, lo que impedia guardar más de un favorito.
+    // This used to be a single ObjectId, so only one favourite could be saved.
     favoriteFlatIds: [{ type: Schema.Types.ObjectId, ref: 'Flat' }],
   },
   {
@@ -59,10 +59,9 @@ const userSchema = new Schema<UserDoc, UserModel, UserMethods>(
 );
 
 /**
- * Único punto donde se hashea. Cualquier ruta que quiera cambiar la
- * contraseña debe asignarla al documento y llamar a save(); por eso el
- * servicio ya no usa findByIdAndUpdate, que se saltaba este hook y dejaba
- * la contraseña en texto plano.
+ * The one place hashing happens. Any route that changes a password must assign
+ * it to the document and call save(); that is why the service no longer uses
+ * findByIdAndUpdate, which skipped this hook and stored the password in clear.
  */
 userSchema.pre('save', async function hashPassword(next) {
   if (!this.isModified('password')) return next();

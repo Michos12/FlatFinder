@@ -22,7 +22,7 @@ export class FlatDetail {
   private readonly messagesService = inject(MessagesService);
   private readonly auth = inject(AuthService);
 
-  /** Llega del router gracias a withComponentInputBinding(). */
+  /** Supplied by the router thanks to withComponentInputBinding(). */
   readonly id = input.required<string>();
 
   readonly errorMessage = signal('');
@@ -35,8 +35,8 @@ export class FlatDetail {
   });
 
   /**
-   * El identificador es el _id del piso, no un indice del array en memoria:
-   * antes /flat-view/3 apuntaba a la cuarta posicion de una lista fija.
+   * The identifier is the flat's _id, not an index into an in-memory array:
+   * /flat-view/3 used to point at the fourth entry of a hardcoded list.
    */
   readonly flat = toSignal<Flat | null>(
     toObservable(this.id).pipe(
@@ -58,8 +58,8 @@ export class FlatDetail {
   });
 
   constructor() {
-    // El propietario recibe toda la conversación del piso; cualquier otro
-    // usuario, solo los mensajes que ha enviado el mismo. Quien decide es el API.
+    // The owner gets the whole conversation for the flat; anyone else only the
+    // messages they sent themselves. The API is what enforces it.
     effect(() => {
       const flat = this.flat();
       if (!flat) return;

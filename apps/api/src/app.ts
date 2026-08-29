@@ -8,20 +8,20 @@ import { flatRouter } from './modules/flats/flat.routes.js';
 import { userRouter } from './modules/users/user.routes.js';
 
 /**
- * Construye la aplicación de Express sin abrir ningún puerto. Separarla de
- * server.ts permite montarla en los tests de integración con supertest.
+ * Builds the Express app without opening a port. Keeping it apart from
+ * server.ts is what lets the integration tests mount it with supertest.
  */
 export function createApp(): Express {
   const app = express();
 
   app.disable('x-powered-by');
   app.use(helmet());
-  // El navegador debe poder leer la respuesta, pero solo desde los orígenes
-  // declarados: antes cors() estaba abierto a cualquiera.
+  // The browser must be able to read the response, but only from the declared
+  // origins: cors() used to be wide open to anyone.
   app.use(cors({ origin: corsOrigins, credentials: true }));
   app.use(express.json({ limit: '100kb' }));
 
-  // Límite global holgado, pensado contra el abuso accidental.
+  // Generous global limit, aimed at accidental abuse rather than attacks.
   app.use(
     rateLimit({
       windowMs: 15 * 60 * 1000,
@@ -31,8 +31,8 @@ export function createApp(): Express {
     }),
   );
 
-  // Límite mucho más estricto en login y registro, que son las rutas que
-  // interesan a un ataque de fuerza bruta.
+  // Much stricter limit on login and register, the routes a brute-force
+  // attack actually cares about.
   const authLimiter = rateLimit({
     windowMs: 15 * 60 * 1000,
     limit: env.NODE_ENV === 'test' ? 1000 : 10,

@@ -16,8 +16,8 @@ import { authInterceptor } from './core/interceptors/auth.interceptor';
 import { errorInterceptor } from './core/interceptors/error.interceptor';
 import { routes } from './app.routes';
 
-// en-CA para que CurrencyPipe muestre CAD como "$2,000" y no como "CA$2,000",
-// que es lo que hace el en-US por defecto.
+// en-CA so CurrencyPipe renders CAD as "$2,000" rather than the "CA$2,000"
+// the default en-US produces.
 registerLocaleData(localeEnCa);
 
 export const appConfig: ApplicationConfig = {
@@ -27,10 +27,10 @@ export const appConfig: ApplicationConfig = {
     provideZonelessChangeDetection(),
     provideRouter(routes, withComponentInputBinding()),
     provideHttpClient(withInterceptors([authInterceptor, errorInterceptor])),
-    // Tras recargar la página solo queda el token: se recupera el usuario
-    // antes del primer render para que la cabecera y los guardas de rol no
-    // parpadeen. Si el token ya no vale, se cierra la sesión sin bloquear
-    // el arranque.
+    // After a reload only the token survives, so the user is fetched before
+    // the first render to keep the header and the role guards from flickering.
+    // If the token is no longer good, the session is dropped without blocking
+    // startup.
     provideAppInitializer(() => {
       const auth = inject(AuthService);
       if (!auth.isAuthenticated()) return;

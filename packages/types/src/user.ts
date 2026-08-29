@@ -1,10 +1,10 @@
-/** Roles del sistema, en orden creciente de permisos. */
+/** System roles, in increasing order of permission. */
 export const USER_ROLES = ['guest', 'owner', 'admin'] as const;
 export type UserRole = (typeof USER_ROLES)[number];
 
 /**
- * Usuario tal y como lo devuelve la API.
- * La contrasena nunca sale del backend, por eso no aparece aquí.
+ * A user as the API returns it.
+ * The password never leaves the backend, which is why it is absent here.
  */
 export interface User {
   id: string;
@@ -30,7 +30,7 @@ export interface LoginInput {
   password: string;
 }
 
-/** Campos que un usuario puede modificar de su propio perfil. */
+/** Fields a user may change on their own profile. */
 export interface UpdateUserInput {
   firstName?: string;
   lastName?: string;
@@ -38,7 +38,7 @@ export interface UpdateUserInput {
   password?: string;
 }
 
-/** Solo un admin puede cambiar el rol de otro usuario. */
+/** Only an admin may change another user's role. */
 export interface AdminUpdateUserInput extends UpdateUserInput {
   role?: UserRole;
 }

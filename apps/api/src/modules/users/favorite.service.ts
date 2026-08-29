@@ -20,7 +20,7 @@ export async function addFavorite(userId: string, flatId: string): Promise<FlatD
   const exists = await Flat.exists({ _id: flatId });
   if (!exists) throw ApiError.notFound('Flat');
 
-  // $addToSet en lugar de push: repetir la llamada no duplica el favorito.
+  // $addToSet rather than push: calling twice does not duplicate the entry.
   await User.updateOne({ _id: userId }, { $addToSet: { favoriteFlatIds: flatId } });
   return listFavorites(userId);
 }

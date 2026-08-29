@@ -3,7 +3,7 @@ import { inject } from '@angular/core';
 import { catchError, throwError } from 'rxjs';
 import { AuthService } from '../api/auth.service';
 
-/** Mensaje legible extraido del envoltorio de error del API. */
+/** A readable message pulled out of the API error envelope. */
 export function messageOf(error: unknown): string {
   if (error instanceof HttpErrorResponse) {
     const body = error.error as { error?: { message?: string } } | null;
@@ -14,8 +14,8 @@ export function messageOf(error: unknown): string {
 }
 
 /**
- * Un 401 significa que el token ya no sirve: se cierra la sesión en lugar de
- * dejar al usuario navegando con credenciales muertas.
+ * A 401 means the token is no longer good, so the session is dropped rather
+ * than leaving the user browsing with dead credentials.
  */
 export const errorInterceptor: HttpInterceptorFn = (req, next) => {
   const auth = inject(AuthService);

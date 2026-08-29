@@ -33,8 +33,8 @@ export class Login {
     this.errorMessage.set('');
     this.submitting.set(true);
 
-    // La versión anterior comparaba una Promise con `if (user)`, que siempre
-    // es cierta: cualquier contraseña daba acceso. Ahora quien decide es el API.
+    // The previous version compared a Promise with `if (user)`, which is
+    // always truthy: any password got you in. The API decides now.
     this.auth.login(this.form.getRawValue()).subscribe({
       next: () => {
         const returnUrl = this.route.snapshot.queryParamMap.get('returnUrl') ?? '/';

@@ -35,10 +35,10 @@ export class FlatList {
   });
 
   /**
-   * El listado se recalcula solo cuando cambian los filtros. El debounce evita
-   * lanzar una petición por cada tecla al escribir la ciudad, y el catchError
-   * va dentro del switchMap para que un fallo no mate el flujo: si se corta
-   * aquí, los filtros dejan de responder para siempre.
+   * The listing recomputes itself whenever the filters change. The debounce
+   * avoids one request per keystroke while typing a city, and the catchError
+   * sits inside the switchMap so a failure does not kill the stream: if it
+   * broke here, the filters would stop responding for good.
    */
   private readonly page = toSignal(
     this.filters.valueChanges.pipe(
@@ -64,7 +64,7 @@ export class FlatList {
   readonly total = () => this.page().total;
 
   constructor() {
-    // Los favoritos se cargan una vez, para poder marcar cada tarjeta.
+    // Favourites are loaded once so each card can be marked.
     this.usersService
       .listFavorites()
       .pipe(takeUntilDestroyed())

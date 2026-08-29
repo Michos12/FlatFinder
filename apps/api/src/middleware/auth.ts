@@ -26,7 +26,7 @@ function extractToken(req: Request): string | null {
   return token;
 }
 
-/** Rechaza la petición si no llega un JWT válido. */
+/** Rejects the request unless a valid JWT is present. */
 export function requireAuth(req: Request, _res: Response, next: NextFunction): void {
   const token = extractToken(req);
   if (!token) {
@@ -37,13 +37,13 @@ export function requireAuth(req: Request, _res: Response, next: NextFunction): v
     req.user = { sub: decoded.sub, role: decoded.role };
     next();
   } catch {
-    // No distinguimos entre token caducado, malformado o con firma inválida:
-    // al cliente le basta con saber que debe volver a autenticarse.
+    // We do not distinguish expired from malformed from badly signed: all the
+    // client needs to know is that it has to authenticate again.
     next(ApiError.unauthorized('Invalid or expired token'));
   }
 }
 
-/** Restringe la ruta a los roles indicados. Debe ir después de requireAuth. */
+/** Restricts a route to the given roles. Must run after requireAuth. */
 export function requireRole(...roles: UserRole[]): RequestHandler {
   return (req, _res, next) => {
     if (!req.user) return next(ApiError.unauthorized());
@@ -53,9 +53,9 @@ export function requireRole(...roles: UserRole[]): RequestHandler {
 }
 
 /**
- * Permite la acción si el usuario autenticado es el dueno del recurso
- * (:id de la ruta) o si es admin. Cubre el caso que la versión anterior
- * tenia invertido: un usuario normal no podia editar su propio perfil.
+ * Allows the action when the authenticated user owns the resource (the :id in
+ * the route) or is an admin. This covers the case the previous version had
+ * backwards, where a regular user could not edit their own profile.
  */
 export function requireSelfOrAdmin(param = 'id'): RequestHandler {
   return (req, _res, next) => {

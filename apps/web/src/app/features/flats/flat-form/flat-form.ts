@@ -20,7 +20,7 @@ export class FlatForm {
   readonly submitting = signal(false);
   readonly currentYear = new Date().getFullYear();
 
-  // Los nombres coinciden con CreateFlatInput de @flatfinder/types.
+  // Names match CreateFlatInput from @flatfinder/types.
   readonly form = this.fb.nonNullable.group({
     city: ['', [Validators.required]],
     streetName: ['', [Validators.required]],
@@ -56,8 +56,8 @@ export class FlatForm {
       yearBuilt: Number(raw.yearBuilt),
       rentPrice: Number(raw.rentPrice),
       dateAvailable: raw.dateAvailable,
-      // Los opcionales solo se mandan si tienen contenido: el API rechaza
-      // una imageUrl vacía porque exige una URL válida.
+      // Optional fields are only sent when filled in: the API rejects an
+      // empty imageUrl because it demands a valid URL.
       ...(raw.description.trim() && { description: raw.description.trim() }),
       ...(raw.imageUrl.trim() && { imageUrl: raw.imageUrl.trim() }),
     };

@@ -1,13 +1,13 @@
-# Imagen del API. Se construye desde la raiz del monorepo:
+# API image. Build it from the root of the monorepo:
 #   docker build -f apps/api/Dockerfile -t flatfinder-api .
 
 FROM node:22-alpine AS build
 WORKDIR /app
 
-# Solo los manifiestos primero, para reutilizar la capa de dependencias
-# mientras no cambien. Se filtra por workspace para no arrastrar Angular a una
-# imagen de servidor, y se ignoran los scripts porque el 'prepare' de
-# packages/types compilaria antes de que exista su codigo fuente.
+# Manifests first, so the dependency layer is reused while they do not change.
+# Filtered by workspace to keep Angular out of a server image, and with scripts
+# ignored because packages/types would otherwise try to compile before its
+# source has been copied in.
 COPY package.json package-lock.json ./
 COPY packages/types/package.json ./packages/types/
 COPY apps/api/package.json ./apps/api/

@@ -2,9 +2,9 @@ import type { Request } from 'express';
 import { ApiError } from './ApiError.js';
 
 /**
- * Express 5 tipa req.params como string | string[], porque una ruta puede
- * repetir el mismo nombre de parámetro. Ninguna de las nuestras lo hace, así
- * que normalizamos aquí en lugar de castear en cada controlador.
+ * Express 5 types req.params as string | string[], because a route may repeat
+ * the same parameter name. None of ours do, so we normalise here rather than
+ * casting in every controller.
  */
 export function param(req: Request, name: string): string {
   const value = req.params[name];

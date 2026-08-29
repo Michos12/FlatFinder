@@ -37,8 +37,8 @@ export function toFlatDto(doc: FlatDocument): FlatDto {
 
 function buildFilter(q: FlatQuery): FilterQuery<FlatDoc> {
   const filter: FilterQuery<FlatDoc> = {};
-  // Escapamos la entrada antes de construir la expresión regular: sin esto,
-  // una búsqueda con metacaracteres puede degradar la consulta.
+  // Escape the input before building the regular expression: without this, a
+  // search full of metacharacters can degrade the query.
   if (q.city) filter.city = new RegExp(q.city.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'), 'i');
   if (q.minPrice !== undefined || q.maxPrice !== undefined) {
     filter.rentPrice = {
@@ -73,7 +73,7 @@ export async function listFlatsByOwner(ownerId: string): Promise<FlatDto[]> {
   return docs.map(toFlatDto);
 }
 
-/** Devuelve el documento, no el DTO: los controladores necesitan el ownerId. */
+/** Returns the document, not the DTO: controllers need the ownerId. */
 export async function getFlatDocument(id: string): Promise<FlatDocument> {
   const flat = await Flat.findById(id);
   if (!flat) throw ApiError.notFound('Flat');

@@ -4,9 +4,9 @@ import { firstValueFrom } from 'rxjs';
 import { AuthService } from '../api/auth.service';
 
 /**
- * El rol vive en el usuario, que tras recargar la página aun no esta cargado;
- * por eso el guarda es asincrono y lo pide al API si hace falta.
- * Es una comodidad de navegacion: quien manda es la comprobación del backend.
+ * The role lives on the user, which is not loaded yet right after a reload,
+ * so this guard is async and asks the API when it has to. It is a navigation
+ * convenience only: the backend check is what actually enforces access.
  */
 export const adminGuard: CanActivateFn = async () => {
   const auth = inject(AuthService);

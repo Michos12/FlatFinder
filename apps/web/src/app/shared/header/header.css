@@ -16,8 +16,8 @@
   padding: 0.7rem 1.25rem;
 }
 
-/* El logotipo era un PNG de 1,4 MB con la errata "FlanFinder" dentro. Ahora
-   es un icono en línea más texto: nítido a cualquier resolución y corregible. */
+/* The logo used to be a 1.4 MB PNG with the typo "FlanFinder" baked in. It is
+   now an inline icon plus text: crisp at any resolution, and fixable. */
 .header__brand {
   display: flex;
   align-items: center;

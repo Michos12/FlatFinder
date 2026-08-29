@@ -3,16 +3,16 @@ export interface Flat {
   city: string;
   streetName: string;
   streetNumber: number;
-  /** Superficie en metros cuadrados. */
+  /** Floor area in square metres. */
   areaSize: number;
   hasAC: boolean;
   yearBuilt: number;
-  /** Precio mensual de alquiler. */
+  /** Monthly rent. */
   rentPrice: number;
   /**
-   * Fecha de disponibilidad, ISO 8601. Es una fecha de calendario, no un
-   * instante: se guarda a medianoche UTC y debe formatearse en UTC, o a
-   * quien esté en un huso negativo le aparecerá el día anterior.
+   * Availability date, ISO 8601. This is a calendar date, not an instant: it
+   * is stored at UTC midnight and must be formatted in UTC, or anyone in a
+   * negative offset will see the previous day.
    */
   dateAvailable: string;
   description?: string;
@@ -29,7 +29,7 @@ export type CreateFlatInput = Omit<
 
 export type UpdateFlatInput = Partial<CreateFlatInput>;
 
-/** Filtros aceptados por GET /flats. */
+/** Filters accepted by GET /flats. */
 export interface FlatQuery {
   city?: string;
   minPrice?: number;
