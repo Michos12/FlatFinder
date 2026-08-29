@@ -5,6 +5,8 @@ import type { CreateFlatInput } from '@flatfinder/types';
 import { FlatsService } from '../../../core/api/flats.service';
 import { messageOf } from '../../../core/interceptors/error.interceptor';
 
+const MAX_IMAGES = 10;
+
 @Component({
   selector: 'app-flat-form',
   imports: [ReactiveFormsModule, RouterLink],
@@ -19,6 +21,7 @@ export class FlatForm {
   readonly errorMessage = signal('');
   readonly submitting = signal(false);
   readonly currentYear = new Date().getFullYear();
+  readonly maxImages = MAX_IMAGES;
 
   // Names match CreateFlatInput from @flatfinder/types.
   readonly form = this.fb.nonNullable.group({
@@ -34,8 +37,25 @@ export class FlatForm {
     rentPrice: [null as number | null, [Validators.required, Validators.min(0)]],
     dateAvailable: ['', [Validators.required]],
     description: [''],
-    imageUrl: [''],
+    // A form array so an owner can list several photos; the first one becomes
+    // the cover on the listing card.
+    imageUrls: this.fb.nonNullable.array([this.fb.nonNullable.control('')]),
   });
+
+  get imageUrls() {
+    return this.form.controls.imageUrls;
+  }
+
+  addImage(): void {
+    if (this.imageUrls.length >= MAX_IMAGES) return;
+    this.imageUrls.push(this.fb.nonNullable.control(''));
+  }
+
+  removeImage(index: number): void {
+    this.imageUrls.removeAt(index);
+    // Always leave one field on screen, so there is something to type into.
+    if (this.imageUrls.length === 0) this.addImage();
+  }
 
   createFlat(): void {
     if (this.form.invalid) {
@@ -47,6 +67,10 @@ export class FlatForm {
     this.submitting.set(true);
 
     const raw = this.form.getRawValue();
+    // Blank rows are dropped rather than sent: the API demands a valid URL for
+    // every entry, so an empty one would fail validation.
+    const images = raw.imageUrls.map((url) => url.trim()).filter(Boolean);
+
     const payload: CreateFlatInput = {
       city: raw.city,
       streetName: raw.streetName,
@@ -56,10 +80,8 @@ export class FlatForm {
       yearBuilt: Number(raw.yearBuilt),
       rentPrice: Number(raw.rentPrice),
       dateAvailable: raw.dateAvailable,
-      // Optional fields are only sent when filled in: the API rejects an
-      // empty imageUrl because it demands a valid URL.
       ...(raw.description.trim() && { description: raw.description.trim() }),
-      ...(raw.imageUrl.trim() && { imageUrl: raw.imageUrl.trim() }),
+      ...(images.length > 0 && { imageUrls: images }),
     };
 
     this.flatsService.create(payload).subscribe({

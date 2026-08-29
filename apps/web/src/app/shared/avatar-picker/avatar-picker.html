@@ -1,0 +1,56 @@
+<div class="avatar-picker">
+  <div class="avatar-picker__figure">
+    @if (avatarUrl() && !imageFailed()) {
+      <img
+        class="avatar-picker__image"
+        [src]="avatarUrl()"
+        [alt]="firstName() + ' ' + lastName()"
+        (error)="onImageError()"
+      />
+    } @else {
+      <span class="avatar-picker__initials" aria-hidden="true">{{ initials }}</span>
+    }
+  </div>
+
+  <div class="avatar-picker__side">
+    @if (editing()) {
+      <!-- FUTURE: this text field becomes <input type="file"> once uploads
+           exist. See core/avatar/avatar.service.ts for the full plan. -->
+      <div class="field">
+        <label for="avatarUrl">Picture URL</label>
+        <input
+          id="avatarUrl"
+          type="url"
+          [ngModel]="draft()"
+          (ngModelChange)="draft.set($event)"
+          placeholder="https://…"
+        />
+        @if (errorMessage()) {
+          <span class="field__error">{{ errorMessage() }}</span>
+        }
+      </div>
+
+      <div class="avatar-picker__actions">
+        <button type="button" class="btn btn--primary" [disabled]="saving()" (click)="apply()">
+          Use this picture
+        </button>
+        <button type="button" class="btn" (click)="cancel()">Cancel</button>
+      </div>
+    } @else {
+      <div class="avatar-picker__actions">
+        <button type="button" class="btn" [disabled]="saving()" (click)="startEditing()">
+          {{ avatarUrl() ? 'Change picture' : 'Add a picture' }}
+        </button>
+        @if (avatarUrl()) {
+          <button type="button" class="btn btn--danger" [disabled]="saving()" (click)="remove()">
+            Remove
+          </button>
+        }
+      </div>
+
+      @if (imageFailed()) {
+        <p class="field__error">That picture could not be loaded.</p>
+      }
+    }
+  </div>
+</div>

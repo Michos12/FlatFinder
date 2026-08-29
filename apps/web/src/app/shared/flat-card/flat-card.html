@@ -2,7 +2,7 @@
   <div class="flat-card__media">
     <img
       class="flat-card__image"
-      [src]="flat().imageUrl || 'assets/houses/house.jpg'"
+      [src]="cover()"
       [alt]="'Flat in ' + flat().city"
       loading="lazy"
     />

@@ -2,6 +2,7 @@ import { Component, computed, effect, inject, input, signal } from '@angular/cor
 import { CurrencyPipe, DatePipe } from '@angular/common';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { RouterLink } from '@angular/router';
+import { ImageCarousel } from '../../../shared/image-carousel/image-carousel';
 import { toObservable, toSignal } from '@angular/core/rxjs-interop';
 import { catchError, of, switchMap } from 'rxjs';
 import type { Flat, Message } from '@flatfinder/types';
@@ -12,7 +13,7 @@ import { messageOf } from '../../../core/interceptors/error.interceptor';
 
 @Component({
   selector: 'app-flat-detail',
-  imports: [ReactiveFormsModule, RouterLink, DatePipe, CurrencyPipe],
+  imports: [ReactiveFormsModule, RouterLink, DatePipe, CurrencyPipe, ImageCarousel],
   templateUrl: './flat-detail.html',
   styleUrl: './flat-detail.css',
 })
@@ -51,6 +52,9 @@ export class FlatDetail {
     ),
     { initialValue: null },
   );
+
+  /** The cover shown beside the details; the carousel holds the full set. */
+  readonly cover = computed(() => this.flat()?.imageUrls?.[0] ?? 'assets/houses/house.jpg');
 
   readonly isOwner = computed(() => {
     const flat = this.flat();

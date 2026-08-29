@@ -10,6 +10,14 @@
     }
 
     <div class="profile">
+      <app-avatar-picker
+        [avatarUrl]="user.avatarUrl"
+        [firstName]="user.firstName"
+        [lastName]="user.lastName"
+        [saving]="savingAvatar()"
+        (avatarUrlChange)="saveAvatar($event)"
+      />
+
       @if (editing()) {
         <form [formGroup]="form" (ngSubmit)="save()">
           <div class="field">
@@ -63,10 +71,12 @@
         <dl class="profile__data">
           <div><dt>Name</dt><dd>{{ user.firstName }} {{ user.lastName }}</dd></div>
           <div><dt>Email</dt><dd>{{ user.email }}</dd></div>
-          <div>
-            <dt>Role</dt>
-            <dd><span class="profile__role">{{ user.role }}</span></dd>
-          </div>
+          @if (isAdmin()) {
+            <div>
+              <dt>Role</dt>
+              <dd><span class="profile__role">{{ user.role }}</span></dd>
+            </div>
+          }
         </dl>
         <div class="profile__actions">
           <button type="button" class="btn btn--primary" (click)="toggleEdit()">

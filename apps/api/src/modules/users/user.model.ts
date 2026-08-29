@@ -11,6 +11,7 @@ export interface UserDoc {
   lastName: string;
   birthDate: Date;
   role: UserRole;
+  avatarUrl?: string;
   favoriteFlatIds: mongoose.Types.ObjectId[];
   createdAt: Date;
   updatedAt: Date;
@@ -40,6 +41,9 @@ const userSchema = new Schema<UserDoc, UserModel, UserMethods>(
     lastName: { type: String, required: true, trim: true },
     birthDate: { type: Date, required: true },
     role: { type: String, enum: USER_ROLES, default: 'guest' },
+    // Stored as a URL. When file uploads land, the backend will write the
+    // stored file's URL here and the shape of this field will not change.
+    avatarUrl: { type: String, trim: true },
     // This used to be a single ObjectId, so only one favourite could be saved.
     favoriteFlatIds: [{ type: Schema.Types.ObjectId, ref: 'Flat' }],
   },

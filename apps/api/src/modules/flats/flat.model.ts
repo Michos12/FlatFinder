@@ -10,7 +10,7 @@ export interface FlatDoc {
   rentPrice: number;
   dateAvailable: Date;
   description?: string;
-  imageUrl?: string;
+  imageUrls?: string[];
   ownerId: mongoose.Types.ObjectId;
   createdAt: Date;
   updatedAt: Date;
@@ -32,7 +32,7 @@ const flatSchema = new Schema<FlatDoc>(
     rentPrice: { type: Number, required: true, min: 0, index: true },
     dateAvailable: { type: Date, required: true },
     description: { type: String, trim: true, maxlength: 2000 },
-    imageUrl: { type: String, trim: true },
+    imageUrls: { type: [String], default: undefined },
     ownerId: { type: Schema.Types.ObjectId, ref: 'User', required: true, index: true },
   },
   {

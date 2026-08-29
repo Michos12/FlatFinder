@@ -16,7 +16,11 @@ export interface Flat {
    */
   dateAvailable: string;
   description?: string;
-  imageUrl?: string;
+  /**
+   * Photos of the flat, in display order. The first one is the cover shown on
+   * the listing card; the detail page runs through all of them in a carousel.
+   */
+  imageUrls?: string[];
   ownerId: string;
   createdAt: string;
   updatedAt: string;

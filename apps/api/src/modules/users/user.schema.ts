@@ -1,5 +1,6 @@
 import { z } from 'zod';
 import { USER_ROLES } from '@flatfinder/types';
+import { httpUrl } from '../../lib/httpUrl.js';
 
 const email = z.string().trim().toLowerCase().email('Invalid email');
 
@@ -41,6 +42,11 @@ export const updateUserSchema = z
     lastName: z.string().trim().min(1).max(80).optional(),
     birthDate: birthDate.optional(),
     password: password.optional(),
+    // An empty string is accepted on purpose: it is how the client clears the
+    // current picture. Anything else has to be a real URL.
+    avatarUrl: z
+      .union([httpUrl('The picture must be a valid http(s) URL'), z.literal('')])
+      .optional(),
   })
   .strict();
 

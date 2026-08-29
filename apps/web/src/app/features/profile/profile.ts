@@ -4,10 +4,11 @@ import type { UpdateUserInput } from '@flatfinder/types';
 import { AuthService } from '../../core/api/auth.service';
 import { UsersService } from '../../core/api/users.service';
 import { messageOf } from '../../core/interceptors/error.interceptor';
+import { AvatarPicker } from '../../shared/avatar-picker/avatar-picker';
 
 @Component({
   selector: 'app-profile',
-  imports: [ReactiveFormsModule],
+  imports: [ReactiveFormsModule, AvatarPicker],
   templateUrl: './profile.html',
   styleUrl: './profile.css',
 })
@@ -17,8 +18,13 @@ export class Profile {
   private readonly usersService = inject(UsersService);
 
   readonly user = this.auth.currentUser;
+  /** Everyone is a guest until they are not, so the role is only worth
+   *  showing when it says something: an administrator badge. */
+  readonly isAdmin = this.auth.isAdmin;
+
   readonly editing = signal(false);
   readonly saving = signal(false);
+  readonly savingAvatar = signal(false);
   readonly errorMessage = signal('');
   readonly successMessage = signal('');
 
@@ -47,6 +53,31 @@ export class Profile {
       });
     }
     this.editing.update((value) => !value);
+  }
+
+  /**
+   * The picture saves on its own rather than waiting for the form, so it can
+   * be changed without entering edit mode. AvatarPicker hands over a plain
+   * URL, which is all this needs to know about it.
+   */
+  saveAvatar(avatarUrl: string): void {
+    const user = this.user();
+    if (!user) return;
+
+    this.errorMessage.set('');
+    this.savingAvatar.set(true);
+
+    this.usersService.update(user.id, { avatarUrl }).subscribe({
+      next: (updated) => {
+        this.auth.setCurrentUser(updated);
+        this.savingAvatar.set(false);
+        this.successMessage.set(avatarUrl ? 'Picture updated' : 'Picture removed');
+      },
+      error: (error: unknown) => {
+        this.savingAvatar.set(false);
+        this.errorMessage.set(messageOf(error));
+      },
+    });
   }
 
   save(): void {

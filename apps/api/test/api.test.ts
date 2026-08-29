@@ -228,6 +228,78 @@ describe('flats', () => {
   });
 });
 
+describe('flat photos', () => {
+  it('stores several images in the order they were given', async () => {
+    const images = [
+      'https://example.test/one.jpg',
+      'https://example.test/two.jpg',
+      'https://example.test/three.jpg',
+    ];
+    const res = await request(app)
+      .patch(`/api/flats/${flatId}`)
+      .set(auth(ownerToken))
+      .send({ imageUrls: images })
+      .expect(200);
+
+    assert.deepEqual(res.body.data.imageUrls, images);
+  });
+
+  it('rejects an entry that is not a URL', async () => {
+    const res = await request(app)
+      .patch(`/api/flats/${flatId}`)
+      .set(auth(ownerToken))
+      .send({ imageUrls: ['assets/houses/house.jpg'] })
+      .expect(400);
+
+    assert.ok(res.body.error.details['imageUrls.0']);
+  });
+
+  it('caps the number of images', async () => {
+    const tooMany = Array.from({ length: 11 }, (_, i) => `https://example.test/${i}.jpg`);
+    await request(app)
+      .patch(`/api/flats/${flatId}`)
+      .set(auth(ownerToken))
+      .send({ imageUrls: tooMany })
+      .expect(400);
+  });
+});
+
+describe('profile picture', () => {
+  it('stores a picture and gives it back on the user', async () => {
+    const me = await request(app).get('/api/users/me').set(auth(tenantToken)).expect(200);
+
+    const res = await request(app)
+      .patch(`/api/users/${me.body.data.id}`)
+      .set(auth(tenantToken))
+      .send({ avatarUrl: 'https://example.test/face.jpg' })
+      .expect(200);
+
+    assert.equal(res.body.data.avatarUrl, 'https://example.test/face.jpg');
+  });
+
+  it('clears the picture when given an empty string', async () => {
+    const me = await request(app).get('/api/users/me').set(auth(tenantToken)).expect(200);
+
+    const res = await request(app)
+      .patch(`/api/users/${me.body.data.id}`)
+      .set(auth(tenantToken))
+      .send({ avatarUrl: '' })
+      .expect(200);
+
+    assert.equal(res.body.data.avatarUrl, undefined);
+  });
+
+  it('rejects anything that is not a URL', async () => {
+    const me = await request(app).get('/api/users/me').set(auth(tenantToken)).expect(200);
+
+    await request(app)
+      .patch(`/api/users/${me.body.data.id}`)
+      .set(auth(tenantToken))
+      .send({ avatarUrl: 'javascript:alert(1)' })
+      .expect(400);
+  });
+});
+
 describe('favourites', () => {
   it('adds, does not duplicate, and removes', async () => {
     const added = await request(app)

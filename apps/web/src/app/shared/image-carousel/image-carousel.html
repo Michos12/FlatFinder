@@ -1,0 +1,41 @@
+<div class="carousel">
+  <div class="carousel__frame">
+    <img class="carousel__image" [src]="current()" [alt]="alt()" />
+
+    @if (hasMultiple()) {
+      <button
+        type="button"
+        class="carousel__nav carousel__nav--prev"
+        (click)="previous()"
+        aria-label="Previous image"
+      >
+        <span aria-hidden="true">&#8249;</span>
+      </button>
+      <button
+        type="button"
+        class="carousel__nav carousel__nav--next"
+        (click)="next()"
+        aria-label="Next image"
+      >
+        <span aria-hidden="true">&#8250;</span>
+      </button>
+      <p class="carousel__counter">{{ index() + 1 }} / {{ slides().length }}</p>
+    }
+  </div>
+
+  @if (hasMultiple()) {
+    <div class="carousel__dots" role="tablist" aria-label="Choose an image">
+      @for (slide of slides(); track slide; let i = $index) {
+        <button
+          type="button"
+          class="carousel__dot"
+          [class.is-active]="i === index()"
+          [attr.aria-selected]="i === index()"
+          [attr.aria-label]="'Image ' + (i + 1)"
+          role="tab"
+          (click)="goTo(i)"
+        ></button>
+      }
+    </div>
+  }
+</div>

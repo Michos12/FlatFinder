@@ -1,4 +1,5 @@
 import { z } from 'zod';
+import { httpUrl } from '../../lib/httpUrl.js';
 
 export const createFlatSchema = z.object({
   city: z.string().trim().min(1, 'City is required').max(120),
@@ -14,7 +15,10 @@ export const createFlatSchema = z.object({
   rentPrice: z.coerce.number().min(0),
   dateAvailable: z.coerce.date(),
   description: z.string().trim().max(2000).optional(),
-  imageUrl: z.string().trim().url('The image must be a valid URL').optional(),
+  imageUrls: z
+    .array(httpUrl('Each image must be a valid http(s) URL'))
+    .max(10, 'A flat can have at most 10 images')
+    .optional(),
 });
 
 export const updateFlatSchema = createFlatSchema.partial().strict();

@@ -77,9 +77,36 @@
 
 /* ---------- Messages ---------- */
 
+/* Messages and gallery side by side, so the row matches the width of the
+   detail card instead of leaving a gap on the right. */
+.detail__lower {
+  display: grid;
+  gap: 1.5rem;
+  grid-template-columns: minmax(0, 1fr);
+  margin-top: 1.5rem;
+}
+
+@media (min-width: 900px) {
+  .detail__lower {
+    grid-template-columns: minmax(0, 1fr) 22rem;
+    align-items: start;
+  }
+}
+
+.gallery {
+  padding: 1.75rem;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+}
+
+.gallery h2 {
+  margin: 0 0 1rem;
+  font-size: 1.15rem;
+}
+
 .messages {
-  max-width: 46rem;
-  margin-top: 2rem;
   padding: 1.75rem;
   background: var(--surface);
   border: 1px solid var(--border);

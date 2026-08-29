@@ -12,6 +12,7 @@ export function toUserDto(doc: UserDocument): UserDto {
     lastName: doc.lastName,
     birthDate: doc.birthDate.toISOString(),
     role: doc.role,
+    avatarUrl: doc.avatarUrl,
     createdAt: doc.createdAt.toISOString(),
     updatedAt: doc.updatedAt.toISOString(),
   };
@@ -58,14 +59,26 @@ export async function getUserById(id: string): Promise<UserDto> {
 
 export async function updateUser(
   id: string,
-  input: { firstName?: string; lastName?: string; birthDate?: Date; password?: string },
+  input: {
+    firstName?: string;
+    lastName?: string;
+    birthDate?: Date;
+    password?: string;
+    avatarUrl?: string;
+  },
 ): Promise<UserDto> {
   // Load and save the document rather than findByIdAndUpdate, so the
   // pre('save') hook hashes the password whenever one is supplied.
   const user = await User.findById(id).select('+password');
   if (!user) throw ApiError.notFound('User');
 
-  Object.assign(user, input);
+  // An empty avatarUrl means "remove the picture", so it is unset rather than
+  // stored as an empty string.
+  const { avatarUrl, ...rest } = input;
+  Object.assign(user, rest);
+  if (avatarUrl !== undefined) {
+    user.avatarUrl = avatarUrl === '' ? undefined : avatarUrl;
+  }
   await user.save();
   return toUserDto(user);
 }

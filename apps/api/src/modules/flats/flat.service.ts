@@ -28,7 +28,7 @@ export function toFlatDto(doc: FlatDocument): FlatDto {
     rentPrice: doc.rentPrice,
     dateAvailable: doc.dateAvailable.toISOString(),
     description: doc.description,
-    imageUrl: doc.imageUrl,
+    imageUrls: doc.imageUrls,
     ownerId: doc.ownerId.toString(),
     createdAt: doc.createdAt.toISOString(),
     updatedAt: doc.updatedAt.toISOString(),

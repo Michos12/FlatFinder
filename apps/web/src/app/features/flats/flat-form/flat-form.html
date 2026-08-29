@@ -78,10 +78,39 @@
       </div>
     </div>
 
-    <div class="field">
-      <label for="imageUrl">Image URL (optional)</label>
-      <input id="imageUrl" type="url" formControlName="imageUrl" placeholder="https://…" />
-    </div>
+    <fieldset class="images" formArrayName="imageUrls">
+      <legend>Photos (optional)</legend>
+      <p class="images__hint">The first one is used as the cover on the listing.</p>
+
+      @for (control of imageUrls.controls; track $index) {
+        <div class="images__row">
+          <input
+            type="url"
+            [formControlName]="$index"
+            [attr.aria-label]="'Photo ' + ($index + 1) + ' URL'"
+            placeholder="https://…"
+          />
+          <button
+            type="button"
+            class="btn"
+            [disabled]="imageUrls.length === 1 && !control.value"
+            (click)="removeImage($index)"
+            [attr.aria-label]="'Remove photo ' + ($index + 1)"
+          >
+            Remove
+          </button>
+        </div>
+      }
+
+      <button
+        type="button"
+        class="btn"
+        [disabled]="imageUrls.length >= maxImages"
+        (click)="addImage()"
+      >
+        Add another photo
+      </button>
+    </fieldset>
 
     <div class="field">
       <label for="description">Description (optional)</label>

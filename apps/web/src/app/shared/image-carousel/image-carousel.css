@@ -1,0 +1,82 @@
+.carousel {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+}
+
+.carousel__frame {
+  position: relative;
+  aspect-ratio: 4 / 3;
+  overflow: hidden;
+  background: var(--surface-muted);
+  border-radius: var(--radius-sm);
+}
+
+.carousel__image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.carousel__nav {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  display: grid;
+  place-items: center;
+  width: 2rem;
+  height: 2rem;
+  padding: 0;
+  border: none;
+  border-radius: 50%;
+  background: color-mix(in srgb, var(--surface) 85%, transparent);
+  box-shadow: var(--shadow-lg);
+  font-size: 1.35rem;
+  line-height: 1;
+  cursor: pointer;
+}
+
+.carousel__nav:hover {
+  background: var(--surface);
+}
+
+.carousel__nav--prev {
+  left: 0.5rem;
+}
+
+.carousel__nav--next {
+  right: 0.5rem;
+}
+
+.carousel__counter {
+  position: absolute;
+  right: 0.5rem;
+  bottom: 0.5rem;
+  margin: 0;
+  padding: 0.15rem 0.5rem;
+  border-radius: var(--radius-pill);
+  background: color-mix(in srgb, var(--surface) 85%, transparent);
+  font-size: 0.75rem;
+  font-weight: 600;
+}
+
+.carousel__dots {
+  display: flex;
+  justify-content: center;
+  gap: 0.35rem;
+}
+
+.carousel__dot {
+  width: 0.5rem;
+  height: 0.5rem;
+  padding: 0;
+  border: none;
+  border-radius: 50%;
+  background: var(--border);
+  cursor: pointer;
+}
+
+.carousel__dot.is-active {
+  background: var(--accent);
+}
