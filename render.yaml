@@ -1,10 +1,18 @@
-# Render blueprint for the API. The database lives separately on MongoDB
-# Atlas: MONGO_URL is filled in by hand from the dashboard.
+# Render blueprint for the API.
+#
+# The database is not defined here: it lives on MongoDB Atlas, and MONGO_URL is
+# filled in from the Render dashboard (`sync: false` means "ask me, do not
+# store it in the repo"). The connection string must end in a database name —
+# without one the driver quietly writes everything to a database called `test`.
 services:
   - type: web
     name: flatfinder-api
     runtime: docker
+    plan: free
+    region: oregon
     dockerfilePath: ./apps/api/Dockerfile
+    # Built from the repository root: the Dockerfile needs the workspace
+    # manifests and packages/types, not just apps/api.
     dockerContext: .
     healthCheckPath: /api/health
     envVars:
@@ -19,6 +27,8 @@ services:
       - key: JWT_EXPIRES_IN
         value: 2h
       # The frontend is served from Vercel and reaches the API through a
-      # same-origin rewrite, so CORS is only needed for local development.
+      # same-origin rewrite, so the browser never makes a cross-origin call and
+      # this only matters for local development. Add the Vercel domain here if
+      # you ever point the frontend straight at this service.
       - key: CORS_ORIGIN
         value: http://localhost:4200
