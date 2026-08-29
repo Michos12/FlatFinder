@@ -1,5 +1,6 @@
 {
   "$schema": "https://openapi.vercel.sh/vercel.json",
+  "framework": null,
   "installCommand": "npm ci --include-workspace-root --workspace @flatfinder/types --workspace @flatfinder/web",
   "buildCommand": "npm run build --workspace @flatfinder/types && npm run build --workspace @flatfinder/web",
   "outputDirectory": "apps/web/dist/web/browser",
@@ -8,6 +9,9 @@
       "source": "/api/:path*",
       "destination": "https://flatfinder-api.onrender.com/api/:path*"
     },
-    { "source": "/(.*)", "destination": "/index.html" }
+    {
+      "source": "/(.*)",
+      "destination": "/index.html"
+    }
   ]
 }
