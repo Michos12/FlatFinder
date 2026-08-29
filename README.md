@@ -49,7 +49,9 @@ Without Docker, point `MONGO_URL` at a MongoDB Atlas cluster.
 
 ```bash
 npm run typecheck   # API types, tests included
-npm test            # API integration tests
+npm test            # API and frontend tests
+npm run test:api    # API integration tests only
+npm run test:web    # frontend unit tests only
 npm run build       # types + api + web
 ```
 
@@ -82,7 +84,7 @@ the API. Keeping a single origin means production needs no CORS at all.
 - [x] API integration tests (22 cases, in-memory MongoDB)
 - [x] CI on GitHub Actions and deployment configuration
 - [x] Interface design pass
-- [ ] Frontend tests
+- [x] Frontend tests (63 cases, Vitest on jsdom)
 - [ ] Live deployment
 
 ## Credits

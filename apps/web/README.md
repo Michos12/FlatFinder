@@ -30,6 +30,25 @@ src/app/
 Every route is loaded on demand, so the initial bundle carries only the shell
 and what is common to all of it.
 
+## Tests
+
+```bash
+npm run test:web      # from the root of the monorepo
+```
+
+Vitest on jsdom, through Angular's `@angular/build:unit-test` builder, so the
+suite needs no browser installed — locally or in CI. Karma was dropped: it is
+deprecated in Angular 20 and would have meant depending on a Chrome binary.
+
+`src/test-providers.ts` gives every spec the same wiring as the real
+application (zoneless change detection, the router, and HttpClient with both
+interceptors) backed by `HttpTestingController`, so nothing can reach the
+network. `src/test-setup.ts` installs an in-memory `localStorage`, which Node
+does not expose by default.
+
+Covered: AuthService, both route guards, both interceptors, ApiService,
+FlatCard, ImageCarousel, the login screen and the profile screen.
+
 ## Styling
 
 `src/styles.css` defines the design tokens (colour, shape, shadow) and a small
